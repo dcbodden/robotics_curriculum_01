@@ -5,14 +5,14 @@ namespace {
   constexpr unsigned long kLoopDelayMs = 10;
 
   enum class RobotMode : uint8_t {
-    kUnknown,
     kIdle,
     kManualAssist,
     kSemiAutonomous,
   };
 
   RobotMode currentMode = RobotMode::kIdle;
-  RobotMode lastReportedMode = RobotMode::kUnknown;
+  RobotMode lastReportedMode = RobotMode::kIdle;
+  bool shouldReportMode = true;
 }  // namespace
 
 void setup() {
@@ -42,10 +42,8 @@ void loop() {
     }
   }
 
-  if (currentMode != lastReportedMode) {
+  if (shouldReportMode || currentMode != lastReportedMode) {
     switch (currentMode) {
-      case RobotMode::kUnknown:
-        break;
       case RobotMode::kIdle:
         Serial.println("Idle mode: base platform powered and awaiting commands.");
         break;
@@ -58,6 +56,7 @@ void loop() {
     }
 
     lastReportedMode = currentMode;
+    shouldReportMode = false;
   }
 
   delay(kLoopDelayMs);
