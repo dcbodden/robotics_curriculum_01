@@ -4,13 +4,14 @@ namespace {
   constexpr uint8_t kMotorStandbyPin = 13;
 
   enum class RobotMode : uint8_t {
+    kUnknown,
     kIdle,
     kManualAssist,
     kSemiAutonomous,
   };
 
   RobotMode currentMode = RobotMode::kIdle;
-  RobotMode lastReportedMode = RobotMode::kSemiAutonomous;
+  RobotMode lastReportedMode = RobotMode::kUnknown;
 }
 
 void setup() {
@@ -42,6 +43,8 @@ void loop() {
 
   if (currentMode != lastReportedMode) {
     switch (currentMode) {
+      case RobotMode::kUnknown:
+        break;
       case RobotMode::kIdle:
         Serial.println("Idle mode: base platform powered and awaiting commands.");
         break;
