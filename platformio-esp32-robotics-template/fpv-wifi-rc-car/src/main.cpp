@@ -28,5 +28,6 @@ void setup() {
 }
 
 void loop() {
+  // Placeholder pacing for the starter template until Wi-Fi, camera, and drive logic are added.
   delay(kLoopDelayMs);
 }
