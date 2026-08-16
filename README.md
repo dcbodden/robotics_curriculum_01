@@ -1,2 +1,20 @@
 # robotics_curriculum_01
 This project is an OpenSpec-driven exploratory robotics curriculum for beginners, which I am developing for my 10 year old child. Electronics, coding, and AI (from CV to LLMs) may be integrated.
+
+## Repository layout
+
+- `electronics-reference/` — general electronics reference materials such as Ohm's law cards, multimeter notes, and other foundational artifacts
+- `experiments/` — standalone experiments such as Snap Circuits activities, breadboard diagrams, and lesson-specific builds
+- `syllabus-and-teacher-materials/` — lesson plans, pedagogy notes, and teacher-training/reference material
+- `platformio-uno-template/` — a VS Code-friendly PlatformIO Arduino Uno starter project for digital/physical integration lessons
+- `platformio-lessons/` — lesson projects derived from the PlatformIO template
+- `openspec/` — lightweight OpenSpec planning artifacts for repository structure and future curriculum changes
+
+## OpenSpec workflow
+
+This repository keeps lightweight OpenSpec artifacts in `openspec/`:
+
+- durable requirements in `openspec/specs/`
+- in-flight or recorded changes in `openspec/changes/`
+
+Use these documents to capture curriculum changes before implementation whenever the change is larger than a small edit.
