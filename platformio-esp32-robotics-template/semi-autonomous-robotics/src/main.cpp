@@ -22,8 +22,13 @@ void setup() {
 void loop() {
   switch (currentMode) {
     case RobotMode::kIdle:
+      Serial.println("Idle mode: base platform powered and awaiting commands.");
+      break;
     case RobotMode::kManualAssist:
+      Serial.println("Manual-assist mode: mobility base active for supervised driving.");
+      break;
     case RobotMode::kSemiAutonomous:
+      Serial.println("Semi-autonomous mode: ready for OV7670-guided robotics experiments.");
       break;
   }
 
