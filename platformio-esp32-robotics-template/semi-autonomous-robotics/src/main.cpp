@@ -12,7 +12,6 @@ namespace {
 
   RobotMode currentMode = RobotMode::kIdle;
   RobotMode lastReportedMode = RobotMode::kIdle;
-  bool shouldReportMode = true;
 }  // namespace
 
 void setup() {
@@ -21,6 +20,7 @@ void setup() {
   digitalWrite(kMotorStandbyPin, HIGH);
   Serial.println("Semi-autonomous robotics template ready for ESP32 perception and mobility experiments.");
   Serial.println("Send 0 for idle, 1 for manual-assist, or 2 for semi-autonomous mode.");
+  Serial.println("Idle mode: base platform powered and awaiting commands.");
 }
 
 void loop() {
@@ -42,7 +42,7 @@ void loop() {
     }
   }
 
-  if (shouldReportMode || currentMode != lastReportedMode) {
+  if (currentMode != lastReportedMode) {
     switch (currentMode) {
       case RobotMode::kIdle:
         Serial.println("Idle mode: base platform powered and awaiting commands.");
@@ -56,7 +56,6 @@ void loop() {
     }
 
     lastReportedMode = currentMode;
-    shouldReportMode = false;
   }
 
   delay(kLoopDelayMs);
