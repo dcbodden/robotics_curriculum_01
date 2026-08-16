@@ -5,7 +5,7 @@ namespace {
   constexpr uint8_t kMotorLeftForwardPin = 26;
   constexpr uint8_t kMotorLeftReversePin = 27;
   constexpr uint8_t kMotorRightForwardPin = 14;
-  constexpr uint8_t kMotorRightReversePin = 12;
+  constexpr uint8_t kMotorRightReversePin = 25;
 }
 
 void setup() {
