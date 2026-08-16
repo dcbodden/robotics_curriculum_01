@@ -2,6 +2,7 @@
 
 namespace {
   constexpr uint8_t kMotorStandbyPin = 13;
+  constexpr unsigned long kLoopDelayMs = 10;
 
   enum class RobotMode : uint8_t {
     kUnknown,
@@ -12,7 +13,7 @@ namespace {
 
   RobotMode currentMode = RobotMode::kIdle;
   RobotMode lastReportedMode = RobotMode::kUnknown;
-}
+}  // namespace
 
 void setup() {
   Serial.begin(115200);
@@ -59,5 +60,5 @@ void loop() {
     lastReportedMode = currentMode;
   }
 
-  delay(1000);
+  delay(kLoopDelayMs);
 }
