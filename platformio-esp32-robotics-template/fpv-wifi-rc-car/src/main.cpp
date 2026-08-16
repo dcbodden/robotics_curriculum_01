@@ -6,7 +6,8 @@ namespace {
   constexpr uint8_t kMotorLeftReversePin = 27;
   constexpr uint8_t kMotorRightForwardPin = 14;
   constexpr uint8_t kMotorRightReversePin = 25;
-}
+  constexpr unsigned long kLoopDelayMs = 1000;
+}  // namespace
 
 void setup() {
   Serial.begin(115200);
@@ -27,5 +28,5 @@ void setup() {
 }
 
 void loop() {
-  delay(1000);
+  delay(kLoopDelayMs);
 }
