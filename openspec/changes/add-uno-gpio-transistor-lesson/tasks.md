@@ -1,12 +1,12 @@
 ## 1. Lesson Project Structure
 
-- [ ] 1.1 Create `platformio-uno-lessons/` with a short README explaining the numbered, standalone lesson convention.
-- [ ] 1.2 Create `platformio-uno-lessons/01-gpio-transistor-switch/` as an independent Arduino Uno PlatformIO project using the existing `atmelavr`, `uno`, and `arduino` configuration.
-- [ ] 1.3 Add the PlatformIO IDE extension recommendation to the standalone lesson project.
+- [x] 1.1 Create `platformio-uno-lessons/` with a short README explaining the numbered, standalone lesson convention.
+- [x] 1.2 Create `platformio-uno-lessons/01-gpio-transistor-switch/` as an independent Arduino Uno PlatformIO project using the existing `atmelavr`, `uno`, and `arduino` configuration.
+- [x] 1.3 Add the PlatformIO IDE extension recommendation to the standalone lesson project.
 
 ## 2. GPIO Program
 
-- [ ] 2.1 Implement the lesson sketch with digital pin 8 configured as an output and alternating HIGH and LOW states.
+- [x] 2.1 Implement the lesson sketch with digital pin 8 configured as an output and alternating HIGH and LOW states.
 - [ ] 2.2 Hold each output state for 2,000 milliseconds and use beginner-readable names and comments.
 
 ## 3. Student Instructions
