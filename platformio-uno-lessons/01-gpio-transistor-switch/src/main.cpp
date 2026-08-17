@@ -1,17 +1,22 @@
 #include <Arduino.h>
 
-namespace {
-  constexpr uint8_t kControlPin = 8;
-  constexpr unsigned long kBlinkDelayMs = 500;
-}  // namespace
+// The digital pin that controls the transistor base.
+const int TRANSISTOR_PIN = 8;
+
+// How long to hold each output state (milliseconds).
+const unsigned long STATE_DURATION_MS = 2000;
 
 void setup() {
-  pinMode(kControlPin, OUTPUT);
+  // Tell the Arduino to use pin 8 as an output.
+  pinMode(TRANSISTOR_PIN, OUTPUT);
 }
 
 void loop() {
-  digitalWrite(kControlPin, HIGH);
-  delay(kBlinkDelayMs);
-  digitalWrite(kControlPin, LOW);
-  delay(kBlinkDelayMs);
+  // Turn the transistor ON by setting the pin HIGH (about 5 V).
+  digitalWrite(TRANSISTOR_PIN, HIGH);
+  delay(STATE_DURATION_MS);  // hold HIGH for two seconds
+
+  // Turn the transistor OFF by setting the pin LOW (0 V).
+  digitalWrite(TRANSISTOR_PIN, LOW);
+  delay(STATE_DURATION_MS);  // hold LOW for two seconds
 }

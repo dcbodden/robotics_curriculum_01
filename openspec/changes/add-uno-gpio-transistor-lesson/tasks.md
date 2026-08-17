@@ -7,7 +7,7 @@
 ## 2. GPIO Program
 
 - [x] 2.1 Implement the lesson sketch with digital pin 8 configured as an output and alternating HIGH and LOW states.
-- [ ] 2.2 Hold each output state for 2,000 milliseconds and use beginner-readable names and comments.
+- [x] 2.2 Hold each output state for 2,000 milliseconds and use beginner-readable names and comments.
 
 ## 3. Student Instructions
 
