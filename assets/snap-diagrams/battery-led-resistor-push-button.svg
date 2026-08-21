@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="900" height="440" viewBox="0 0 900 440"
+     role="img" aria-labelledby="title description">
+  <title id="title">Battery, LED, resistor, and push-button Snap Circuits diagram</title>
+  <desc id="description">A closed rectangular series circuit with all snaps aligned to a common grid. Parts are rotated only in 90 degree increments.</desc>
+
+  <rect width="900" height="440" rx="24" fill="#f7f8fb"/>
+  <text x="450" y="36" text-anchor="middle"
+        font-family="Arial, sans-serif" font-size="22" font-weight="700"
+        fill="#172033">Battery → Resistor → LED → Push Button</text>
+
+  <!-- Light construction grid; the electrical snap centers lie on it. -->
+  <g stroke="#dce3ef" stroke-width="1">
+    <path d="M260 60V370 M300 60V370 M340 60V370 M380 60V370 M420 60V370
+             M460 60V370 M500 60V370 M540 60V370 M580 60V370 M620 60V370"/>
+    <path d="M220 90H660 M220 130H660 M220 170H660 M220 210H660
+             M220 250H660 M220 290H660 M220 330H660"/>
+  </g>
+
+  <!-- Conductive snap-wire links. -->
+  <g fill="none" stroke="#0b347c" stroke-width="10" stroke-linecap="round">
+    <path d="M260 90H390"/>
+    <path d="M610 90H620"/>
+    <path d="M620 322V330"/>
+    <path d="M610 330H620"/>
+    <path d="M260 330H370"/>
+    <path d="M260 90V176"/>
+    <path d="M260 246V330"/>
+  </g>
+
+  <!-- Snap centers on the shared 40 px grid. -->
+  <g fill="#0b347c" stroke="#08245a" stroke-width="2">
+    <circle cx="260" cy="90" r="9"/><circle cx="260" cy="130" r="9"/>
+    <circle cx="260" cy="330" r="9"/><circle cx="260" cy="290" r="9"/>
+    <circle cx="620" cy="90" r="9"/><circle cx="620" cy="330" r="9"/>
+  </g>
+  <g fill="#d9bd72">
+    <circle cx="260" cy="90" r="3"/><circle cx="260" cy="130" r="3"/>
+    <circle cx="260" cy="330" r="3"/><circle cx="260" cy="290" r="3"/>
+    <circle cx="620" cy="90" r="3"/><circle cx="620" cy="330" r="3"/>
+  </g>
+
+  <!-- Original extracted assets. Rotations: 0°, 90°, 0°, and 0°. -->
+  <image x="244" y="168" width="84" height="84"
+         xlink:href="../snap-symbols/b1-battery-holder.svg"/>
+
+  <image x="370" y="50" width="262" height="80"
+         xlink:href="../snap-symbols/r1-resistor-100ohm.svg"/>
+
+  <image x="496" y="168" width="248" height="84"
+         transform="rotate(90 620 210)"
+         xlink:href="../snap-symbols/d1-red-led.svg"/>
+
+  <image x="359" y="289" width="262" height="82"
+         xlink:href="../snap-symbols/s2-press-switch.svg"/>
+
+  <g font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#4d596d">
+    <text x="205" y="220" text-anchor="end">3 V BATTERY</text>
+    <text x="500" y="145" text-anchor="middle">100 Ω</text>
+    <text x="690" y="215">RED LED</text>
+    <text x="500" y="400" text-anchor="middle">PRESS TO CLOSE</text>
+  </g>
+</svg>
