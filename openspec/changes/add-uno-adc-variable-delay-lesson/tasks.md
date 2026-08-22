@@ -1,8 +1,8 @@
 ## 1. Lesson Project Structure
 
-- [ ] 1.1 Create `platformio-uno-lessons/02-adc-variable-delay/` as an independent Arduino Uno PlatformIO project using the repository's `atmelavr`, `uno`, and `arduino` configuration.
-- [ ] 1.2 Configure the lesson's serial monitor for 9,600 baud and include the same editor recommendations used by the existing Uno lesson projects.
-- [ ] 1.3 Update the lessons collection documentation to list lesson 02 after `01-gpio-transistor-switch` and state its prerequisite concepts.
+- [x] 1.1 Create `platformio-uno-lessons/02-adc-variable-delay/` as an independent Arduino Uno PlatformIO project using the repository's `atmelavr`, `uno`, and `arduino` configuration.
+- [x] 1.2 Configure the lesson's serial monitor for 9,600 baud and include the same editor recommendations used by the existing Uno lesson projects.
+- [x] 1.3 Update the lessons collection documentation to list lesson 02 after `01-gpio-transistor-switch` and state its prerequisite concepts.
 
 ## 2. ADC-Controlled Program
 
