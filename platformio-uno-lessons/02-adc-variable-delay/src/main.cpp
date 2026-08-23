@@ -23,7 +23,9 @@ void setup() {
 }
 
 void loop() {
+	// Read the voltage on A0 as a number from 0 through 1023.
 	int adcReading = analogRead(ANALOG_INPUT_PIN);
+	// Map that ADC reading to a delay from 100 through 2,000 milliseconds.
 	unsigned long stateDelayMs = map(adcReading, ADC_MIN, ADC_MAX, DELAY_MIN_MS, DELAY_MAX_MS);
 	Serial.print("ADC reading: ");
 	Serial.print(adcReading);
@@ -31,9 +33,11 @@ void loop() {
 	Serial.print(stateDelayMs);
 	Serial.println(" ms");
 
+	// Turn the transistor ON by setting the pin HIGH (about 5 V).
 	digitalWrite(TRANSISTOR_PIN, HIGH);
 	delay(stateDelayMs);
 
+	// Read and map A0 again so the next interval uses the latest knob position.
 	adcReading = analogRead(ANALOG_INPUT_PIN);
 	stateDelayMs = map(adcReading, ADC_MIN, ADC_MAX, DELAY_MIN_MS, DELAY_MAX_MS);
 	Serial.print("ADC reading: ");
@@ -42,6 +46,7 @@ void loop() {
 	Serial.print(stateDelayMs);
 	Serial.println(" ms");
 
+	// Turn the transistor OFF by setting the pin LOW (0 V).
 	digitalWrite(TRANSISTOR_PIN, LOW);
 	delay(stateDelayMs);
 }
