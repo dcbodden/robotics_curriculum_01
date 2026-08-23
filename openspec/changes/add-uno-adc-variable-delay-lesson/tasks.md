@@ -28,8 +28,8 @@
 
 ## 5. Verification
 
-- [ ] 5.1 Build `02-adc-variable-delay` with PlatformIO and confirm it targets an Arduino Uno without compiling another lesson.
-- [ ] 5.2 Review or test the endpoint mapping so ADC readings 0 and 1023 produce delays of 100 ms and 2,000 ms respectively.
-- [ ] 5.3 Verify the sketch samples before each output interval and emits matching labeled ADC and delay values at 9,600 baud.
+- [x] 5.1 Build `02-adc-variable-delay` with PlatformIO and confirm it targets an Arduino Uno without compiling another lesson.
+- [x] 5.2 Review or test the endpoint mapping so ADC readings 0 and 1023 produce delays of 100 ms and 2,000 ms respectively.
+- [x] 5.3 Verify the sketch samples before each output interval and emits matching labeled ADC and delay values at 9,600 baud.
 - [ ] 5.4 Review the student instructions against every ADC lesson scenario, including independent build behavior, safe wiring, three-position observation, and lesson 01 continuity.
 - [ ] 5.5 Run strict OpenSpec validation for `add-uno-adc-variable-delay-lesson` and resolve all reported issues.
