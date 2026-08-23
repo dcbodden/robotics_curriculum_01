@@ -58,3 +58,12 @@ Ask a teacher to verify every connection before reconnecting the USB cable. Chec
 Keep the voltage on A0 between 0 V and 5 V. Use only the Arduino's 5 V and GND pins to power this potentiometer; do not connect a separate battery, power supply, or other externally powered analog signal to A0.
 
 Make sure the center wiper is securely connected to A0. If A0 is left unconnected, or **floating**, it can pick up electrical noise and produce unstable readings that jump around even when no one turns the knob.
+
+## Build, Upload, and Observe
+
+1. Open the `02-adc-variable-delay` folder in VS Code. Make sure the PlatformIO IDE extension is installed and the teacher-approved circuit is connected. If the PlatformIO icon does not appear in this multi-project workspace, choose **File > Add Folder to Workspace...**, add the `02-adc-variable-delay` folder, and wait for PlatformIO to activate.
+2. Select the PlatformIO icon in the VS Code Activity Bar. Under **Project Tasks**, expand **uno**, expand **General**, and select **Build**. Wait for the terminal to report `SUCCESS`.
+3. Connect the Arduino Uno with its USB cable. In the same **General** task list, select **Upload** and wait for the upload to finish successfully.
+4. Select **Monitor** from the **General** task list. The project opens the serial monitor at 9,600 baud.
+5. Slowly move the potentiometer to a new position. Watch the labeled `ADC reading` and `Delay` values in the serial monitor, and watch the LED blink.
+6. Compare what you see: lower ADC readings should show shorter delays and faster blinking, while higher readings should show longer delays and slower blinking.
