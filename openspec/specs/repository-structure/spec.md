@@ -1,5 +1,9 @@
 # Repository Structure
 
+## Purpose
+
+Provide an initial directory structure to support curriclum development.
+
 ## Requirements
 
 ### Requirement: Curriculum repository layout
