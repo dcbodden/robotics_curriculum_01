@@ -8,6 +8,10 @@ Voltage can slide smoothly from low to high, like moving a dimmer switch. The Ar
 
 The Uno has a 10-bit ADC, so it can choose from 1,024 values. Those values are numbered **0 through 1023** because counting starts at 0. A voltage near 0 V gives a reading near 0, a voltage near 5 V gives a reading near 1023, and voltages in between give readings in between. This lets the program work with a changing voltage as a digital number.
 
+## How the Reading Changes the Blink Speed
+
+A low ADC reading makes a shorter delay, so the LED blinks faster. A high ADC reading makes a longer delay, so the LED blinks slower. Watch how the numbers change as you move the slider or turn the knob on your variable resistor; depending on which outer potentiometer terminal connects to 5 V, either direction could make the reading go up.
+
 ## Keep the Lesson 01 Output Circuit
 
 Leave the transistor and LED assembly from lesson 01 connected just as it was. Do not rebuild it or move its parts. Keep these two lesson 01 connections:
