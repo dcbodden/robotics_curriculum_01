@@ -67,3 +67,15 @@ Make sure the center wiper is securely connected to A0. If A0 is left unconnecte
 4. Select **Monitor** from the **General** task list. The project opens the serial monitor at 9,600 baud.
 5. Slowly move the potentiometer to a new position. Watch the labeled `ADC reading` and `Delay` values in the serial monitor, and watch the LED blink.
 6. Compare what you see: lower ADC readings should show shorter delays and faster blinking, while higher readings should show longer delays and slower blinking.
+
+## Record Your Observations
+
+Test three different potentiometer positions. For each position, copy the ADC reading and delay from the serial monitor, then describe the visible blink speed as fast, medium, or slow.
+
+| Potentiometer position | ADC reading (0-1023) | Delay (milliseconds) | Visible blink speed |
+| --- | --- | --- | --- |
+| Position 1 |  |  |  |
+| Position 2 |  |  |  |
+| Position 3 |  |  |  |
+
+Compare your three rows. Which position had the lowest ADC reading and fastest blink? Which position had the highest ADC reading and slowest blink?
