@@ -25,12 +25,22 @@ void setup() {
 void loop() {
 	int adcReading = analogRead(ANALOG_INPUT_PIN);
 	unsigned long stateDelayMs = map(adcReading, ADC_MIN, ADC_MAX, DELAY_MIN_MS, DELAY_MAX_MS);
+	Serial.print("ADC reading: ");
+	Serial.print(adcReading);
+	Serial.print(" | Delay: ");
+	Serial.print(stateDelayMs);
+	Serial.println(" ms");
 
 	digitalWrite(TRANSISTOR_PIN, HIGH);
 	delay(stateDelayMs);
 
 	adcReading = analogRead(ANALOG_INPUT_PIN);
 	stateDelayMs = map(adcReading, ADC_MIN, ADC_MAX, DELAY_MIN_MS, DELAY_MAX_MS);
+	Serial.print("ADC reading: ");
+	Serial.print(adcReading);
+	Serial.print(" | Delay: ");
+	Serial.print(stateDelayMs);
+	Serial.println(" ms");
 
 	digitalWrite(TRANSISTOR_PIN, LOW);
 	delay(stateDelayMs);

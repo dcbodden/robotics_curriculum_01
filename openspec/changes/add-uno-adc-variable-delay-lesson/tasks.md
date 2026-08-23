@@ -8,7 +8,7 @@
 
 - [x] 2.1 Add a beginner-readable sketch that configures digital pin 8 as the transistor control output, initializes serial communication at 9,600 baud, and names A0 as the analog input.
 - [x] 2.2 Read A0 before each HIGH and LOW interval and map the 0–1023 ADC range to an increasing 100–2,000 ms delay range.
-- [ ] 2.3 Print a labeled ADC reading and mapped delay for every sampled interval, then apply that delay to the corresponding pin-8 state.
+- [x] 2.3 Print a labeled ADC reading and mapped delay for every sampled interval, then apply that delay to the corresponding pin-8 state.
 - [ ] 2.4 Keep comments and control flow visibly related to lesson 01 while explaining only the newly introduced ADC and mapping concepts.
 
 ## 3. Wiring and Safety Instructions
