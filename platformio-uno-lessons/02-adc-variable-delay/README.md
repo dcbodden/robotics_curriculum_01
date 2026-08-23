@@ -25,4 +25,26 @@ A potentiometer has two outer terminals and one center terminal called the **wip
 
 The two outer terminals may trade places. Swapping them changes which turning direction raises the A0 voltage, but the voltage divider still works the same way.
 
-After all three connections are secure, check them before reconnecting the USB cable.
+## Circuit Reference Photos
+
+These original, repository-owned photos show one completed Snap Circuits experiment connected to the Arduino Uno. Use the wiring table above as the connection guide, and ask a teacher to check your circuit before applying power.
+
+![Full Snap Circuits experiment connected to an Arduino Uno](external_circuit_images/full_circuit.jpeg)
+
+The full circuit shows the variable resistor near the bottom and the transistor-controlled LED assembly near the top.
+
+![Arduino power and analog headers with jumpers connected to 5 V, GND, and A0](external_circuit_images/variable_resistor_pin_connections.jpeg)
+
+The variable resistor uses Arduino 5 V and GND across its outer terminals. Its center wiper connects to analog input A0.
+
+![Arduino digital header with jumpers connected to pin 8 and GND](external_circuit_images/transistor_pin_connections.jpeg)
+
+The lesson 01 output assembly keeps its control connection to digital pin 8 and its shared-ground connection to Arduino GND.
+
+## Safety Check
+
+Ask a teacher to verify every connection before reconnecting the USB cable. Check that no wire or metal part directly joins Arduino 5 V to GND, because that would create a short circuit and could damage the board.
+
+Keep the voltage on A0 between 0 V and 5 V. Use only the Arduino's 5 V and GND pins to power this potentiometer; do not connect a separate battery, power supply, or other externally powered analog signal to A0.
+
+Make sure the center wiper is securely connected to A0. If A0 is left unconnected, or **floating**, it can pick up electrical noise and produce unstable readings that jump around even when no one turns the knob.
