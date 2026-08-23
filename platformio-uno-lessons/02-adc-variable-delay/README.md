@@ -79,3 +79,10 @@ Test three different potentiometer positions. For each position, copy the ADC re
 | Position 3 |  |  |  |
 
 Compare your three rows. Which position had the lowest ADC reading and fastest blink? Which position had the highest ADC reading and slowest blink?
+
+## Troubleshooting
+
+- **ADC readings jump around:** Disconnect USB power, then check that the center wiper connects firmly to A0 and the two outer terminals connect to 5 V and GND. A loose or floating A0 input gives unstable readings.
+- **The adjustment direction seems reversed:** This is normal. The direction depends on which outer terminal connects to 5 V. You may use it as wired or, with USB power disconnected, swap the two outer-terminal wires.
+- **The serial monitor shows nothing:** Make sure the sketch uploaded successfully, open PlatformIO **Monitor**, and check that it is using 9,600 baud.
+- **The blink timing does not change:** Watch the ADC and delay values while adjusting the potentiometer. If the values do not change, recheck the A0 wiper, 5 V, and GND connections. If the values change but the LED does not, recheck lesson 01's pin-8 and shared-ground connections.

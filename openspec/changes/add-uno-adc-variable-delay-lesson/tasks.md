@@ -24,7 +24,7 @@
 - [x] 4.2 Explain that low readings produce shorter delays and faster blinking while high readings produce longer delays and slower blinking, without assuming a fixed knob direction.
 - [x] 4.3 Add numbered build, upload, serial-monitor, and observation steps using the PlatformIO extension in VS Code.
 - [x] 4.4 Add an observation table or prompts for at least three potentiometer positions comparing ADC reading, delay in milliseconds, and visible blink speed.
-- [ ] 4.5 Add concise troubleshooting for a floating or miswired A0 input, reversed adjustment direction, missing serial output, and unchanged blink timing.
+- [x] 4.5 Add concise troubleshooting for a floating or miswired A0 input, reversed adjustment direction, missing serial output, and unchanged blink timing.
 
 ## 5. Verification
 
