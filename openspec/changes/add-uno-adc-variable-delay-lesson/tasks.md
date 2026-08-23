@@ -13,8 +13,8 @@
 
 ## 3. Wiring and Safety Instructions
 
-- [ ] 3.1 Document the three-terminal potentiometer voltage divider: outer terminals to Arduino 5 V and GND, center wiper to A0, with USB power disconnected during wiring.
-- [ ] 3.2 Document reuse of lesson 01's shared-ground and digital-pin-8 transistor/LED output connections without redesigning the external assembly.
+- [x] 3.1 Document the three-terminal potentiometer voltage divider: outer terminals to Arduino 5 V and GND, center wiper to A0, with USB power disconnected during wiring.
+- [x] 3.2 Document reuse of lesson 01's shared-ground and digital-pin-8 transistor/LED output connections without redesigning the external assembly.
 - [ ] 3.3 Add cautions about teacher verification, keeping A0 within 0–5 V, avoiding external analog power, preventing 5 V-to-GND shorts, and the unstable behavior of a floating A0 input.
 - [ ] 3.4 If a wiring illustration is included, create original repository-owned artwork rather than copying third-party component or circuit artwork.
 

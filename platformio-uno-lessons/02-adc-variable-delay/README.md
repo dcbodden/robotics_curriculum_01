@@ -1,0 +1,28 @@
+# Lesson 02: ADC Variable Delay
+
+This lesson uses a three-terminal potentiometer to send an adjustable voltage to analog pin A0. The Arduino reads that voltage and uses it to change the pin-8 blink delay.
+
+## Keep the Lesson 01 Output Circuit
+
+Leave the transistor and LED assembly from lesson 01 connected just as it was. Do not rebuild it or move its parts. Keep these two lesson 01 connections:
+
+- Arduino GND connects to the existing assembly's ground so both circuits share the same ground.
+- Arduino digital pin 8 connects to the existing NPN transistor base control point.
+
+Lesson 02 adds the potentiometer connections below; it does not replace the pin-8 output circuit.
+
+## Wire the Potentiometer
+
+Disconnect the USB cable from the Arduino Uno before adding or changing any wires. The board must have no USB power while you build the circuit.
+
+A potentiometer has two outer terminals and one center terminal called the **wiper**. Connect it as a voltage divider:
+
+| Potentiometer terminal | Arduino Uno connection |
+| --- | --- |
+| One outer terminal | 5 V |
+| Other outer terminal | GND |
+| Center wiper | A0 |
+
+The two outer terminals may trade places. Swapping them changes which turning direction raises the A0 voltage, but the voltage divider still works the same way.
+
+After all three connections are secure, check them before reconnecting the USB cable.
