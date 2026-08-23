@@ -34,7 +34,7 @@ The sketch and `platformio.ini` both use 9,600 baud. PlatformIO reads `monitor_s
 
 Opening the monitor may reset the Uno. A brief pause before the first line appears is normal. Lower ADC readings should show shorter delays, and higher readings should show longer delays.
 
-## Upload Again While the Monitor Is Open
+## Close the Serial Monitor Before You Upload Again
 
 The upload tool and serial monitor share the Uno's USB serial port. Before another upload:
 
