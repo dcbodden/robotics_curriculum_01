@@ -2,6 +2,12 @@
 
 This lesson uses a three-terminal potentiometer to send an adjustable voltage to analog pin A0. The Arduino reads that voltage and uses it to change the pin-8 blink delay.
 
+## How the Arduino Turns Voltage Into a Number
+
+Voltage can slide smoothly from low to high, like moving a dimmer switch. The Arduino's **analog-to-digital converter**, or **ADC**, measures the voltage on A0 and chooses a whole-number value for it.
+
+The Uno has a 10-bit ADC, so it can choose from 1,024 values. Those values are numbered **0 through 1023** because counting starts at 0. A voltage near 0 V gives a reading near 0, a voltage near 5 V gives a reading near 1023, and voltages in between give readings in between. This lets the program work with a changing voltage as a digital number.
+
 ## Keep the Lesson 01 Output Circuit
 
 Leave the transistor and LED assembly from lesson 01 connected just as it was. Do not rebuild it or move its parts. Keep these two lesson 01 connections:

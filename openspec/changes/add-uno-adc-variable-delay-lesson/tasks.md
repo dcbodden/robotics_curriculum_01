@@ -20,7 +20,7 @@
 
 ## 4. Student ADC Activity
 
-- [ ] 4.1 Explain in fifth-grade-friendly language how a varying voltage becomes one of 1,024 digital values from 0 through 1023.
+- [x] 4.1 Explain in fifth-grade-friendly language how a varying voltage becomes one of 1,024 digital values from 0 through 1023.
 - [ ] 4.2 Explain that low readings produce shorter delays and faster blinking while high readings produce longer delays and slower blinking, without assuming a fixed knob direction.
 - [ ] 4.3 Add numbered build, upload, serial-monitor, and observation steps using the PlatformIO extension in VS Code.
 - [ ] 4.4 Add an observation table or prompts for at least three potentiometer positions comparing ADC reading, delay in milliseconds, and visible blink speed.
