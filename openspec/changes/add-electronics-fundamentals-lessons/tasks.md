@@ -1,9 +1,9 @@
 ## 1. Lesson Collection Structure
 
-- [ ] 1.1 Create `electronics-fundamentals-lessons/` with a collection README that explains the numbered, standalone, non-code lesson convention.
-- [ ] 1.2 Create `01-multimeter-ohms-law/` and `02-manual-voltage-mapping/` with independent student instructions and recording activities.
-- [ ] 1.3 Document that either fundamentals lesson may be taught before or alongside the Arduino ADC variable-delay lesson and is not required to build firmware.
-- [ ] 1.4 Update repository structure documentation to list the new fundamentals lesson collection.
+- [x] 1.1 Create `electronics-fundamentals-lessons/` with a collection README that explains the numbered, standalone, non-code lesson convention.
+- [x] 1.2 Create `01-multimeter-ohms-law/` and `02-manual-voltage-mapping/` with independent student instructions and recording activities.
+- [x] 1.3 Document the recommended curriculum sequence: teach the multimeter and Ohm's law lesson first, teach the Arduino ADC variable-delay lesson before manual voltage mapping, and use the mapping lesson afterward for reinforcement and comprehension; neither fundamentals lesson requires building or uploading firmware.
+- [x] 1.4 Update repository structure documentation to list the new fundamentals lesson collection.
 
 ## 2. Multimeter and Ohm's Law Lesson
 

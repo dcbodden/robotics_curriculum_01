@@ -1,6 +1,6 @@
 ## Why
 
-Students encounter voltage, resistance, current, and digital value ranges in the Arduino lessons before they have a standalone activity for measuring those quantities or practicing how a continuous range becomes a small set of digital levels. Two optional electronics fundamentals lessons will let teachers introduce those ideas before or alongside the Arduino ADC lesson without requiring code or an Arduino project.
+Students need hands-on experience with voltage, resistance, and current before beginning the Arduino sequence, then benefit from revisiting analog-to-digital conversion after seeing it in code. A multimeter and Ohm's law lesson taught first will establish the electrical foundation, while a manual voltage-mapping lesson taught after the Arduino ADC variable-delay lesson will reinforce how a continuous voltage becomes a digital value. Neither fundamentals lesson requires students to build or upload firmware.
 
 ## What Changes
 
@@ -9,7 +9,7 @@ Students encounter voltage, resistance, current, and digital value ranges in the
 - Use the lamp to make current flow visible, but use the fixed resistor for Ohm's law calculations because a lamp filament's resistance changes as it heats.
 - Add a manual lookup-table lesson that divides the 0–5 V range of a 50K Ohm RV Snap voltage divider into eight output levels.
 - Map the eight voltage ranges to decimal levels 0 through 7 and matching 3-bit values `000` through `111`.
-- Explain how teachers may use either lesson before or alongside the Arduino ADC variable-delay lesson.
+- Establish the recommended curriculum sequence: multimeter and Ohm's law first, Arduino ADC variable-delay before manual voltage mapping, and manual voltage mapping afterward for reinforcement and comprehension.
 
 ## Capabilities
 
@@ -27,4 +27,4 @@ Students encounter voltage, resistance, current, and digital value ranges in the
 - Adds student worksheets or tables for recording measurements, checking Ohm's law, and mapping measured voltages to eight digital levels.
 - Uses low-voltage Snap Circuits parts and a digital multimeter; it adds no software dependencies or firmware.
 - Requires explicit meter-mode, probe-port, powered-circuit, and series-versus-parallel safety instructions, with teacher verification before current measurement.
-- May add cross-references from related curriculum documentation without making either fundamentals lesson a mandatory build dependency.
+- Adds cross-references that communicate the recommended lesson sequence without making either fundamentals lesson a firmware build dependency.

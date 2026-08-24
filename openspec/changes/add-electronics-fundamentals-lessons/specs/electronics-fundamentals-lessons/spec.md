@@ -7,9 +7,13 @@ Defines standalone, fifth-grade-friendly electronics activities that teach safe 
 ### Requirement: Standalone electronics fundamentals collection
 The curriculum SHALL provide `electronics-fundamentals-lessons/` as a collection of numbered, non-code lessons, beginning with one multimeter and Ohm's law lesson and one manual voltage-mapping lesson.
 
-#### Scenario: Choose when to teach a fundamentals lesson
-- **WHEN** a teacher plans instruction around the Arduino ADC variable-delay lesson
-- **THEN** either fundamentals lesson can be taught before or alongside it without building or uploading firmware
+#### Scenario: Follow the recommended lesson sequence
+- **WHEN** a teacher plans the curriculum sequence
+- **THEN** the multimeter and Ohm's law lesson is taught first, the Arduino ADC variable-delay lesson is taught before manual voltage mapping, and the manual voltage-mapping lesson follows as reinforcement
+
+#### Scenario: Complete a fundamentals lesson without firmware
+- **WHEN** a student completes either fundamentals lesson
+- **THEN** the student does not need to build or upload firmware for that activity
 
 ### Requirement: Low-voltage multimeter activity
 The multimeter lesson SHALL use a low-voltage Snap Circuits battery, switch, lamp, and fixed resistor to demonstrate an open and closed circuit and to measure voltage, resistance, and current.

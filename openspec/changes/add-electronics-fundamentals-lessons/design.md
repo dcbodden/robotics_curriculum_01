@@ -1,6 +1,6 @@
 ## Context
 
-The Arduino Uno lessons already ask fifth-grade students to recognize voltage levels and ADC values. The repository does not yet provide standalone, non-code lessons for using a digital multimeter or for manually sorting a voltage into digital ranges. The new collection must work as optional preparation or parallel practice rather than as a firmware dependency.
+The Arduino Uno lessons already ask fifth-grade students to recognize voltage levels and ADC values. The repository does not yet provide standalone, non-code lessons for using a digital multimeter or for manually sorting a voltage into digital ranges. The multimeter lesson will establish foundational electrical concepts as the first curriculum lesson. After students encounter ADC behavior in the Arduino ADC variable-delay lesson, the manual voltage-mapping activity will revisit the concept to strengthen retention and comprehension. Neither fundamentals lesson is a firmware dependency.
 
 Current measurement presents the largest safety and teaching risk. A meter in current mode has a low-resistance path and must be inserted in series; placing it across a battery can short the source or blow the meter fuse. A Snap Circuits lamp is useful as a visible indicator, but its hot filament does not behave like a fixed resistor. See `proposal.md` for scope and the delta specs for observable requirements.
 
@@ -70,9 +70,9 @@ Alternative considered: use levels 1–8. Levels 0–7 align directly with the e
 
 The mapping worksheet will include or elicit at least one voltage from each range, including the minimum and maximum. Students will record voltage, decimal level, and binary value, then explain in their own words how many nearby voltages can share one output level. This makes the activity about quantization rather than only turning a control and copying numbers.
 
-### Keep sequencing optional and artwork owned by the repository
+### Use a foundation, application, reinforcement sequence and repository-owned artwork
 
-The collection README and related Arduino lesson documentation may identify both lessons as optional preparation or reinforcement. Neither lesson becomes a prerequisite for opening or building an Arduino project. Any diagrams or photos added during implementation must be original repository-owned material or use assets with clearly documented permission.
+The collection README and related Arduino lesson documentation will present a recommended teaching order: begin the curriculum with the multimeter and Ohm's law lesson, teach the Arduino ADC variable-delay lesson before manual voltage mapping, and use the mapping lesson afterward to reinforce the ADC concept. This teaching sequence does not create a firmware dependency: the fundamentals activities remain non-code lessons and do not require students to build or upload firmware. Any diagrams or photos added during implementation must be original repository-owned material or use assets with clearly documented permission.
 
 ## Risks / Trade-offs
 

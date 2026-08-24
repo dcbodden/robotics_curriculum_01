@@ -4,6 +4,7 @@ This project is an OpenSpec-driven exploratory robotics curriculum for beginners
 ## Repository layout
 
 - `electronics-reference/` — general electronics reference materials such as Ohm's law cards, multimeter notes, and other foundational artifacts
+- `electronics-fundamentals-lessons/` — numbered, standalone, non-code lessons for hands-on electronics measurement and concepts
 - `experiments/` — standalone experiments such as Snap Circuits activities, breadboard diagrams, and lesson-specific builds
 - `syllabus-and-teacher-materials/` — lesson plans, pedagogy notes, and teacher-training/reference material
 - `platformio-uno-template/` — a VS Code-friendly PlatformIO Arduino Uno starter project for digital/physical integration lessons
