@@ -70,6 +70,12 @@ The current reading will provide the evidence:
 
 Do not switch the meter to current mode or connect it to this circuit until the lesson reaches the teacher-verified current procedure.
 
+## Why R1 Has Two Jobs
+
+R1 is the circuit's **load**. A load is a part that uses electrical energy and limits how much current can flow. In this circuit, R1 turns a small amount of electrical energy into heat while its resistance keeps the current from becoming too large. R1 must stay in the path during the current measurement; never bypass it with the meter or a wire.
+
+R1 is also a **fixed resistor**. Fixed means its resistance is designed to stay approximately the same instead of being adjusted like a knob. Its measured resistance may differ a little from the `100 Ω` label, so this lesson uses the measured value in the Ohm's law calculation. The same R1 that safely limits current therefore supplies the resistance value used to predict that current.
+
 ## Measure R1 Resistance First
 
 **Resistance must be measured with all power removed. Never use resistance mode on a powered circuit.**
@@ -152,12 +158,13 @@ Current must be measured **in series**, which means the meter becomes one link i
 2. With the circuit unpowered, identify the B1 battery holder, 100 Ω R1 fixed resistor, and S2 press switch.
 3. Follow **Build and Trace the Circuit** to assemble B1, R1, and S2 with no cells installed.
 4. Follow **Observe an Open and Closed Path** to trace what S2 changes. Wait for the later teacher checkpoint before using current mode.
-5. Follow **Measure R1 Resistance First** and record the measured value before any powered measurements.
-6. Follow **Measure B1 Voltage Next** and record B1's voltage while the intentional S2-to-B1 gap remains open.
-7. Follow **Predict Current with Ohm's Law** and record the predicted current in milliamps before changing the meter setup.
-8. Follow **Measure Current in Series — Teacher Verification Required** only when directed. Stop at every teacher checkpoint.
-9. Record each observation and measurement in [`recording-activity.md`](recording-activity.md).
-10. Compare your predicted current with the later measured current.
-11. Answer the reflection questions in your own words.
+5. Read **Why R1 Has Two Jobs** and make sure R1 stays in the circuit path.
+6. Follow **Measure R1 Resistance First** and record the measured value before any powered measurements.
+7. Follow **Measure B1 Voltage Next** and record B1's voltage while the intentional S2-to-B1 gap remains open.
+8. Follow **Predict Current with Ohm's Law** and record the predicted current in milliamps before changing the meter setup.
+9. Follow **Measure Current in Series — Teacher Verification Required** only when directed. Stop at every teacher checkpoint.
+10. Record each observation and measurement in [`recording-activity.md`](recording-activity.md).
+11. Compare your predicted current with the later measured current.
+12. Answer the reflection questions in your own words.
 
 This lesson does not require an Arduino, programming, building firmware, or uploading firmware.
