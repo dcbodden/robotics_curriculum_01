@@ -18,8 +18,8 @@
 
 ## 4. Repository Documentation
 
-- [ ] 4.1 Update the root repository documentation to include `platformio-uno-lessons/` and identify the first lesson.
-- [ ] 4.2 Update the Uno template README to direct lesson authors and students to the separate lessons collection.
+- [x] 4.1 Update the root repository documentation to include `platformio-uno-lessons/` and identify the first lesson.
+- [x] 4.2 Update the Uno template README to direct lesson authors and students to the separate lessons collection.
 
 ## 5. Verification
 
