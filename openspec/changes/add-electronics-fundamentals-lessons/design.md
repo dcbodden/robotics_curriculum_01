@@ -33,17 +33,17 @@ Alternative considered: place the activities under `electronics-reference/`. A l
 
 ### Use the fixed resistor as both the load and calculation component
 
-The first lesson will follow the sample photo and assemble a teacher-verified series circuit using the low-voltage Snap Circuits B1 battery, 100 Ohm R1 fixed resistor, and momentary S2 press switch. Pressing S2 completes the series path. Students will use teacher-approved meter readings, rather than a lamp, as evidence of the change between the open and closed circuit. They will measure R1 with power removed, measure its voltage drop in parallel while powered, and measure circuit current by inserting the meter in series.
+The first lesson will follow the sample photo and assemble a teacher-verified series circuit using the low-voltage Snap Circuits B1 battery, 100 Ohm R1 fixed resistor, and momentary S2 press switch. Pressing S2 will complete the series path when the multimeter is properly connected to measure current.
 
-The Ohm's law worksheet will calculate $I = V / R$ from R1's measured values and compare that result with measured series current. It will describe approximate agreement and unit conversion rather than promise identical values. The teacher guide must verify the actual B1 battery voltage, R1 resistance and power rating, expected circuit current, and a safe meter range before students begin.
+The student sequence is deliberate: measure R1 with power removed and the resistor isolated, measure the voltage provided by B1, calculate and record predicted current in milliamps with $I = V / R$, and only then reconfigure the meter in series to measure current. The worksheet will compare the measured result with the prediction using approximate agreement and consistent units rather than promise identical values. The teacher guide must verify the actual B1 battery voltage, R1 resistance and power rating, expected circuit current, and a safe meter range before students begin.
 
 Alternative considered: add a lamp as a visible current indicator. The lamp is unnecessary because the meter provides the lesson's observations, and its changing filament resistance would make the beginner circuit and Ohm's law comparison less direct.
 
 ### Make current measurement a teacher-controlled transition
 
-Student-facing instructions will use separate checkpoints for each meter mode. Current measurement requires power off, moving the red lead to the correct current jack, selecting the highest suitable current range, opening the circuit, placing the meter in series, and receiving teacher verification before restoring power. After the reading, power is removed before the red lead returns to the voltage/resistance jack.
+Student-facing instructions will use separate checkpoints for each meter mode. Current-mode setup cannot begin until the student has recorded a predicted current in milliamps. The prediction helps the teacher confirm that the selected current input and range can accept the expected value, but it does not replace starting on the highest suitable safe range or checking the exact meter's limits. Current measurement requires power off, moving the red lead to the correct current jack, opening the circuit, placing the meter in series, and receiving teacher verification before restoring power. After the reading, power is removed before the red lead returns to the voltage/resistance jack.
 
-Voltage remains a parallel measurement on a powered circuit. Resistance remains an across-the-part measurement only after the battery is disconnected and the resistor is isolated from alternate circuit paths. A prominent warning will prohibit current-mode measurements across the battery and all measurements involving household or wall power.
+Voltage measurement can be doen directly on the B1 connections. Resistance remains an across-the-part measurement where the circuit is open and no power is flowing. A prominent warning will prohibit current-mode measurements across the battery, and emphasize the importance of ensuring adequate load (resistance) in the circuit to avoid overcurrent situations.
 
 Alternative considered: omit direct current measurement and calculate it only. Direct measurement is retained because it is part of the requested lesson, but the teacher checkpoint limits the highest-risk configuration error.
 

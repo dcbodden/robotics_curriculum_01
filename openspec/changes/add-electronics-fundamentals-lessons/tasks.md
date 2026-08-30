@@ -9,12 +9,12 @@
 
 - [x] 2.1 Identify the B1 battery, 100 Ohm R1 fixed resistor, and S2 press switch shown in `sample_circuit/base_layout.jpg`, then add a teacher preparation check for actual battery voltage, resistor value and power rating, expected current, and meter range.
 - [ ] 2.2 Add fifth-grade-friendly assembly and observation steps showing how S2 opens and closes the B1/R1 series path and how teacher-approved meter readings provide evidence of current flow.
-- [ ] 2.3 Add a DC voltage procedure with the black lead in COM, the red lead in the voltage jack, and the probes connected in parallel across named measurement points.
-- [ ] 2.4 Add an unpowered resistance procedure that disconnects the battery, isolates the fixed resistor from alternate paths, checks the meter mode and probe jacks, and measures across the resistor.
-- [ ] 2.5 Add a teacher-verified current procedure that powers down before rewiring, starts on a safe current range, inserts the meter in series, prohibits connecting current mode across the battery, and returns the red lead after power is removed.
-- [ ] 2.6 Explain $V = I \times R$ and guide students to calculate $I = V / R$ with consistent units using the fixed resistor's measured voltage and resistance.
+- [ ] 2.3 Add an unpowered resistance procedure that disconnects the battery, isolates R1 from alternate paths, checks the meter mode and probe jacks, and records the resistance before powered measurements begin.
+- [ ] 2.4 Add a DC voltage procedure that follows the resistance measurement, uses the black lead in COM and the red lead in the voltage jack, places the probes in parallel across named R1 measurement points, and records the voltage.
+- [ ] 2.5 Explain $V = I \times R$ and guide students to use R1's measured voltage and resistance with consistent units to calculate and record predicted current in milliamps before any current-mode rewiring.
+- [ ] 2.6 Add a teacher-verified current procedure that begins only after the prediction is recorded, powers down before rewiring, starts on the highest suitable safe current range that includes the predicted value, inserts the meter in series, prohibits connecting current mode across the battery, records measured current in milliamps, returns the red lead after power is removed, and compares the measurement approximately with the prediction.
 - [ ] 2.7 Explain that R1 is both the circuit load that limits current and the approximately fixed resistance used in the Ohm's law calculation.
-- [ ] 2.8 Add a recording table for switch or circuit state, resistor voltage, resistance, measured current, calculated current, and an approximate comparison of the two current values.
+- [ ] 2.8 Add a recording table ordered by switch or circuit state, fixed resistance, resistor voltage, predicted current in milliamps, measured current in milliamps, and an approximate comparison of the two current values.
 - [ ] 2.9 Add prominent low-voltage-only cautions and concise troubleshooting for meter mode, probe ports, negative voltage readings, overload displays, open circuits, and blown meter fuses.
 
 ## 3. Manual Voltage-Mapping Lesson
@@ -37,7 +37,7 @@
 ## 5. Verification
 
 - [ ] 5.1 Assemble and teacher-test the B1/R1/S2 multimeter circuit shown in `sample_circuit/base_layout.jpg`, confirming battery voltage, resistor value and power rating, expected voltage and current ranges, switch behavior, and a safe meter configuration before finalizing numeric examples.
-- [ ] 5.2 Review every mode transition in the multimeter procedure for power state, probe jack, dial setting, series or parallel placement, teacher checkpoint, and low-voltage-only language.
+- [ ] 5.2 Verify the resistance → voltage → predicted-current → teacher-approved series-current sequence and review every mode transition for power state, probe jack, dial setting, series or parallel placement, teacher checkpoint, and low-voltage-only language.
 - [ ] 5.3 Verify programmatically or by exhaustive review that the lookup table covers every value from 0 through 5 V exactly once and maps all internal boundaries and 5.000 V as specified.
 - [ ] 5.4 Review both student activities against every electronics fundamentals delta-spec scenario, including all recording fields and all eight mapping outcomes.
 - [ ] 5.5 Run strict OpenSpec validation for `add-electronics-fundamentals-lessons` and resolve all reported issues.

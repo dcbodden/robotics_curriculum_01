@@ -22,16 +22,16 @@ The multimeter lesson SHALL use a low-voltage Snap Circuits circuit consisting o
 - **WHEN** a student presses S2 in the correctly assembled circuit during a teacher-approved meter measurement
 - **THEN** the meter reading provides evidence that current flows through R1 and the student can describe the circuit as a complete path
 
-#### Scenario: Measure voltage
-- **WHEN** a student measures voltage in the powered circuit
-- **THEN** the meter is set to DC voltage with the black lead in COM and the red lead in the voltage jack, and the probes are placed in parallel across the two measurement points
-
 #### Scenario: Measure resistance
 - **WHEN** a student measures the fixed resistor
 - **THEN** all power is disconnected, the resistor is isolated from other circuit paths, and the meter is set to resistance before the probes touch the resistor terminals
 
-#### Scenario: Measure current
-- **WHEN** a student measures current through the circuit
+#### Scenario: Measure voltage
+- **WHEN** a student measures voltage in the powered circuit after recording R1's resistance
+- **THEN** the meter is set to DC voltage with the black lead in COM and the red lead in the voltage jack, and the probes are placed in parallel across the two measurement points
+
+#### Scenario: Measure current after making a prediction
+- **WHEN** a student has recorded a predicted current in milliamps and is ready to measure current through the circuit
 - **THEN** power is removed before the circuit is opened, the meter leads and range are configured for current, a teacher verifies the series connection, and power is restored only for the reading
 
 ### Requirement: Multimeter safety boundaries
@@ -46,11 +46,15 @@ The multimeter lesson SHALL explain that resistance is never measured on a power
 - **THEN** power is removed and the red probe is returned from the current jack to the voltage/resistance jack
 
 ### Requirement: Fixed-resistor Ohm's law comparison
-The multimeter lesson SHALL use the 100 Ohm R1 fixed resistor as both the circuit load and the component for a beginner calculation comparing measured voltage, measured resistance, measured current, and the relationship $V = I \times R$.
+The multimeter lesson SHALL use the 100 Ohm R1 fixed resistor as both the circuit load and the component for a beginner sequence that measures resistance and voltage, calculates and records predicted current in milliamps with $I = V / R$, and only then measures current in series for an approximate comparison.
 
-#### Scenario: Compare calculation and measurement
+#### Scenario: Predict current before measuring it
 - **WHEN** a student records the fixed resistor's resistance and voltage
-- **THEN** the worksheet guides the student to calculate expected current with $I = V / R$ and compare it with a safely measured current using consistent units
+- **THEN** the worksheet guides the student to calculate and record predicted current in milliamps with $I = V / R$ before any current-mode rewiring
+
+#### Scenario: Compare prediction and measurement
+- **WHEN** the teacher-approved series current measurement is complete
+- **THEN** the student records the measured current in milliamps and describes whether it is approximately close to the predicted current
 
 #### Scenario: Explain the fixed resistor's role
 - **WHEN** the lesson identifies R1 as the circuit load
@@ -83,7 +87,7 @@ Each lesson SHALL use fifth-grade-friendly numbered instructions and a recording
 
 #### Scenario: Complete the multimeter record
 - **WHEN** a student completes the measurement activity
-- **THEN** the student records switch or circuit state, resistor voltage, fixed resistance, measured current, and calculated current
+- **THEN** the student records switch or circuit state, fixed resistance, resistor voltage, predicted current in milliamps, measured current in milliamps, and an approximate comparison
 
 #### Scenario: Complete the mapping record
 - **WHEN** a student tests the minimum, maximum, and at least six additional voltages covering all eight ranges
