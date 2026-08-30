@@ -88,6 +88,19 @@ Resistance tells how strongly a part limits current. The meter marks resistance 
 
 The `100 Ω` printed on R1 is its labeled value. The measured value may be somewhat different, so use the measured value in the later Ohm's law prediction.
 
+## Measure B1 Voltage Next
+
+Voltage is the electrical push supplied by the battery. A voltage measurement is made **in parallel**, which means the two probes touch the two B1 battery terminals at the same time. Keep the intentional gap between S2 and B1 positive open during this measurement.
+
+1. Confirm that R1 is snapped back onto B1 negative and that the free S2 terminal is still not connected to B1 positive.
+2. Install the two teacher-approved AA cells in B1 in the directions marked on the holder. Do not press S2.
+3. Turn the meter off while checking the leads. Put the black lead in **COM** and the red lead in the voltage jack, usually marked **VΩ**. The red lead must not be in a current jack.
+4. Turn the dial to DC voltage, shown as `V` with a straight line. Do not use the AC voltage setting. For a manual-ranging meter, begin on a teacher-approved DC voltage range above B1's expected voltage. An auto-ranging meter chooses the range itself.
+5. Ask the teacher to verify the lead jacks, DC voltage setting, installed cells, and open gap between S2 and B1 positive.
+6. Touch the black probe directly to B1's negative (`−`) terminal and the red probe directly to B1's positive (`+`) terminal. The probes are now in parallel across B1. Keep the probe tips from touching each other.
+7. Wait for a steady reading, then record B1's measured voltage: __________ V.
+8. Remove both probes and turn the meter off. Remove both AA cells from B1 before changing the circuit or preparing for another meter mode. Leave the S2-to-B1 gap open.
+
 ## Student Instructions
 
 1. Read the safety directions your teacher provides before touching the circuit or meter.
@@ -95,9 +108,10 @@ The `100 Ω` printed on R1 is its labeled value. The measured value may be somew
 3. Follow **Build and Trace the Circuit** to assemble B1, R1, and S2 with no cells installed.
 4. Follow **Observe an Open and Closed Path** to trace what S2 changes. Wait for the later teacher checkpoint before using current mode.
 5. Follow **Measure R1 Resistance First** and record the measured value before any powered measurements.
-6. Make each voltage and current measurement only when directed. Stop at every teacher checkpoint.
-7. Record each observation and measurement in [`recording-activity.md`](recording-activity.md).
-8. Use your recorded voltage and resistance to calculate current, then compare it with the measured current.
-9. Answer the reflection questions in your own words.
+6. Follow **Measure B1 Voltage Next** and record B1's voltage while the intentional S2-to-B1 gap remains open.
+7. Make the later current measurement only when directed. Stop at every teacher checkpoint.
+8. Record each observation and measurement in [`recording-activity.md`](recording-activity.md).
+9. Use your recorded voltage and resistance to calculate current, then compare it with the measured current.
+10. Answer the reflection questions in your own words.
 
 This lesson does not require an Arduino, programming, building firmware, or uploading firmware.
