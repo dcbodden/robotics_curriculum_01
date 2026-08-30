@@ -11,10 +11,10 @@
 
 ## 3. Student Instructions
 
-- [ ] 3.1 Document the two connections to the existing Snap Circuits assembly: shared ground and Arduino D8 to the NPN base control point, including power-off and teacher-verification cautions.
-- [ ] 3.2 Add a fifth-grade-friendly digital multimeter activity that measures D8 relative to shared ground during both two-second states and records the corresponding LED state.
-- [ ] 3.3 Add numbered VS Code and PlatformIO instructions for connecting the Uno with a USB data cable, opening the lesson directory, building, uploading, and recognizing success.
-- [ ] 3.4 Add concise troubleshooting for USB data cables, board detection, upload-port access, and Linux serial permissions.
+- [x] 3.1 Document the two connections to the existing Snap Circuits assembly: shared ground and Arduino D8 to the NPN base control point, including power-off and teacher-verification cautions.
+- [x] 3.2 Add a fifth-grade-friendly digital multimeter activity that measures D8 relative to shared ground during both two-second states and records the corresponding LED state.
+- [x] 3.3 Add numbered VS Code and PlatformIO instructions for connecting the Uno with a USB data cable, opening the lesson directory, building, uploading, and recognizing success.
+- [x] 3.4 Add concise troubleshooting for USB data cables, board detection, upload-port access, and Linux serial permissions.
 
 ## 4. Repository Documentation
 
