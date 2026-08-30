@@ -123,6 +123,29 @@ For example, `3.0 V ÷ 100 Ω = 0.030 A`, and `0.030 A × 1,000 = 30 mA`. This i
 6. Record your **predicted current**: __________ mA.
 7. Ask the teacher to check the calculation. Do not move the red lead to a current jack, select current mode, or connect anything across the S2-to-B1 gap yet.
 
+## Measure Current in Series — Teacher Verification Required
+
+Current must be measured **in series**, which means the meter becomes one link in the circuit's only path. Begin this procedure only after the predicted current above has been recorded and checked by the teacher.
+
+> **STOP:** A meter in current mode must never be connected directly across B1's positive and negative terminals or directly across any component. That could create a short circuit, damage the meter, or blow its fuse. In this procedure, the meter bridges only the intentional gap between B1 positive and the free S2 terminal, so R1 remains in the path.
+
+1. Keep S2 released. Confirm that both AA cells are removed from B1 before changing the meter or circuit.
+2. Show the teacher the recorded predicted current. The teacher must confirm that it is below the limit of the selected current jack and range on this exact meter.
+3. With the meter off, keep the black lead in **COM**. Move the red lead from the voltage jack to the teacher-approved current jack identified during teacher preparation.
+4. Set the dial to DC current. Start on the highest suitable safe current range that includes the predicted value. Follow the exact meter manual; never use a jack or range whose limit is below the predicted current.
+5. Connect the red probe or teacher-approved lead attachment to B1 positive (`+`). Connect the black probe or attachment to the free S2 terminal. Do not connect the probes to B1 negative. The path is now `B1 positive → meter → S2 → R1 → B1 negative`.
+6. **Teacher checkpoint:** Before restoring power, the teacher verifies all of the following:
+   - R1 is snapped between B1 negative and S2;
+   - the meter bridges only the free S2 terminal and B1 positive;
+   - S2 is released;
+   - the black lead is in COM and the red lead is in the approved current jack; and
+   - the dial is on the approved DC current range.
+7. Only after teacher approval, install the two AA cells in B1 in the marked directions. With S2 released, the reading should be at or near `0 mA` because the switch keeps the path open.
+8. Press and hold S2 only long enough to get a steady reading. Record the measured current: __________ mA. Release S2 immediately after the reading.
+9. Compare using the same unit: predicted current __________ mA; measured current __________ mA. Are they approximately close? __________. The values do not need to be exactly equal.
+10. Remove both AA cells from B1 before disconnecting either meter lead or changing the dial. Confirm that B1 is empty.
+11. Turn the meter off, disconnect it from the circuit, and return the red lead from the current jack to the voltage/resistance jack, usually marked **VΩ**. Leave the S2-to-B1 gap open.
+
 ## Student Instructions
 
 1. Read the safety directions your teacher provides before touching the circuit or meter.
@@ -132,7 +155,7 @@ For example, `3.0 V ÷ 100 Ω = 0.030 A`, and `0.030 A × 1,000 = 30 mA`. This i
 5. Follow **Measure R1 Resistance First** and record the measured value before any powered measurements.
 6. Follow **Measure B1 Voltage Next** and record B1's voltage while the intentional S2-to-B1 gap remains open.
 7. Follow **Predict Current with Ohm's Law** and record the predicted current in milliamps before changing the meter setup.
-8. Make the later current measurement only when directed. Stop at every teacher checkpoint.
+8. Follow **Measure Current in Series — Teacher Verification Required** only when directed. Stop at every teacher checkpoint.
 9. Record each observation and measurement in [`recording-activity.md`](recording-activity.md).
 10. Compare your predicted current with the later measured current.
 11. Answer the reflection questions in your own words.
