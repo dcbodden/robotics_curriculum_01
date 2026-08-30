@@ -70,15 +70,34 @@ The current reading will provide the evidence:
 
 Do not switch the meter to current mode or connect it to this circuit until the lesson reaches the teacher-verified current procedure.
 
+## Measure R1 Resistance First
+
+**Resistance must be measured with all power removed. Never use resistance mode on a powered circuit.**
+
+Resistance tells how strongly a part limits current. The meter marks resistance with the omega symbol (`Ω`). Measure R1 before measuring voltage or current:
+
+1. Confirm that both AA cells are removed from B1. Show the empty holder to the teacher.
+2. Keep the intentional gap between the free end of S2 and B1 positive open.
+3. Unsnap the R1 end that connects to B1 negative. Leave that R1 terminal lifted so R1 has no complete path through B1 or S2. The [`sample_circuit/resistance.jpg`](sample_circuit/resistance.jpg) photo shows this isolated-resistor setup.
+4. Turn the meter off while checking the leads. Put the black lead in **COM** and the red lead in the jack marked for voltage and resistance, usually **VΩ**. The red lead must not be in a current jack.
+5. Turn the dial to resistance (`Ω`). For a manual-ranging meter, begin on a teacher-approved range above 100 Ω, then select a lower suitable range if the meter manual allows it. An auto-ranging meter chooses the range itself.
+6. Ask the teacher to verify the empty B1 holder, lifted R1 terminal, lead jacks, and resistance setting before the probes touch R1.
+7. Touch one probe tip to each metal terminal of R1. Probe color and direction do not matter for this resistor. Keep fingers off the metal probe tips and wait for a steady number.
+8. Read both the number and its unit. Record the measured resistance as __________ Ω. If the meter displays kilo-ohms (`kΩ`), ask the teacher to help convert it to ohms before recording.
+9. Remove the probes and turn the meter off. Snap R1 back onto B1 negative, but leave the free S2 terminal and B1 positive unconnected for the later current measurement. Ask the teacher to recheck the layout before any cells are installed.
+
+The `100 Ω` printed on R1 is its labeled value. The measured value may be somewhat different, so use the measured value in the later Ohm's law prediction.
+
 ## Student Instructions
 
 1. Read the safety directions your teacher provides before touching the circuit or meter.
 2. With the circuit unpowered, identify the B1 battery holder, 100 Ω R1 fixed resistor, and S2 press switch.
 3. Follow **Build and Trace the Circuit** to assemble B1, R1, and S2 with no cells installed.
 4. Follow **Observe an Open and Closed Path** to trace what S2 changes. Wait for the later teacher checkpoint before using current mode.
-5. Make each voltage, resistance, and current measurement only when directed. Stop at every teacher checkpoint.
-6. Record each observation and measurement in [`recording-activity.md`](recording-activity.md).
-7. Use your recorded voltage and resistance to calculate current, then compare it with the measured current.
-8. Answer the reflection questions in your own words.
+5. Follow **Measure R1 Resistance First** and record the measured value before any powered measurements.
+6. Make each voltage and current measurement only when directed. Stop at every teacher checkpoint.
+7. Record each observation and measurement in [`recording-activity.md`](recording-activity.md).
+8. Use your recorded voltage and resistance to calculate current, then compare it with the measured current.
+9. Answer the reflection questions in your own words.
 
 This lesson does not require an Arduino, programming, building firmware, or uploading firmware.

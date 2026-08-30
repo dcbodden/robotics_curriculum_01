@@ -9,7 +9,7 @@
 
 - [x] 2.1 Identify the B1 battery, 100 Ohm R1 fixed resistor, and S2 press switch shown in `sample_circuit/base_layout.jpg`, then add a teacher preparation check for actual battery voltage, resistor value and power rating, expected current, and meter range.
 - [x] 2.2 Add fifth-grade-friendly assembly and observation steps showing how S2 opens and closes the B1/R1 series path and how teacher-approved meter readings provide evidence of current flow.
-- [ ] 2.3 Add an unpowered resistance procedure that disconnects the battery, isolates R1 from alternate paths, checks the meter mode and probe jacks, and records the resistance before powered measurements begin.
+- [x] 2.3 Add an unpowered resistance procedure that disconnects the battery, isolates R1 from alternate paths, checks the meter mode and probe jacks, and records the resistance before powered measurements begin.
 - [ ] 2.4 Add a DC voltage procedure that follows the resistance measurement, uses the black lead in COM and the red lead in the voltage jack, places the probes in parallel across named R1 measurement points, and records the voltage.
 - [ ] 2.5 Explain $V = I \times R$ and guide students to use R1's measured voltage and resistance with consistent units to calculate and record predicted current in milliamps before any current-mode rewiring.
 - [ ] 2.6 Add a teacher-verified current procedure that begins only after the prediction is recorded, powers down before rewiring, starts on the highest suitable safe current range that includes the predicted value, inserts the meter in series, prohibits connecting current mode across the battery, records measured current in milliamps, returns the red lead after power is removed, and compares the measurement approximately with the prediction.
