@@ -11,6 +11,16 @@ By the end of the lesson, you will be able to:
 - use voltage and resistance to calculate current; and
 - compare a calculated result with a meter reading.
 
+## Safety Rules — Low Voltage Only
+
+> **Use only the B1 holder with its two teacher-approved AA cells and the B1/R1/S2 circuit in this lesson. Never place the probes in a household or wall outlet, power strip, appliance, or any other power source. Stop and tell the teacher if a part, lead, or meter is damaged, hot, wet, or smells unusual.**
+
+- Remove both AA cells before building, changing a connection, or changing to or from current mode.
+- Measure resistance only when B1 is empty and R1 is isolated.
+- Measure voltage in parallel only while the red lead is in the voltage/resistance jack.
+- Measure current only in the teacher-verified series path. Never place a current-mode meter directly across B1 or another component.
+- Turn the meter off after each measurement. After current measurement, remove the cells before returning the red lead to the voltage/resistance jack.
+
 ## Teacher Preparation — Teacher Only
 
 Use the [`sample_circuit/base_layout.jpg`](sample_circuit/base_layout.jpg) photo as the layout reference. The circuit uses only these three Snap Circuits parts:
@@ -151,6 +161,19 @@ Current must be measured **in series**, which means the meter becomes one link i
 9. Compare using the same unit: predicted current __________ mA; measured current __________ mA. Are they approximately close? __________. The values do not need to be exactly equal.
 10. Remove both AA cells from B1 before disconnecting either meter lead or changing the dial. Confirm that B1 is empty.
 11. Turn the meter off, disconnect it from the circuit, and return the red lead from the current jack to the voltage/resistance jack, usually marked **VΩ**. Leave the S2-to-B1 gap open.
+
+## Troubleshooting — Stop and Check Safely
+
+When a reading is unexpected, release S2, remove the probes, and remove both AA cells before changing connections, lead jacks, or meter mode. Ask the teacher to help.
+
+| Problem | Safe check |
+| --- | --- |
+| The meter mode does not match the measurement. | With power removed and the meter off, choose resistance (`Ω`) for isolated R1, DC voltage for B1, or the teacher-approved DC current range for the series-current procedure. |
+| A lead is in the wrong port. | Check that black is in **COM**. Red belongs in **VΩ** for resistance and voltage. Move red to a current jack only during the powered-down, teacher-verified current procedure, then return it to **VΩ** afterward. |
+| B1 voltage has a minus sign. | Remove the probes. Put black on B1 negative (`−`) and red on B1 positive (`+`), then measure again in DC voltage mode. |
+| The display shows `OL`, `1`, or another overload symbol. | Remove the probes and power. The range may be too low, or the resistance path may be open. The teacher checks the meter manual, chooses a safe higher range if appropriate, and checks probe contact before trying again. |
+| Current stays near `0 mA`. | With S2 released, this is expected because the circuit is open. If it stays near zero while S2 is pressed, remove both cells. The teacher checks that the meter bridges only B1 positive and the free S2 terminal, that R1 remains in the path, and that all snaps and lead contacts are secure. |
+| The teacher suspects a blown meter fuse. | Stop using the meter's current ranges and label the meter for teacher inspection. Only a qualified adult following the exact meter manual may inspect or replace its fuse. Never open the meter, bypass a fuse, or substitute a different fuse. |
 
 ## Student Instructions
 

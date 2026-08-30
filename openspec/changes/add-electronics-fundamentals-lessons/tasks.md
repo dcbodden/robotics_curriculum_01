@@ -15,7 +15,7 @@
 - [x] 2.6 Add a teacher-verified current procedure that begins only after the prediction is recorded, powers down before rewiring, starts on the highest suitable safe current range that includes the predicted value, inserts the meter in series, prohibits connecting current mode across the battery, records measured current in milliamps, returns the red lead after power is removed, and compares the measurement approximately with the prediction.
 - [x] 2.7 Explain that R1 is both the circuit load that limits current and the approximately fixed resistance used in the Ohm's law calculation.
 - [x] 2.8 Add a recording table ordered by switch or circuit state, fixed resistance, B1 battery voltage, predicted current in milliamps, measured current in milliamps, and an approximate comparison of the two current values.
-- [ ] 2.9 Add prominent low-voltage-only cautions and concise troubleshooting for meter mode, probe ports, negative voltage readings, overload displays, open circuits, and blown meter fuses.
+- [x] 2.9 Add prominent low-voltage-only cautions and concise troubleshooting for meter mode, probe ports, negative voltage readings, overload displays, open circuits, and blown meter fuses.
 
 ## 3. Manual Voltage-Mapping Lesson
 
