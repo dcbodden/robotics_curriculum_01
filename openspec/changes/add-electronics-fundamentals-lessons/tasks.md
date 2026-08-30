@@ -7,7 +7,7 @@
 
 ## 2. Multimeter and Ohm's Law Lesson
 
-- [ ] 2.1 Identify the B1 battery, 100 Ohm R1 fixed resistor, and S2 press switch shown in `sample_circuit/base_layout.jpg`, then add a teacher preparation check for actual battery voltage, resistor value and power rating, expected current, and meter range.
+- [x] 2.1 Identify the B1 battery, 100 Ohm R1 fixed resistor, and S2 press switch shown in `sample_circuit/base_layout.jpg`, then add a teacher preparation check for actual battery voltage, resistor value and power rating, expected current, and meter range.
 - [ ] 2.2 Add fifth-grade-friendly assembly and observation steps showing how S2 opens and closes the B1/R1 series path and how teacher-approved meter readings provide evidence of current flow.
 - [ ] 2.3 Add a DC voltage procedure with the black lead in COM, the red lead in the voltage jack, and the probes connected in parallel across named measurement points.
 - [ ] 2.4 Add an unpowered resistance procedure that disconnects the battery, isolates the fixed resistor from alternate paths, checks the meter mode and probe jacks, and measures across the resistor.
