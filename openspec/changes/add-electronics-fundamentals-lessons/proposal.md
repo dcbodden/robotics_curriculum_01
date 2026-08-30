@@ -5,8 +5,8 @@ Students need hands-on experience with voltage, resistance, and current before b
 ## What Changes
 
 - Add an `electronics-fundamentals-lessons/` collection for numbered, standalone, non-code activities.
-- Add a multimeter lesson that safely measures voltage, resistance, and current in a low-voltage Snap Circuits battery, switch, lamp, and fixed-resistor circuit.
-- Use the lamp to make current flow visible, but use the fixed resistor for Ohm's law calculations because a lamp filament's resistance changes as it heats.
+- Add a multimeter lesson that safely measures voltage, resistance, and current in a low-voltage Snap Circuits circuit using the B1 battery, 100 Ohm R1 fixed resistor, and S2 press switch shown in `sample_circuit/base_layout.jpg`.
+- Use R1 as both the circuit load and the fixed resistance for Ohm's law calculations; the circuit does not include a lamp.
 - Add a manual lookup-table lesson that divides the 0–5 V range of a 50K Ohm RV Snap voltage divider into eight output levels.
 - Map the eight voltage ranges to decimal levels 0 through 7 and matching 3-bit values `000` through `111`.
 - Establish the recommended curriculum sequence: multimeter and Ohm's law first, Arduino ADC variable-delay before manual voltage mapping, and manual voltage mapping afterward for reinforcement and comprehension.

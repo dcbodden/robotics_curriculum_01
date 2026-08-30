@@ -16,11 +16,11 @@ The curriculum SHALL provide `electronics-fundamentals-lessons/` as a collection
 - **THEN** the student does not need to build or upload firmware for that activity
 
 ### Requirement: Low-voltage multimeter activity
-The multimeter lesson SHALL use a low-voltage Snap Circuits battery, switch, lamp, and fixed resistor to demonstrate an open and closed circuit and to measure voltage, resistance, and current.
+The multimeter lesson SHALL use a low-voltage Snap Circuits circuit consisting of the B1 battery, 100 Ohm R1 fixed resistor, and S2 press switch to demonstrate an open and closed circuit and to measure voltage, resistance, and current.
 
-#### Scenario: Observe current flow
-- **WHEN** a student closes the switch in the correctly assembled circuit
-- **THEN** the lamp provides a visible sign of current flow and the student can describe the circuit as a complete path
+#### Scenario: Observe the switch completing the path
+- **WHEN** a student presses S2 in the correctly assembled circuit during a teacher-approved meter measurement
+- **THEN** the meter reading provides evidence that current flows through R1 and the student can describe the circuit as a complete path
 
 #### Scenario: Measure voltage
 - **WHEN** a student measures voltage in the powered circuit
@@ -46,15 +46,15 @@ The multimeter lesson SHALL explain that resistance is never measured on a power
 - **THEN** power is removed and the red probe is returned from the current jack to the voltage/resistance jack
 
 ### Requirement: Fixed-resistor Ohm's law comparison
-The multimeter lesson SHALL use the fixed resistor, rather than the heated lamp filament, for a beginner calculation comparing measured voltage, measured resistance, measured current, and the relationship $V = I \times R$.
+The multimeter lesson SHALL use the 100 Ohm R1 fixed resistor as both the circuit load and the component for a beginner calculation comparing measured voltage, measured resistance, measured current, and the relationship $V = I \times R$.
 
 #### Scenario: Compare calculation and measurement
 - **WHEN** a student records the fixed resistor's resistance and voltage
 - **THEN** the worksheet guides the student to calculate expected current with $I = V / R$ and compare it with a safely measured current using consistent units
 
-#### Scenario: Discuss the lamp separately
-- **WHEN** the lesson describes the lamp
-- **THEN** it explains that the lamp makes current flow visible but its filament resistance changes as it heats, so it is not treated as the fixed value in the Ohm's law calculation
+#### Scenario: Explain the fixed resistor's role
+- **WHEN** the lesson identifies R1 as the circuit load
+- **THEN** it explains that R1 limits current and provides an approximately fixed resistance suitable for the Ohm's law calculation
 
 ### Requirement: Eight-level manual voltage mapping
 The mapping lesson SHALL treat a 50K Ohm RV Snap as a voltage divider from Arduino 5 V to GND and manually map its 0–5 V wiper range into eight equal 0.625 V ranges labeled decimal 0–7 and binary `000`–`111`.
@@ -83,7 +83,7 @@ Each lesson SHALL use fifth-grade-friendly numbered instructions and a recording
 
 #### Scenario: Complete the multimeter record
 - **WHEN** a student completes the measurement activity
-- **THEN** the student records circuit state, voltage, fixed resistance, measured current, calculated current, and whether the lamp is lit
+- **THEN** the student records switch or circuit state, resistor voltage, fixed resistance, measured current, and calculated current
 
 #### Scenario: Complete the mapping record
 - **WHEN** a student tests the minimum, maximum, and at least six additional voltages covering all eight ranges
