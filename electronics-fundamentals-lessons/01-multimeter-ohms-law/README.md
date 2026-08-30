@@ -101,6 +101,28 @@ Voltage is the electrical push supplied by the battery. A voltage measurement is
 7. Wait for a steady reading, then record B1's measured voltage: __________ V.
 8. Remove both probes and turn the meter off. Remove both AA cells from B1 before changing the circuit or preparing for another meter mode. Leave the S2-to-B1 gap open.
 
+## Predict Current with Ohm's Law
+
+A **prediction** is what you expect a measurement to show before you test it. Ohm's law connects voltage (`V`), current (`I`), and resistance (`R`):
+
+$$V = I \times R$$
+
+To predict current, rearrange the formula:
+
+$$I = \frac{V}{R}$$
+
+Use B1's measured voltage—not just the voltage printed on the batteries—and R1's measured resistance—not just its `100 Ω` label. Keep the units consistent: volts divided by ohms gives current in amperes. Then multiply amperes by 1,000 to convert to milliamps (`mA`).
+
+For example, `3.0 V ÷ 100 Ω = 0.030 A`, and `0.030 A × 1,000 = 30 mA`. This is only an example; use your own measured numbers below.
+
+1. Confirm that the probes are removed, the meter is off, both AA cells are out of B1, and the S2-to-B1 gap is open.
+2. Copy B1's measured voltage: __________ V.
+3. Copy R1's measured resistance: __________ Ω.
+4. Divide voltage by resistance: __________ V ÷ __________ Ω = __________ A.
+5. Convert amperes to milliamps: __________ A × 1,000 = __________ mA.
+6. Record your **predicted current**: __________ mA.
+7. Ask the teacher to check the calculation. Do not move the red lead to a current jack, select current mode, or connect anything across the S2-to-B1 gap yet.
+
 ## Student Instructions
 
 1. Read the safety directions your teacher provides before touching the circuit or meter.
@@ -109,9 +131,10 @@ Voltage is the electrical push supplied by the battery. A voltage measurement is
 4. Follow **Observe an Open and Closed Path** to trace what S2 changes. Wait for the later teacher checkpoint before using current mode.
 5. Follow **Measure R1 Resistance First** and record the measured value before any powered measurements.
 6. Follow **Measure B1 Voltage Next** and record B1's voltage while the intentional S2-to-B1 gap remains open.
-7. Make the later current measurement only when directed. Stop at every teacher checkpoint.
-8. Record each observation and measurement in [`recording-activity.md`](recording-activity.md).
-9. Use your recorded voltage and resistance to calculate current, then compare it with the measured current.
-10. Answer the reflection questions in your own words.
+7. Follow **Predict Current with Ohm's Law** and record the predicted current in milliamps before changing the meter setup.
+8. Make the later current measurement only when directed. Stop at every teacher checkpoint.
+9. Record each observation and measurement in [`recording-activity.md`](recording-activity.md).
+10. Compare your predicted current with the later measured current.
+11. Answer the reflection questions in your own words.
 
 This lesson does not require an Arduino, programming, building firmware, or uploading firmware.
