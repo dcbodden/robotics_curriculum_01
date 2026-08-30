@@ -79,7 +79,7 @@ The collection README and related Arduino lesson documentation will present a re
 - [A meter in current mode is placed across the battery] → Use power-off steps, a prominent prohibition, a teacher check of the series connection, and immediate return of the red lead after measurement.
 - [A resistance reading includes parallel circuit paths] → Disconnect the battery and isolate at least one resistor terminal before measuring.
 - [The B1 voltage and 100 Ohm R1 combination exceeds a resistor or meter rating] → Require the teacher guide to verify the actual battery voltage, expected current, resistor power, and meter range before publishing the final circuit.
-- [Calculated and measured current differ] → Use measured resistor voltage and resistance, check units, discuss meter and component tolerance, and ask for approximate comparison rather than exact equality.
+- [Calculated and measured current differ] → Use measured B1 voltage and R1 resistance, check units, discuss meter and component tolerance, and ask for approximate comparison rather than exact equality.
 - [RV Snap endpoints do not reach exactly 0 V or 5 V] → Describe measured endpoints as approximate while keeping the nominal lookup table at 0–5 V.
 - [A rounded meter display appears on a range boundary] → Define each internal boundary as belonging to the higher range and include boundary examples.
 - [Students confuse eight levels with the Uno's 1,024 ADC values] → Call the table a smaller model and explicitly compare 3-bit eight-level resolution with the Uno's 10-bit resolution.
