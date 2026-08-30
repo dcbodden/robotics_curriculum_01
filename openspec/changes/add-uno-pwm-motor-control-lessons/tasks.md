@@ -2,7 +2,7 @@
 
 - [x] 1.1 Create `03-pwm-motor-ramp`, `04-adc-pwm-motor-control`, and `05-interrupt-driven-motor-control` as independent Arduino Uno PlatformIO projects using the established `atmelavr`, `uno`, and `arduino` configuration.
 - [x] 1.2 Add the existing PlatformIO IDE extension recommendation and serial monitor configuration needed by each lesson.
-- [ ] 1.3 Update `platformio-uno-lessons/README.md` with the three new lessons, their prerequisites, and the progression from PWM through blocking ADC control to interrupt-driven control.
+- [x] 1.3 Update `platformio-uno-lessons/README.md` with the three new lessons, their prerequisites, and the progression from PWM through blocking ADC control to interrupt-driven control.
 
 ## 2. Protected Motor Circuit Instructions
 
