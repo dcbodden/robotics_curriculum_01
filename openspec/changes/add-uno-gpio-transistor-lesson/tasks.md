@@ -24,5 +24,5 @@
 ## 5. Verification
 
 - [x] 5.1 Build the standalone lesson with PlatformIO and confirm it targets an Arduino Uno without compiling another project.
-- [ ] 5.2 Review the student procedure against the delta specs, including the two-second timing, Snap Circuits assumptions, multimeter comparison, and upload flow.
+- [x] 5.2 Review the student procedure against the delta specs, including the two-second timing, Snap Circuits assumptions, multimeter comparison, and upload flow.
 - [ ] 5.3 Run strict OpenSpec validation for `add-uno-gpio-transistor-lesson` and resolve any reported issues.
