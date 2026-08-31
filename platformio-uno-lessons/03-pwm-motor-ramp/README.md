@@ -94,3 +94,41 @@ Do not reverse the diode. A reversed flywheel diode would conduct across B1 when
 5. Connect USB and enable B1 only after the teacher approves the circuit. Remove both power sources again before moving a wire or component.
 
 Immediately switch off B1 and disconnect USB if the motor does not turn when commanded to run, any component or battery becomes hot, there is an unusual smell, smoke or sparking appears, or the motor or wiring moves unexpectedly. Tell the teacher and do not touch a hot component or reconnect power until the circuit has been checked.
+
+## Build, Upload, and Run the Ramp
+
+1. Keep B1 switched off. After the teacher approves the unpowered circuit, connect the Uno to the computer with a USB data cable.
+2. Open the `platformio-uno-lessons/03-pwm-motor-ramp` folder in VS Code. The folder you open must contain this lesson's `platformio.ini` file.
+3. Select the PlatformIO alien-head icon in the Activity Bar. Under **Project Tasks**, expand **uno**, then expand **General**.
+4. Select **Build** and wait for the terminal to end with `SUCCESS` and no error message.
+5. Select **Upload** and wait for the upload terminal to end with `SUCCESS`. The Uno restarts and begins producing the PWM ramp, but the motor remains unpowered while B1 is off.
+6. Confirm again that the bare motor is secured and its shaft is clear. Ask the teacher for a final wiring check, then switch on B1 without touching or moving the circuit.
+7. Watch for at least three complete cycles. Each cycle should take about eight seconds: roughly four seconds ramping upward and four seconds ramping downward.
+8. When the activity is complete, switch off B1 first and then disconnect USB. Do not change the circuit until both power sources are removed.
+
+## Observe and Record the Motor Response
+
+The program changes its command smoothly and repeats the same pattern every cycle. Watch the motor itself to find out whether its motion follows that command in the same way.
+
+| Cycle | Approximate full-cycle time | Did the motor wait before starting? | Did it coast while slowing? | Other changes in sound or motion |
+| --- | --- | --- | --- | --- |
+| 1 |  |  |  |  |
+| 2 |  |  |  |  |
+| 3 |  |  |  |  |
+
+After recording three cycles, answer these questions:
+
+1. Did the motor begin moving as soon as the upward ramp began, or was there a starting threshold?
+2. Did it stop as soon as the downward ramp reached its lowest commands, or did it coast?
+3. Did the speed appear to change evenly throughout the ramp? Describe any range where the response changed more or less than expected.
+4. How was the motor's physical response different from the program's smooth 0-to-255-to-0 command?
+
+## Troubleshooting
+
+- **Build does not end with `SUCCESS`:** Make sure VS Code opened the `03-pwm-motor-ramp` folder that contains this lesson's `platformio.ini`. Run **Build** again and read the first error in the terminal.
+- **Upload cannot find the Uno:** Use a known USB data cable, try a direct computer USB port, close other programs that may be using the Uno's port, and try **Upload** again.
+- **The motor never turns:** Immediately switch off B1 and disconnect USB. Ask the teacher to check the B1 batteries, shared ground, D3 gate path, MOSFET pin functions, motor-current path, and diode polarity before reconnecting power.
+- **The motor runs at one speed instead of ramping:** Remove both power sources. Check that Arduino D3 reaches MOSFET Gate pin 1 through the 220–330 ohm resistor and that the 10 kilohm pulldown connects the Gate to shared ground rather than to the Drain.
+- **The motor turns only near the top of the ramp:** A starting threshold is expected. Record it as an observation. Stop and ask the teacher to check the circuit if the motor never turns during the cycle.
+- **The motor or Uno stutters or resets:** Remove both power sources. Ask the teacher to check for loose motor-current wiring, a missing shared ground, weak B1 batteries, or a 1N5817 that is not connected directly across the motor with the documented polarity.
+- **A cycle is not close to eight seconds:** Confirm that `RAMP_STEP_DELAY_MS` is `16` and that both loops in `src/main.cpp` still cover every PWM value from 0 through 255.
