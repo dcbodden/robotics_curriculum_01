@@ -2,6 +2,26 @@
 
 This lesson introduces pulse-width modulation (PWM) by changing the command sent to an externally powered DC motor.
 
+## How PWM Controls the Motor
+
+Pulse-width modulation, or **PWM**, switches the MOSFET on and off very quickly. The **duty cycle** is the percentage of each switching cycle spent on. A 0% duty cycle is always off, a 50% duty cycle is on half the time, and a 100% duty cycle is always on.
+
+The Arduino represents that range with PWM commands from 0 through 255:
+
+| PWM command | Approximate duty cycle | Command meaning |
+| --- | --- | --- |
+| 0 | 0% | Fully off |
+| 128 | 50% | On about half the time |
+| 255 | 100% | Fully on |
+
+This program changes the PWM command by one step at a time, so the **command** forms a smooth ramp. The motor's physical speed may not form the same smooth line:
+
+- The motor may remain still through the lowest commands because it needs enough force to overcome friction. The command where it begins turning is its **starting threshold**.
+- When the command decreases, the spinning motor may **coast** instead of stopping immediately because its moving parts have momentum.
+- Twice the PWM command does not necessarily produce twice the motor speed. Friction, the motor's electrical behavior, its mechanical load, and battery voltage can make the response **non-linear**.
+
+Treat the PWM value as a motor command, not as a direct speed measurement.
+
 ## What You Need
 
 - 1 Arduino Uno;

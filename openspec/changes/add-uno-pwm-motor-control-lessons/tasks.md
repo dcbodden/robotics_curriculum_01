@@ -14,8 +14,8 @@
 
 ## 3. Lesson 03 Programmatic PWM Ramp
 
-- [ ] 3.1 Implement the lesson-03 sketch on D3 with beginner-readable constants and a repeated approximately four-second 0-to-255 ramp followed by an approximately four-second 255-to-0 ramp.
-- [ ] 3.2 Explain PWM duty cycle and why a smoothly changing command can produce a starting threshold, coasting, or non-linear motor speed.
+- [x] 3.1 Implement the lesson-03 sketch on D3 with beginner-readable constants and a repeated approximately four-second 0-to-255 ramp followed by an approximately four-second 255-to-0 ramp.
+- [x] 3.2 Explain PWM duty cycle and why a smoothly changing command can produce a starting threshold, coasting, or non-linear motor speed.
 - [ ] 3.3 Add build, upload, observation, recording, and troubleshooting steps for the eight-second ramp demonstration.
 
 ## 4. Lesson 04 Blocking ADC Motor Control
