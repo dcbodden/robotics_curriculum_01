@@ -29,3 +29,25 @@ Hold the MOSFET with its flat, printed face toward you and its three metal leads
 | Drain flange/tab | Metal tab behind the plastic body | Electrically the same Drain node as pin 2; it is not an insulated mounting tab. |
 
 Use the terminal names and functions when tracing the circuit. Do not rely only on “left,” “middle,” and “right,” because turning the part around reverses its apparent order. The [RFP30N06LE manufacturer datasheet](https://www.sparkfun.com/datasheets/Components/General/RFP30N06LE.pdf) shows the TO-220AB Gate, Drain, Source, and Drain-flange assignments.
+
+## Connect the Low-Side Motor and Gate Paths
+
+The B1 batteries power the motor. The Arduino sends only the control signal and shares the circuit's ground reference.
+
+| From | To | Purpose |
+| --- | --- | --- |
+| B1 positive (`+`) | Motor positive terminal | Starts the motor-power path using the separate two-AA supply. |
+| Motor negative terminal | MOSFET Drain, pin 2 | Sends motor current to the MOSFET's switched terminal. |
+| MOSFET Source, pin 3 | Shared-ground breadboard rail | Returns switched motor current toward B1 negative. |
+| B1 negative (`-`) | Shared-ground breadboard rail | Completes the B1 motor-current loop. |
+| Arduino GND | Shared-ground breadboard rail | Gives D3 and the MOSFET Gate the same 0 V reference. |
+| Arduino D3 | 220–330 ohm resistor, then MOSFET Gate, pin 1 | Carries the PWM control signal while the series resistor limits each gate charge/discharge pulse. |
+| MOSFET Gate, pin 1 | 10 kilohm resistor, then shared ground | Pulls the Gate LOW when D3 is disconnected or not actively driving it. |
+
+When the MOSFET is on, the main motor-current path is:
+
+```text
+B1 positive -> motor -> MOSFET Drain -> MOSFET Source -> B1 negative
+```
+
+The Arduino remains USB-powered. **Never connect B1 positive to Arduino 5 V, VIN, A0, D3, or any other Arduino pin.** B1 negative joins Arduino GND only at the documented shared-ground node.
