@@ -6,7 +6,7 @@
 
 ## 2. Protected Motor Circuit Instructions
 
-- [ ] 2.1 Add a bill of materials for the yellow 3–6 V gearbox motor, RFP30N06LE, 1N5817, two-AA B1 supply, breadboard, RV snap for lessons 04–05, 220–330 ohm gate resistor, and 10 kilohm gate pulldown resistor.
+- [x] 2.1 Add a bill of materials for the yellow 3–6 V gearbox motor, RFP30N06LE, 1N5817, two-AA B1 supply, breadboard, RV snap for lessons 04–05, 220–330 ohm gate resistor, and 10 kilohm gate pulldown resistor.
 - [ ] 2.2 Document the RFP30N06LE gate, drain, source, and tab identification from its datasheet and provide a functional wiring table that does not rely only on physical orientation.
 - [ ] 2.3 Document the low-side power path, D3 gate connection, gate pulldown, shared-ground connection, and strict isolation of B1 positive from Arduino 5 V and VIN.
 - [ ] 2.4 Document the 1N5817 directly across the motor with its banded cathode toward B1/motor positive and its anode toward the MOSFET drain/motor negative.
