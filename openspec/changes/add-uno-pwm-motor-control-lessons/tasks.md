@@ -10,7 +10,7 @@
 - [x] 2.2 Document the RFP30N06LE gate, drain, source, and tab identification from its datasheet and provide a functional wiring table that does not rely only on physical orientation.
 - [x] 2.3 Document the low-side power path, D3 gate connection, gate pulldown, shared-ground connection, and strict isolation of B1 positive from Arduino 5 V and VIN.
 - [x] 2.4 Document the 1N5817 directly across the motor with its banded cathode toward B1/motor positive and its anode toward the MOSFET drain/motor negative.
-- [ ] 2.5 Add power-off wiring, teacher verification, secured bare-motor operation, immediate-shutdown symptoms, and no-wheel-or-propeller safety instructions to all three lesson procedures.
+- [x] 2.5 Add power-off wiring, teacher verification, secured bare-motor operation, immediate-shutdown symptoms, and no-wheel-or-propeller safety instructions to all three lesson procedures.
 
 ## 3. Lesson 03 Programmatic PWM Ramp
 

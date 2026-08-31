@@ -65,3 +65,13 @@ Place the 1N5817 directly across the motor terminals, as close to the motor conn
 During normal motor power, this orientation keeps the diode from conducting. When PWM turns the MOSFET off, the motor's stored magnetic energy can keep current circulating through the diode instead of producing a damaging voltage spike.
 
 Do not reverse the diode. A reversed flywheel diode would conduct across B1 when the MOSFET turns on, creating a short circuit.
+
+## Complete the Safety Check Before Powering the Circuit
+
+1. Disconnect the USB cable and switch off or remove the batteries from B1. Build or change the circuit only while **both** power sources are disconnected.
+2. Use only the bare motor. Do not attach a wheel, propeller, gear, or anything else to its shaft.
+3. Secure the motor so it cannot roll, jump, or pull wires loose. Keep hands, hair, clothing, and other objects away from the shaft.
+4. Ask the teacher to trace every connection before power is applied. The teacher must verify the MOSFET terminals, gate resistors, shared ground, separate positive supplies, and the 1N5817 band toward B1/motor positive.
+5. Connect USB and enable B1 only after the teacher approves the circuit. Remove both power sources again before moving a wire or component.
+
+Immediately switch off B1 and disconnect USB if the motor does not turn when commanded to run, any component or battery becomes hot, there is an unusual smell, smoke or sparking appears, or the motor or wiring moves unexpectedly. Tell the teacher and do not touch a hot component or reconnect power until the circuit has been checked.
