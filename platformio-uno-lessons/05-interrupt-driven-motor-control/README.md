@@ -52,3 +52,16 @@ B1 positive -> motor -> MOSFET Drain -> MOSFET Source -> B1 negative
 ```
 
 The Arduino remains USB-powered. **Never connect B1 positive to Arduino 5 V, VIN, A0, D3, or any other Arduino pin.** B1 negative joins Arduino GND only at the documented shared-ground node.
+
+## Add the 1N5817 Flywheel Diode
+
+Place the 1N5817 directly across the motor terminals, as close to the motor connections as the breadboard permits.
+
+| Diode end | Connect to |
+| --- | --- |
+| Cathode (banded end) | Motor positive, which is the same node as B1 positive |
+| Anode (unbanded end) | Motor negative, which is the same node as MOSFET Drain pin 2 |
+
+During normal motor power, this orientation keeps the diode from conducting. When PWM turns the MOSFET off, the motor's stored magnetic energy can keep current circulating through the diode instead of producing a damaging voltage spike.
+
+Do not reverse the diode. A reversed flywheel diode would conduct across B1 when the MOSFET turns on, creating a short circuit.
