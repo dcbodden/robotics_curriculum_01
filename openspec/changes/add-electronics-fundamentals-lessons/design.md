@@ -1,8 +1,8 @@
 ## Context
 
-The Arduino Uno lessons already ask fifth-grade students to recognize voltage levels and ADC values. The repository does not yet provide standalone, non-code lessons for using a digital multimeter or for manually sorting a voltage into digital ranges. The new collection must work as optional preparation or parallel practice rather than as a firmware dependency.
+The Arduino Uno lessons already ask fifth-grade students to recognize voltage levels and ADC values. The repository does not yet provide standalone, non-code lessons for using a digital multimeter or for manually sorting a voltage into digital ranges. The multimeter lesson will establish foundational electrical concepts as the first curriculum lesson. After students encounter ADC behavior in the Arduino ADC variable-delay lesson, the manual voltage-mapping activity will revisit the concept to strengthen retention and comprehension. Neither fundamentals lesson is a firmware dependency.
 
-Current measurement presents the largest safety and teaching risk. A meter in current mode has a low-resistance path and must be inserted in series; placing it across a battery can short the source or blow the meter fuse. A Snap Circuits lamp is useful as a visible indicator, but its hot filament does not behave like a fixed resistor. See `proposal.md` for scope and the delta specs for observable requirements.
+Current measurement presents the largest safety and teaching risk. A meter in current mode has a low-resistance path and must be inserted in series; placing it across a battery can short the source or blow the meter fuse. The supplied `electronics-fundamentals-lessons/01-multimeter-ohms-law/sample_circuit/base_layout.jpg` shows the intended B1 battery, 100 Ohm R1 fixed resistor, and S2 press-switch loop. See `proposal.md` for scope and the delta specs for observable requirements.
 
 ## Goals / Non-Goals
 
@@ -18,7 +18,7 @@ Current measurement presents the largest safety and teaching risk. A meter in cu
 **Non-Goals:**
 
 - Measure household outlets, mains-powered devices, high voltage, or high current.
-- Treat the lamp filament as a constant resistance or require exact agreement between calculated and measured current.
+- Add a lamp or another load to the B1/R1/S2 sample circuit, or require exact agreement between calculated and measured current.
 - Teach internal multimeter circuitry, meter fuse replacement, significant-figure rules, or uncertainty analysis.
 - Build, upload, or modify Arduino firmware.
 - Expand the mapping activity to the Uno's full 1,024 ADC values; the eight-level table is a smaller manual model of the same idea.
@@ -31,19 +31,19 @@ Create `electronics-fundamentals-lessons/` with a collection README and two less
 
 Alternative considered: place the activities under `electronics-reference/`. A lesson collection is preferred because these materials have ordered procedures, teacher checks, and student observations rather than reference-only content.
 
-### Use the lamp for observation and the fixed resistor for calculation
+### Use the fixed resistor as both the load and calculation component
 
-The first lesson will assemble a teacher-verified series circuit using the low-voltage Snap Circuits battery, switch, lamp, and a known fixed resistor suitable for the available parts. Closing the switch makes current flow visible at the lamp. Students will measure the fixed resistor with power removed, measure its voltage drop in parallel while powered, and measure circuit current by inserting the meter in series.
+The first lesson will follow the sample photo and assemble a teacher-verified series circuit using the low-voltage Snap Circuits B1 battery, 100 Ohm R1 fixed resistor, and momentary S2 press switch. Pressing S2 will complete the series path when the multimeter is properly connected to measure current.
 
-The Ohm's law worksheet will calculate $I = V / R$ from the fixed resistor's measured values and compare that result with measured series current. It will describe approximate agreement and unit conversion rather than promise identical values. The teacher guide must verify the actual resistor value and power rating, expected circuit current, lamp visibility, and a safe meter range before students begin.
+The student sequence is deliberate: measure R1 with power removed and the resistor isolated, measure the voltage provided by B1, calculate and record predicted current in milliamps with $I = V / R$, and only then reconfigure the meter in series to measure current. The worksheet will compare the measured result with the prediction using approximate agreement and consistent units rather than promise identical values. The teacher guide must verify the actual B1 battery voltage, R1 resistance and power rating, expected circuit current, and a safe meter range before students begin.
 
-Alternative considered: calculate with the lamp's labeled or cold resistance. That would hide the large resistance change caused by filament heating and weaken the lesson's explanation of measurement differences.
+Alternative considered: add a lamp as a visible current indicator. The lamp is unnecessary because the meter provides the lesson's observations, and its changing filament resistance would make the beginner circuit and Ohm's law comparison less direct.
 
 ### Make current measurement a teacher-controlled transition
 
-Student-facing instructions will use separate checkpoints for each meter mode. Current measurement requires power off, moving the red lead to the correct current jack, selecting the highest suitable current range, opening the circuit, placing the meter in series, and receiving teacher verification before restoring power. After the reading, power is removed before the red lead returns to the voltage/resistance jack.
+Student-facing instructions will use separate checkpoints for each meter mode. Current-mode setup cannot begin until the student has recorded a predicted current in milliamps. The prediction helps the teacher confirm that the selected current input and range can accept the expected value, but it does not replace starting on the highest suitable safe range or checking the exact meter's limits. Current measurement requires power off, moving the red lead to the correct current jack, opening the circuit, placing the meter in series, and receiving teacher verification before restoring power. After the reading, power is removed before the red lead returns to the voltage/resistance jack.
 
-Voltage remains a parallel measurement on a powered circuit. Resistance remains an across-the-part measurement only after the battery is disconnected and the resistor is isolated from alternate circuit paths. A prominent warning will prohibit current-mode measurements across the battery and all measurements involving household or wall power.
+Voltage measurement can be doen directly on the B1 connections. Resistance remains an across-the-part measurement where the circuit is open and no power is flowing. A prominent warning will prohibit current-mode measurements across the battery, and emphasize the importance of ensuring adequate load (resistance) in the circuit to avoid overcurrent situations.
 
 Alternative considered: omit direct current measurement and calculate it only. Direct measurement is retained because it is part of the requested lesson, but the teacher checkpoint limits the highest-risk configuration error.
 
@@ -70,16 +70,16 @@ Alternative considered: use levels 1–8. Levels 0–7 align directly with the e
 
 The mapping worksheet will include or elicit at least one voltage from each range, including the minimum and maximum. Students will record voltage, decimal level, and binary value, then explain in their own words how many nearby voltages can share one output level. This makes the activity about quantization rather than only turning a control and copying numbers.
 
-### Keep sequencing optional and artwork owned by the repository
+### Use a foundation, application, reinforcement sequence and repository-owned artwork
 
-The collection README and related Arduino lesson documentation may identify both lessons as optional preparation or reinforcement. Neither lesson becomes a prerequisite for opening or building an Arduino project. Any diagrams or photos added during implementation must be original repository-owned material or use assets with clearly documented permission.
+The collection README and related Arduino lesson documentation will present a recommended teaching order: begin the curriculum with the multimeter and Ohm's law lesson, teach the Arduino ADC variable-delay lesson before manual voltage mapping, and use the mapping lesson afterward to reinforce the ADC concept. This teaching sequence does not create a firmware dependency: the fundamentals activities remain non-code lessons and do not require students to build or upload firmware. Any diagrams or photos added during implementation must be original repository-owned material or use assets with clearly documented permission.
 
 ## Risks / Trade-offs
 
 - [A meter in current mode is placed across the battery] → Use power-off steps, a prominent prohibition, a teacher check of the series connection, and immediate return of the red lead after measurement.
 - [A resistance reading includes parallel circuit paths] → Disconnect the battery and isolate at least one resistor terminal before measuring.
-- [The chosen resistor makes the lamp too dim or exceeds a part rating] → Require the teacher guide to verify the actual parts, expected current, resistor power, and lamp visibility before publishing the final circuit.
-- [Calculated and measured current differ] → Use measured resistor voltage and resistance, check units, discuss meter and component tolerance, and ask for approximate comparison rather than exact equality.
+- [The B1 voltage and 100 Ohm R1 combination exceeds a resistor or meter rating] → Require the teacher guide to verify the actual battery voltage, expected current, resistor power, and meter range before publishing the final circuit.
+- [Calculated and measured current differ] → Use measured B1 voltage and R1 resistance, check units, discuss meter and component tolerance, and ask for approximate comparison rather than exact equality.
 - [RV Snap endpoints do not reach exactly 0 V or 5 V] → Describe measured endpoints as approximate while keeping the nominal lookup table at 0–5 V.
 - [A rounded meter display appears on a range boundary] → Define each internal boundary as belonging to the higher range and include boundary examples.
 - [Students confuse eight levels with the Uno's 1,024 ADC values] → Call the table a smaller model and explicitly compare 3-bit eight-level resolution with the Uno's 10-bit resolution.

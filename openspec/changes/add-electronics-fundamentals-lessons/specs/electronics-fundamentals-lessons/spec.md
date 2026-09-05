@@ -7,27 +7,31 @@ Defines standalone, fifth-grade-friendly electronics activities that teach safe 
 ### Requirement: Standalone electronics fundamentals collection
 The curriculum SHALL provide `electronics-fundamentals-lessons/` as a collection of numbered, non-code lessons, beginning with one multimeter and Ohm's law lesson and one manual voltage-mapping lesson.
 
-#### Scenario: Choose when to teach a fundamentals lesson
-- **WHEN** a teacher plans instruction around the Arduino ADC variable-delay lesson
-- **THEN** either fundamentals lesson can be taught before or alongside it without building or uploading firmware
+#### Scenario: Follow the recommended lesson sequence
+- **WHEN** a teacher plans the curriculum sequence
+- **THEN** the multimeter and Ohm's law lesson is taught first, the Arduino ADC variable-delay lesson is taught before manual voltage mapping, and the manual voltage-mapping lesson follows as reinforcement
+
+#### Scenario: Complete a fundamentals lesson without firmware
+- **WHEN** a student completes either fundamentals lesson
+- **THEN** the student does not need to build or upload firmware for that activity
 
 ### Requirement: Low-voltage multimeter activity
-The multimeter lesson SHALL use a low-voltage Snap Circuits battery, switch, lamp, and fixed resistor to demonstrate an open and closed circuit and to measure voltage, resistance, and current.
+The multimeter lesson SHALL use a low-voltage Snap Circuits circuit consisting of the B1 battery, 100 Ohm R1 fixed resistor, and S2 press switch to demonstrate an open and closed circuit and to measure B1 voltage, R1 resistance, and circuit current.
 
-#### Scenario: Observe current flow
-- **WHEN** a student closes the switch in the correctly assembled circuit
-- **THEN** the lamp provides a visible sign of current flow and the student can describe the circuit as a complete path
-
-#### Scenario: Measure voltage
-- **WHEN** a student measures voltage in the powered circuit
-- **THEN** the meter is set to DC voltage with the black lead in COM and the red lead in the voltage jack, and the probes are placed in parallel across the two measurement points
+#### Scenario: Observe the switch completing the path
+- **WHEN** a student presses S2 in the correctly assembled circuit during a teacher-approved meter measurement
+- **THEN** the meter reading provides evidence that current flows through R1 and the student can describe the circuit as a complete path
 
 #### Scenario: Measure resistance
 - **WHEN** a student measures the fixed resistor
 - **THEN** all power is disconnected, the resistor is isolated from other circuit paths, and the meter is set to resistance before the probes touch the resistor terminals
 
-#### Scenario: Measure current
-- **WHEN** a student measures current through the circuit
+#### Scenario: Measure B1 voltage
+- **WHEN** a student measures B1's voltage directly at its positive and negative terminals after recording R1's resistance
+- **THEN** the meter is set to DC voltage with the black lead in COM and the red lead in the voltage jack, the probes are placed in parallel across B1's two terminals, and the intentional gap between S2 and B1 remains open
+
+#### Scenario: Measure current after making a prediction
+- **WHEN** a student has recorded a predicted current in milliamps and is ready to measure current through the circuit
 - **THEN** power is removed before the circuit is opened, the meter leads and range are configured for current, a teacher verifies the series connection, and power is restored only for the reading
 
 ### Requirement: Multimeter safety boundaries
@@ -42,15 +46,19 @@ The multimeter lesson SHALL explain that resistance is never measured on a power
 - **THEN** power is removed and the red probe is returned from the current jack to the voltage/resistance jack
 
 ### Requirement: Fixed-resistor Ohm's law comparison
-The multimeter lesson SHALL use the fixed resistor, rather than the heated lamp filament, for a beginner calculation comparing measured voltage, measured resistance, measured current, and the relationship $V = I \times R$.
+The multimeter lesson SHALL use the 100 Ohm R1 fixed resistor as both the circuit load and the resistance for a beginner sequence that measures R1's resistance and B1's voltage, calculates and records predicted current in milliamps with $I = V / R$, and only then measures current in series for an approximate comparison.
 
-#### Scenario: Compare calculation and measurement
-- **WHEN** a student records the fixed resistor's resistance and voltage
-- **THEN** the worksheet guides the student to calculate expected current with $I = V / R$ and compare it with a safely measured current using consistent units
+#### Scenario: Predict current before measuring it
+- **WHEN** a student records R1's resistance and B1's voltage
+- **THEN** the worksheet guides the student to calculate and record predicted current in milliamps with $I = V / R$ before any current-mode rewiring
 
-#### Scenario: Discuss the lamp separately
-- **WHEN** the lesson describes the lamp
-- **THEN** it explains that the lamp makes current flow visible but its filament resistance changes as it heats, so it is not treated as the fixed value in the Ohm's law calculation
+#### Scenario: Compare prediction and measurement
+- **WHEN** the teacher-approved series current measurement is complete
+- **THEN** the student records the measured current in milliamps and describes whether it is approximately close to the predicted current
+
+#### Scenario: Explain the fixed resistor's role
+- **WHEN** the lesson identifies R1 as the circuit load
+- **THEN** it explains that R1 limits current and provides an approximately fixed resistance suitable for the Ohm's law calculation
 
 ### Requirement: Eight-level manual voltage mapping
 The mapping lesson SHALL treat a 50K Ohm RV Snap as a voltage divider from Arduino 5 V to GND and manually map its 0–5 V wiper range into eight equal 0.625 V ranges labeled decimal 0–7 and binary `000`–`111`.
@@ -79,7 +87,7 @@ Each lesson SHALL use fifth-grade-friendly numbered instructions and a recording
 
 #### Scenario: Complete the multimeter record
 - **WHEN** a student completes the measurement activity
-- **THEN** the student records circuit state, voltage, fixed resistance, measured current, calculated current, and whether the lamp is lit
+- **THEN** the student records switch or circuit state, fixed resistance, B1 battery voltage, predicted current in milliamps, measured current in milliamps, and an approximate comparison
 
 #### Scenario: Complete the mapping record
 - **WHEN** a student tests the minimum, maximum, and at least six additional voltages covering all eight ranges

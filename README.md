@@ -4,9 +4,11 @@ This project is an OpenSpec-driven exploratory robotics curriculum for beginners
 ## Repository layout
 
 - `electronics-reference/` — general electronics reference materials such as Ohm's law cards, multimeter notes, and other foundational artifacts
+- `electronics-fundamentals-lessons/` — numbered, standalone, non-code lessons for hands-on electronics measurement and concepts
 - `experiments/` — standalone experiments such as Snap Circuits activities, breadboard diagrams, and lesson-specific builds
 - `syllabus-and-teacher-materials/` — lesson plans, pedagogy notes, and teacher-training/reference material
 - `platformio-uno-template/` — a VS Code-friendly PlatformIO Arduino Uno starter project for digital/physical integration lessons
+- [`platformio-uno-lessons/`](platformio-uno-lessons/) — numbered, independently buildable Arduino Uno projects, beginning with [`01-gpio-transistor-switch`](platformio-uno-lessons/01-gpio-transistor-switch/) for controlling and measuring a transistor-switched LED with digital pin 8
 - `platformio-esp32-robotics-template/` — an ESP32-WROOM-32 advanced robotics template organized around OV7670 camera work, DRV8833 motor control, an FPV Wi-Fi RC car project, and a follow-on semi-autonomous robotics project
 - `openspec/` — lightweight OpenSpec planning artifacts for repository structure and future curriculum changes
 
