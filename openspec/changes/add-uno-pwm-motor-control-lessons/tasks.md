@@ -20,7 +20,7 @@
 
 ## 4. Lesson 04 Blocking ADC Motor Control
 
-- [ ] 4.1 Implement the lesson-04 sketch to read A0, map 0–1023 directly to D3 PWM 0–255, print labeled ADC and PWM values, and delay 500 milliseconds between updates.
+- [x] 4.1 Implement the lesson-04 sketch to read A0, map 0–1023 directly to D3 PWM 0–255, print labeled ADC and PWM values, and delay 500 milliseconds between updates.
 - [ ] 4.2 Document the RV outer-terminal connections to Arduino 5 V and GND and the center-wiper connection to A0 without connecting B1 positive to the ADC circuit.
 - [ ] 4.3 Explain that the 500-millisecond delay makes serial output readable while also making motor-control response intentionally sluggish.
 - [ ] 4.4 Add build, upload, serial-monitor, multi-position observation, recording, and troubleshooting steps that relate RV position, ADC value, PWM value, and motor behavior.
