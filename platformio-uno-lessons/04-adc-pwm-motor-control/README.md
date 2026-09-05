@@ -2,6 +2,14 @@
 
 This lesson uses the adjustable RV voltage from lesson 02 to control the PWM command sent to an externally powered DC motor.
 
+## Why the Control Update Waits
+
+Each pass through the program reads A0, maps that ADC reading to a PWM value, sends the new value to D3, and prints the ADC and PWM values. It then calls `delay(500)` before starting the next pass. The half-second pause spaces the serial-monitor lines far enough apart to make them easy to read.
+
+The delay is **blocking**, which means the main program waits instead of taking another reading. If you move the RV just after A0 is sampled, the motor keeps the previous PWM command until the next pass through the program, so its response can lag by as much as about half a second. This intentionally sluggish response gives you something clear to compare with the faster control updates in lesson 05.
+
+The Arduino's PWM hardware keeps switching D3 at the already selected duty cycle during the delay. The PWM signal does not stop; only the reading and motor-command update wait.
+
 ## What You Need
 
 - 1 Arduino Uno;
