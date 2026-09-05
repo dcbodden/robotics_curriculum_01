@@ -53,6 +53,22 @@ B1 positive -> motor -> MOSFET Drain -> MOSFET Source -> B1 negative
 
 The Arduino remains USB-powered. **Never connect B1 positive to Arduino 5 V, VIN, A0, D3, or any other Arduino pin.** B1 negative joins Arduino GND only at the documented shared-ground node.
 
+## Connect the RV Voltage Divider to A0
+
+The three-terminal RV works as a **voltage divider**: its two outer terminals connect across the Arduino's 5 V supply, and its center terminal, called the **wiper**, provides an adjustable voltage for A0.
+
+Make these connections only while USB is disconnected and B1 is switched off or has its batteries removed:
+
+| RV terminal | Arduino connection | Purpose |
+| --- | --- | --- |
+| One outer terminal | Arduino 5 V | Supplies the high side of the RV from the Arduino power domain. |
+| Other outer terminal | Arduino GND/shared ground | Supplies the 0 V side of the RV. |
+| Center wiper | Arduino A0 | Provides an adjustable input between approximately 0 V and 5 V. |
+
+The two outer terminals may trade places; swapping them changes which adjustment direction raises the A0 reading. The center wiper must still connect to A0.
+
+**Use Arduino 5 V only for the RV's high side. Never connect B1 positive to an RV terminal, A0, Arduino 5 V, or VIN.** B1 positive belongs only to the motor-positive power path. The two circuits share ground through B1 negative and Arduino GND, but their positive supplies remain separate.
+
 ## Add the 1N5817 Flywheel Diode
 
 Place the 1N5817 directly across the motor terminals, as close to the motor connections as the breadboard permits.
@@ -71,7 +87,7 @@ Do not reverse the diode. A reversed flywheel diode would conduct across B1 when
 1. Disconnect the USB cable and switch off or remove the batteries from B1. Build or change the circuit only while **both** power sources are disconnected.
 2. Use only the bare motor. Do not attach a wheel, propeller, gear, or anything else to its shaft.
 3. Secure the motor so it cannot roll, jump, or pull wires loose. Keep hands, hair, clothing, and other objects away from the shaft.
-4. Ask the teacher to trace every connection before power is applied. The teacher must verify the MOSFET terminals, gate resistors, shared ground, separate positive supplies, and the 1N5817 band toward B1/motor positive.
+4. Ask the teacher to trace every connection before power is applied. The teacher must verify the MOSFET terminals, gate resistors, RV-to-A0 voltage divider, shared ground, separate positive supplies, and the 1N5817 band toward B1/motor positive.
 5. Connect USB and enable B1 only after the teacher approves the circuit. Remove both power sources again before moving a wire or component.
 
 Immediately switch off B1 and disconnect USB if the motor does not turn when commanded to run, any component or battery becomes hot, there is an unusual smell, smoke or sparking appears, or the motor or wiring moves unexpectedly. Tell the teacher and do not touch a hot component or reconnect power until the circuit has been checked.
