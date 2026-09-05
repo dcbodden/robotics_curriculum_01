@@ -19,13 +19,13 @@
 
 ## 3. Manual Voltage-Mapping Lesson
 
-- [ ] 3.1 Document safe 50K Ohm RV Snap voltage-divider wiring from Arduino 5 V to GND with the center wiper as the measurement point, including USB-disconnected wiring and teacher verification.
-- [ ] 3.2 Explain in fifth-grade-friendly language how eight ranges act like digital buckets and how decimal levels 0–7 match 3-bit values `000`–`111`.
-- [ ] 3.3 Add the complete lookup table using eight 0.625 V ranges from 0–5 V, assigning internal boundaries to the higher range and including 5.000 V in level 7.
-- [ ] 3.4 Add numbered measurement and lookup steps that require the minimum, maximum, and at least six additional readings so every output level is represented.
-- [ ] 3.5 Add a recording table for measured voltage, decimal level, and 3-bit value plus prompts comparing nearby voltages that share a level.
-- [ ] 3.6 Relate the eight-level manual model to the Uno ADC's 1,024 values without requiring the floor formula or Arduino code from students.
-- [ ] 3.7 Add concise troubleshooting for approximate endpoints, reversed adjustment direction, unstable readings, incorrect meter setup, and boundary rounding.
+- [x] 3.1 Document safe 50K Ohm RV Snap voltage-divider wiring from Arduino 5 V to GND with the center wiper as the measurement point, including USB-disconnected wiring and teacher verification.
+- [x] 3.2 Explain in fifth-grade-friendly language how eight ranges act like digital buckets and how decimal levels 0–7 match 3-bit values `000`–`111`.
+- [x] 3.3 Add the complete lookup table using eight 0.625 V ranges from 0–5 V, assigning internal boundaries to the higher range and including 5.000 V in level 7.
+- [x] 3.4 Add numbered measurement and lookup steps that require the minimum, maximum, and at least six additional readings so every output level is represented.
+- [x] 3.5 Add a recording table for measured voltage, decimal level, and 3-bit value plus prompts comparing nearby voltages that share a level.
+- [x] 3.6 Relate the eight-level manual model to the Uno ADC's 1,024 values without requiring the floor formula or Arduino code from students.
+- [x] 3.7 Add concise troubleshooting for approximate endpoints, reversed adjustment direction, unstable readings, incorrect meter setup, and boundary rounding.
 
 ## 4. Curriculum Integration and Assets
 
