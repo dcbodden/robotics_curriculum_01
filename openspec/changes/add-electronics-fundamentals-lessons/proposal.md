@@ -7,6 +7,7 @@ Students need hands-on experience with voltage, resistance, and current before b
 - Add an `electronics-fundamentals-lessons/` collection for numbered, standalone, non-code activities.
 - Add a multimeter lesson that safely measures voltage, resistance, and current in a low-voltage Snap Circuits circuit using the B1 battery, 100 Ohm R1 fixed resistor, and S2 press switch shown in `sample_circuit/base_layout.jpg`.
 - Use R1 as both the circuit load and the fixed resistance for Ohm's law calculations; the circuit does not include a lamp.
+- Permit the AA cells to remain installed while measuring R1 resistance only in the documented layout, where S2 is released and the intentional gap between S2 and B1 positive remains open, so two open points prevent B1 from energizing R1; battery removal remains required before current-mode rewiring.
 - Add a manual lookup-table lesson that divides the 0–5 V range of a 50K Ohm RV Snap voltage divider into eight output levels.
 - Map the eight voltage ranges to decimal levels 0 through 7 and matching 3-bit values `000` through `111`.
 - Establish the recommended curriculum sequence: multimeter and Ohm's law first, Arduino ADC variable-delay before manual voltage mapping, and manual voltage mapping afterward for reinforcement and comprehension.
@@ -26,5 +27,5 @@ Students need hands-on experience with voltage, resistance, and current before b
 - Adds a new top-level curriculum directory with two lesson directories and collection documentation.
 - Adds student worksheets or tables for recording measurements, checking Ohm's law, and mapping measured voltages to eight digital levels.
 - Uses low-voltage Snap Circuits parts and a digital multimeter; it adds no software dependencies or firmware.
-- Requires explicit meter-mode, probe-port, powered-circuit, and series-versus-parallel safety instructions, with teacher verification before current measurement.
+- Requires explicit meter-mode, probe-port, powered-circuit, and series-versus-parallel safety instructions, including teacher verification of both open points before resistance measurement and battery removal before current-mode rewiring.
 - Adds cross-references that communicate the recommended lesson sequence without making either fundamentals lesson a firmware build dependency.

@@ -23,8 +23,9 @@ The multimeter lesson SHALL use a low-voltage Snap Circuits circuit consisting o
 - **THEN** the meter reading provides evidence that current flows through R1 and the student can describe the circuit as a complete path
 
 #### Scenario: Measure resistance
-- **WHEN** a student measures the fixed resistor
-- **THEN** all power is disconnected, the resistor is isolated from other circuit paths, and the meter is set to resistance before the probes touch the resistor terminals
+- **WHEN** a student measures the fixed resistor in the documented B1/R1/S2 layout
+- **THEN** S2 is released, the intentional gap between S2 and B1 positive remains open, a teacher confirms that no alternate path completes the battery circuit, and the meter is set to resistance before the probes touch R1's terminals
+- **AND** the AA cells may remain installed because the two open points prevent B1 from energizing R1
 
 #### Scenario: Measure B1 voltage
 - **WHEN** a student measures B1's voltage directly at its positive and negative terminals after recording R1's resistance
@@ -35,7 +36,7 @@ The multimeter lesson SHALL use a low-voltage Snap Circuits circuit consisting o
 - **THEN** power is removed before the circuit is opened, the meter leads and range are configured for current, a teacher verifies the series connection, and power is restored only for the reading
 
 ### Requirement: Multimeter safety boundaries
-The multimeter lesson SHALL explain that resistance is never measured on a powered circuit, current mode is never connected directly across a battery or component, circuit changes are made with power removed, and the activity is limited to the specified low-voltage circuit rather than household or wall power.
+The multimeter lesson SHALL explain that resistance is never measured across a powered component; in the documented B1/R1/S2 layout, R1 remains unpowered while S2 is released and the intentional S2-to-B1-positive gap is open, so the AA cells need not be removed for that measurement. Current mode is never connected directly across a battery or component, current-mode rewiring and other circuit changes are made with the cells removed, and the activity is limited to the specified low-voltage circuit rather than household or wall power.
 
 #### Scenario: Prepare for a different meter mode
 - **WHEN** a student changes between voltage, resistance, and current measurements

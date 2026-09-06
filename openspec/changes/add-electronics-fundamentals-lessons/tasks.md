@@ -9,7 +9,7 @@
 
 - [x] 2.1 Identify the B1 battery, 100 Ohm R1 fixed resistor, and S2 press switch shown in `sample_circuit/base_layout.jpg`, then add a teacher preparation check for actual battery voltage, resistor value and power rating, expected current, and meter range.
 - [x] 2.2 Add fifth-grade-friendly assembly and observation steps showing how S2 opens and closes the B1/R1 series path and how teacher-approved meter readings provide evidence of current flow.
-- [x] 2.3 Add an unpowered resistance procedure that disconnects the battery, isolates R1 from alternate paths, checks the meter mode and probe jacks, and records the resistance before powered measurements begin.
+- [ ] 2.3 Revise the unpowered resistance procedure so S2 stays released and the intentional S2-to-B1-positive gap stays open, a teacher verifies that no alternate path completes the battery circuit, the AA cells may remain installed because B1 cannot energize R1 through the two open points, the meter mode and probe jacks are checked, and the cells are removed if the exact topology cannot be confirmed.
 - [x] 2.4 Add a DC voltage procedure that follows the resistance measurement, uses the black lead in COM and the red lead in the voltage jack, places the probes in parallel directly across B1's positive and negative terminals while the intentional S2-to-B1 gap remains open, and records B1's voltage.
 - [x] 2.5 Explain $V = I \times R$ and guide students to use B1's measured voltage and R1's measured resistance with consistent units to calculate and record predicted current in milliamps before any current-mode rewiring.
 - [x] 2.6 Add a teacher-verified current procedure that begins only after the prediction is recorded, powers down before rewiring, starts on the highest suitable safe current range that includes the predicted value, inserts the meter in series, prohibits connecting current mode across the battery, records measured current in milliamps, returns the red lead after power is removed, and compares the measurement approximately with the prediction.
@@ -36,8 +36,9 @@
 
 ## 5. Verification
 
-- [ ] 5.1 Assemble and teacher-test the B1/R1/S2 multimeter circuit shown in `sample_circuit/base_layout.jpg`, confirming battery voltage, resistor value and power rating, expected voltage and current ranges, switch behavior, and a safe meter configuration before finalizing numeric examples.
-- [ ] 5.2 Verify the resistance → voltage → predicted-current → teacher-approved series-current sequence and review every mode transition for power state, probe jack, dial setting, series or parallel placement, teacher checkpoint, and low-voltage-only language.
+- [x] 5.1 Assemble and teacher-test the B1/R1/S2 multimeter circuit shown in `sample_circuit/base_layout.jpg`, confirming battery voltage, resistor value and power rating, expected voltage and current ranges, switch behavior, and a safe meter configuration before finalizing numeric examples.
+  - Teacher verification completed September 6, 2026: the repository owner confirmed that the assembled circuit, measurements, ratings, expected ranges, switch behavior, and meter configuration all worked as intended.
+- [ ] 5.2 Verify the resistance → voltage → predicted-current → teacher-approved series-current sequence and review every mode transition for the two open points and absence of alternate paths during resistance measurement, required cell removal before current-mode rewiring, probe jack, dial setting, series or parallel placement, teacher checkpoint, and low-voltage-only language.
 - [ ] 5.3 Verify programmatically or by exhaustive review that the lookup table covers every value from 0 through 5 V exactly once and maps all internal boundaries and 5.000 V as specified.
 - [ ] 5.4 Review both student activities against every electronics fundamentals delta-spec scenario, including all recording fields and all eight mapping outcomes.
 - [ ] 5.5 Run strict OpenSpec validation for `add-electronics-fundamentals-lessons` and resolve all reported issues.
