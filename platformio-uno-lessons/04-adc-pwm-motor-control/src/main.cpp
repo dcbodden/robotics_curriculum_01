@@ -13,7 +13,7 @@ const int PWM_MIN = 0;
 const int PWM_MAX = 255;
 
 // Pause between control updates so the serial output is easy to read.
-const unsigned long CONTROL_UPDATE_DELAY_MS = 500;
+const unsigned long CONTROL_UPDATE_DELAY_MS = 1000;
 const unsigned long SERIAL_BAUD = 9600;
 
 void setup() {

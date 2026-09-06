@@ -14,8 +14,8 @@ const int ADC_MAX = 1023;
 const int PWM_MIN = 0;
 const int PWM_MAX = 255;
 
-// The foreground reports the latest values twice per second.
-const unsigned long REPORT_DELAY_MS = 500;
+// The foreground reports the latest values once per second.
+const unsigned long REPORT_DELAY_MS = 1000;
 const unsigned long SERIAL_BAUD = 9600;
 
 // Timer1 receives 250,000 clock ticks per second after the 64:1 prescaler.
