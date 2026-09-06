@@ -75,3 +75,33 @@ Do not reverse the diode. A reversed flywheel diode would conduct across B1 when
 5. Connect USB and enable B1 only after the teacher approves the circuit. Remove both power sources again before moving a wire or component.
 
 Immediately switch off B1 and disconnect USB if the motor does not turn when commanded to run, any component or battery becomes hot, there is an unusual smell, smoke or sparking appears, or the motor or wiring moves unexpectedly. Tell the teacher and do not touch a hot component or reconnect power until the circuit has been checked.
+
+## Compare Lesson 04 and Lesson 05 Responsiveness
+
+This is a fair comparison: keep the same RV, motor circuit, B1 supply, and USB-powered Arduino for both programs. Do not move any wires between tests. The RV must keep one outer terminal on Arduino 5 V, its other outer terminal on shared ground, and its center wiper on A0. The protected motor circuit must keep the same D3 gate path, separate B1 positive motor supply, shared ground, and flywheel diode used in lesson 04.
+
+Both lessons print one serial report about every 500 milliseconds. The important observation is how soon the **motor** responds between those reports: lesson 04 updates its command only once per 500-millisecond loop, while lesson 05's timer updates it every 100 milliseconds.
+
+1. Switch off B1, keep the circuit unchanged, and upload lesson 04 from `platformio-uno-lessons/04-adc-pwm-motor-control`.
+2. Open the serial monitor at 9,600 baud. Adjust the RV until the reported ADC and PWM values are near zero.
+3. Confirm that the bare motor is still secured and the wiring still has teacher approval, then switch on B1.
+4. Just after a new serial line appears, move the RV quickly from near minimum to near maximum. Watch the motor without touching it and record whether its response seems immediate or delayed. Repeat the test three times, then repeat three times from near maximum to near minimum.
+5. Switch off B1. Without changing the circuit, upload lesson 05 from `platformio-uno-lessons/05-interrupt-driven-motor-control` and reopen the serial monitor at the same 9,600-baud setting.
+6. Repeat the same three low-to-high and three high-to-low RV movements. Make each movement just after a serial line so the trials are as similar as possible.
+7. Switch off B1 when the comparison is complete, close the serial monitor, and disconnect USB. Remove both power sources before changing any wire.
+
+| RV movement | Lesson 04 motor response | Lesson 05 motor response | Which response seemed faster? |
+| --- | --- | --- | --- |
+| Low to high, trial 1 |  |  |  |
+| Low to high, trial 2 |  |  |  |
+| Low to high, trial 3 |  |  |  |
+| High to low, trial 1 |  |  |  |
+| High to low, trial 2 |  |  |  |
+| High to low, trial 3 |  |  |  |
+
+After completing the table, answer these questions:
+
+1. Did the serial lines appear at about the same half-second pace in both lessons?
+2. Which lesson usually made the motor respond sooner after you moved the RV?
+3. Why can the lesson 05 motor respond before its next ADC and PWM values appear in the serial monitor?
+4. What hardware and timing did you keep the same to make this a fair test, and what one thing changed?

@@ -5,8 +5,8 @@ The existing Arduino Uno lessons establish digital transistor control and ADC-dr
 ## What Changes
 
 - Add `03-pwm-motor-ramp` as a standalone PlatformIO lesson that smoothly ramps a motor command from 0% to 100% and back over eight seconds.
-- Add `04-adc-pwm-motor-control` as a standalone lesson that maps A0 readings to PWM output and intentionally waits 500 ms between sample-and-report cycles.
-- Add `05-interrupt-driven-motor-control` as a standalone lesson that updates ADC-derived PWM every 100 ms from a Timer1 interrupt while the foreground loop reports values every 500 ms.
+- Add `04-adc-pwm-motor-control` as a standalone lesson that maps A0 readings to PWM output and intentionally waits 1,000 ms between sample-and-report cycles.
+- Add `05-interrupt-driven-motor-control` as a standalone lesson that updates ADC-derived PWM every 100 ms from a Timer1 interrupt while the foreground loop reports values every 1,000 ms.
 - Document a teacher-verified, low-side RFP30N06LE motor driver using Arduino D3, a series gate resistor, a gate pulldown resistor, an external two-AA B1 motor supply, a 1N5817 flywheel diode, and shared ground.
 - Extend the lesson collection documentation with the new independent projects, prerequisites, student observations, and electrical and mechanical safety checks.
 
