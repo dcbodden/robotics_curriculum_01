@@ -33,3 +33,7 @@
 - [x] 5.3 Verify the sketch samples before each output interval and emits matching labeled ADC and delay values at 9,600 baud.
 - [x] 5.4 Review the student instructions against every ADC lesson scenario, including independent build behavior, safe wiring, three-position observation, and lesson 01 continuity.
 - [x] 5.5 Run strict OpenSpec validation for `add-uno-adc-variable-delay-lesson` and resolve all reported issues.
+
+## Archive Note
+
+Archived on 2026-09-06 with the lesson implementation complete and all 21 tasks checked. This change did not track separate proposal, delta-spec, or design artifacts, so the archive was completed with those artifact sections missing at the user's direction.
