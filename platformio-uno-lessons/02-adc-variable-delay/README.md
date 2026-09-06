@@ -2,6 +2,13 @@
 
 This lesson uses a three-terminal potentiometer to send an adjustable voltage to analog pin A0. The Arduino reads that voltage and uses it to change the pin-8 blink delay.
 
+## Optional Related Activities
+
+- Before this lesson, [Multimeter and Ohm's Law](../../electronics-fundamentals-lessons/01-multimeter-ohms-law/) offers optional practice measuring voltage, resistance, and current.
+- After this lesson, [Manual Voltage Mapping](../../electronics-fundamentals-lessons/02-manual-voltage-mapping/) offers optional reinforcement by sorting measured voltages into eight digital levels.
+
+These activities are helpful connections, not prerequisites. You can build and upload this lesson without completing either one.
+
 ## How the Arduino Turns Voltage Into a Number
 
 Voltage can slide smoothly from low to high, like moving a dimmer switch. The Arduino's **analog-to-digital converter**, or **ADC**, measures the voltage on A0 and chooses a whole-number value for it.
