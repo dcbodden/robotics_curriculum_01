@@ -11,6 +11,21 @@ By the end of the lesson, you will be able to:
 - use voltage and resistance to calculate current; and
 - compare a calculated result with a meter reading.
 
+## Who Does What
+
+- **Student actions:** Directions that say **you** are for the student. You may identify parts, build with the batteries removed, take approved readings, calculate, record, and explain observations. Stop whenever a step says **teacher checkpoint** or **ask the teacher**.
+- **Teacher-only checks:** The teacher completes **Teacher Preparation**, verifies every checkpoint, chooses safe meter jacks and ranges, and decides when power may be connected. A student must not skip or perform a teacher-only check.
+
+## Electrical Words You Will Use
+
+- A **circuit** is a path that electricity can follow. A **terminal** is a metal connection point on a part.
+- A **digital multimeter** is a tool that measures electrical values. Its **leads** are the insulated wires, its **probes** are the metal tips, and its **jacks** are the sockets where the leads plug in. **COM** is the jack for the black lead.
+- **Voltage**, measured in volts (`V`), is the electrical push. **Current**, measured in amperes (`A`) or milliamps (`mA`), is the flow of electric charge. One ampere equals 1,000 milliamps.
+- **Resistance**, measured in ohms (`Ω`), tells how strongly a part limits current. One kilo-ohm (`kΩ`) equals 1,000 ohms.
+- **DC**, or direct current, flows in one main direction and is the kind supplied by batteries. **AC**, or alternating current, repeatedly changes direction and is not used in this lesson.
+- **In series** means parts form one path, one after another. **In parallel** means two points are connected across the same pair of terminals.
+- A **short circuit** is an unintended path with too little resistance, which can allow dangerous current. A meter's **fuse** is a safety part that breaks the path if current becomes too high.
+
 ## Safety Rules — Low Voltage Only
 
 > **Use only the B1 holder with its two teacher-approved AA cells and the B1/R1/S2 circuit in this lesson. Never place the probes in a household or wall outlet, power strip, appliance, or any other power source. Stop and tell the teacher if a part, lead, or meter is damaged, hot, wet, or smells unusual.**

@@ -2,6 +2,8 @@
 
 Name: ______________________________  Date: __________________
 
+**Student:** Write predictions, teacher-approved readings, calculations, and explanations here. **Teacher:** Approve each measurement and complete every safety checkpoint in the lesson instructions. This worksheet does not give permission to change the meter mode or connect power without that approval.
+
 ## Predict
 
 Before measuring current, what do you predict the meter will show when S2 is released? What do you predict it will show when S2 is pressed?

@@ -2,6 +2,8 @@
 
 Name: ______________________________  Date: __________________
 
+**Student:** Write predictions and record measurements only after the lesson's teacher checkpoint. **Teacher:** Verify the wiring and meter setup before USB power is connected. This worksheet does not replace the safety and wiring directions in the lesson.
+
 ## Predict
 
 What do you predict will happen to the measured voltage as the control moves from one end to the other?

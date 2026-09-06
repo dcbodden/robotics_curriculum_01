@@ -11,6 +11,21 @@ By the end of the lesson, you will be able to:
 - match each decimal level with a 3-bit value; and
 - explain how many nearby voltages can share the same digital level.
 
+## Who Does What
+
+- **Student actions:** Directions that say **you** are for the student. You may make predictions, wire only with USB disconnected, move the RV control after approval, read the meter, use the lookup table, and record observations. Stop whenever a step says **teacher checkpoint** or **ask the teacher**.
+- **Teacher-only checks:** The teacher identifies the RV terminals, verifies all wiring and meter settings, confirms that no external power is connected, and decides when USB power may be connected. A student must not skip or perform a teacher-only check.
+
+## Electrical and Digital Words You Will Use
+
+- **Voltage**, measured in volts (`V`), is the electrical push that can make current flow. **Resistance**, measured in ohms (`Ω`), tells how strongly a part limits current. `50K Ω` means 50 kilo-ohms, or 50,000 ohms.
+- The **RV Snap**, also called a **variable resistor** or **potentiometer**, is a resistor adjusted with a control. Its **terminals** are its metal connection points. The center terminal is the **wiper**, which moves electrically as the control moves.
+- A **voltage divider** uses the RV's resistance to make an adjustable voltage between 0 V and 5 V at the wiper.
+- **GND**, pronounced “ground,” is the circuit's 0 V reference point. **DC**, or direct current, flows in one main direction and is the type of voltage used in this lesson.
+- A **short circuit** is an unintended path with too little resistance, such as connecting 5 V directly to GND. It can allow too much current and damage equipment.
+- **Decimal** is the everyday number system using digits 0 through 9. **Binary** uses only 0 and 1. A **bit** is one binary digit.
+- An **ADC**, or analog-to-digital converter, measures a smoothly changing voltage and gives it a numbered digital value.
+
 ## Think of the Ranges as Digital Buckets
 
 The RV voltage can change smoothly through many different values. To make a simpler digital model, this lesson sorts those values into eight ranges. Imagine eight buckets lined up from the lowest voltage to the highest voltage: each measured voltage drops into the one bucket whose range contains it.
