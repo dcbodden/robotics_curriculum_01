@@ -42,5 +42,6 @@
   - Review completed September 6, 2026: confirmed the ordered student sequence, the released-S2 and open S2-to-B1-positive resistance safeguards with no alternate path, cell removal before current-mode setup and teardown, COM/VΩ/current-jack instructions, explicit dial settings, parallel voltage and series current placement, teacher checkpoints, and the low-voltage-only boundary.
 - [x] 5.3 Verify programmatically or by exhaustive review that the lookup table covers every value from 0 through 5 V exactly once and maps all internal boundaries and 5.000 V as specified.
   - Exhaustive review confirmed September 6, 2026 by the repository owner.
-- [ ] 5.4 Review both student activities against every electronics fundamentals delta-spec scenario, including all recording fields and all eight mapping outcomes.
+- [x] 5.4 Review both student activities against every electronics fundamentals delta-spec scenario, including all recording fields and all eight mapping outcomes.
+  - Review completed September 6, 2026: every scenario is represented in the lesson instructions and recording activities; the distributed PDFs retain the required recording fields, and the mapping activity requires minimum and maximum readings, at least six intermediate readings, extra rows as needed, and explicit confirmation of levels 0 through 7.
 - [ ] 5.5 Run strict OpenSpec validation for `add-electronics-fundamentals-lessons` and resolve all reported issues.
