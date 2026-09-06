@@ -27,7 +27,7 @@
 
 ## 5. Lesson 05 Interrupt-Driven Motor Control
 
-- [ ] 5.1 Configure Timer1 in compare mode for a 100-millisecond interrupt without changing Timer0 or D3's Timer2 PWM configuration.
+- [x] 5.1 Configure Timer1 in compare mode for a 100-millisecond interrupt without changing Timer0 or D3's Timer2 PWM configuration.
 - [ ] 5.2 Implement the interrupt handler to read A0, derive and apply the 0–255 D3 PWM command, update `volatile` shared values, and perform no serial output.
 - [ ] 5.3 Implement a consistent foreground snapshot of the shared ADC and PWM values, report it over serial, and block for 500 milliseconds between reports.
 - [ ] 5.4 Explain foreground work, interrupt work, `volatile` data, atomic snapshots, and the deliberate trade-off of using synchronous `analogRead()` in this bounded 10 Hz demonstration.
