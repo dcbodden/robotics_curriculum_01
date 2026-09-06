@@ -32,7 +32,7 @@
 - [x] 4.1 Add links from the root and collection documentation to both fundamentals lessons and identify their suggested relationship to the ADC variable-delay lesson.
 - [x] 4.2 Add optional preparation or reinforcement links from the ADC variable-delay lesson without making the fundamentals activities build prerequisites.
 - [x] 4.3 Ensure instructions consistently separate student actions from teacher-only checks and define unfamiliar electrical terms for a fifth-grade audience.
-- [ ] 4.4 Document repository ownership or permission for `sample_circuit/base_layout.jpg` and every other circuit illustration or photo included in the lessons.
+- [x] 4.4 Document repository ownership or permission for `sample_circuit/base_layout.jpg` and every other circuit illustration or photo included in the lessons.
 
 ## 5. Verification
 

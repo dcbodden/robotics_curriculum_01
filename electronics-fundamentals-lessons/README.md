@@ -24,4 +24,6 @@ Both fundamentals lessons are non-code activities. Students do not build or uplo
 - [Multimeter and Ohm's Law](01-multimeter-ohms-law/)
 - [Manual Voltage Mapping](02-manual-voltage-mapping/)
 
+Ownership and reuse permission for lesson photographs and illustrations are recorded in [Asset Provenance](ASSETS.md).
+
 Use this collection for foundational electronics practice that supports coding lessons while remaining separate from PlatformIO project folders.
