@@ -48,9 +48,9 @@ Lesson 03 will step `analogWrite` from 0 to 255 and back with a short fixed dela
 
 Alternative considered: calculate duty cycle continuously from `millis()`. That gives more exact timing but introduces non-blocking time arithmetic before the curriculum is ready to contrast blocking foreground work with interrupts.
 
-### Make lesson 04's 500 ms blocking behavior explicit
+### Make lesson 04's 1,000 ms blocking behavior explicit
 
-Each lesson-04 loop iteration reads A0, maps 0–1023 directly to 0–255, updates D3, prints labeled ADC and PWM values, then calls `delay(500)`. The delay is retained to make serial output readable and to give students a perceptible control-latency limitation to compare with lesson 05.
+Each lesson-04 loop iteration reads A0, maps 0–1023 directly to 0–255, updates D3, prints labeled ADC and PWM values, then calls `delay(1000)`. The longer delay keeps serial output readable and makes the control-latency limitation easier for students to observe and compare with lesson 05.
 
 Alternative considered: separate fast control and slow reporting using `millis()`. That solves the responsiveness problem before students have observed it and does not set up the intended interrupt demonstration.
 
@@ -60,11 +60,11 @@ Configure Timer1 in clear-timer-on-compare mode for a 100 ms compare interrupt w
 
 The interrupt handler reads A0, derives an 8-bit PWM value, updates D3, and stores the latest ADC and PWM values in `volatile` shared variables. It performs no serial I/O. A synchronous `analogRead()` makes the handler longer than an ideal production ISR, but at ten calls per second it keeps the demonstration direct and the interrupt occupancy small. The README will name this as a teaching trade-off rather than a general recommendation.
 
-Alternative considered: have the timer ISR set a flag and service ADC in the foreground. A blocking 500 ms delay would then prevent 100 ms control updates, defeating the observable comparison. A fully interrupt-driven ADC state machine would shorten the timer ISR but add register-level concepts outside this lesson's scope.
+Alternative considered: have the timer ISR set a flag and service ADC in the foreground. A blocking 1,000 ms delay would then prevent 100 ms control updates, defeating the observable comparison. A fully interrupt-driven ADC state machine would shorten the timer ISR but add register-level concepts outside this lesson's scope.
 
 ### Snapshot shared values before serial reporting
 
-The foreground loop will briefly disable interrupts while copying the 16-bit ADC value and 8-bit PWM value into local variables, then restore interrupts before printing. This prevents a torn 16-bit read on the 8-bit ATmega328P and keeps the slow serial operations outside the ISR. It then blocks for 500 ms, during which Timer1 updates continue.
+The foreground loop will briefly disable interrupts while copying the 16-bit ADC value and 8-bit PWM value into local variables, then restore interrupts before printing. This prevents a torn 16-bit read on the 8-bit ATmega328P and keeps the slow serial operations outside the ISR. It then blocks for 1,000 ms, during which Timer1 updates continue.
 
 Alternative considered: print the shared variables directly. That leaves the ADC report vulnerable to inconsistent byte reads and misses an important correctness rule for interrupt-shared state.
 
@@ -80,5 +80,5 @@ Lessons 04 and 05 retain the three-terminal RV connection from lesson 02: Arduin
 - [Incorrect diode polarity creates a short when the MOSFET turns on] → Show the cathode band in both the wiring table and circuit diagram and require a teacher checkpoint before B1 is enabled.
 - [Incorrect TO-220 orientation can swap gate, drain, and source] → Identify pins from the exact RFP30N06LE datasheet and require tracing by function rather than relying only on a drawing's orientation.
 - [Calling `analogRead()` inside an ISR models a deliberate teaching compromise] → Document the bounded 10 Hz use, forbid serial output in the ISR, and explain that more advanced systems can trigger ADC conversion asynchronously.
-- [Timer register changes can silently break PWM or Arduino timing] → Use Timer1 only for scheduling, D3/Timer2 only for PWM, and leave Timer0 configuration untouched; verify motor updates continue during `delay(500)`.
+- [Timer register changes can silently break PWM or Arduino timing] → Use Timer1 only for scheduling, D3/Timer2 only for PWM, and leave Timer0 configuration untouched; verify motor updates continue during `delay(1000)`.
 - [Breadboard or jumper errors can expose moving parts or short AA cells] → Require power-off wiring, secure the motor with no attachment, add teacher verification, and provide immediate shutdown guidance.

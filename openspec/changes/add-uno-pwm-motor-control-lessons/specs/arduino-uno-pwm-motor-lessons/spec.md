@@ -34,7 +34,7 @@ Lesson 03 SHALL repeatedly vary the D3 PWM command from 0 through 255 over appro
 - **THEN** the activity distinguishes the smoothly changing PWM command from motor behaviors such as a starting threshold, coasting, or non-linear speed changes
 
 ### Requirement: Blocking ADC-to-PWM motor control
-Lesson 04 SHALL read A0 as a value from 0 through 1023, map it directly to a D3 PWM command from 0 through 255, report both values over the serial connection, and wait 500 milliseconds before the next sample-and-report cycle.
+Lesson 04 SHALL read A0 as a value from 0 through 1023, map it directly to a D3 PWM command from 0 through 255, report both values over the serial connection, and wait 1,000 milliseconds before the next sample-and-report cycle.
 
 #### Scenario: Adjust the RV control
 - **WHEN** a student changes the three-terminal RV position while lesson 04 is running
@@ -42,13 +42,13 @@ Lesson 04 SHALL read A0 as a value from 0 through 1023, map it directly to a D3 
 
 #### Scenario: Observe blocking responsiveness
 - **WHEN** the RV position changes immediately after a sample
-- **THEN** the motor command can retain the preceding value until the next 500-millisecond sample-and-report cycle
+- **THEN** the motor command can retain the preceding value until the next 1,000-millisecond sample-and-report cycle
 
 ### Requirement: Interrupt-driven ADC-to-PWM motor control
-Lesson 05 SHALL update the A0 reading and corresponding D3 PWM command every 100 milliseconds from a timer interrupt while the foreground loop reports the latest values every 500 milliseconds and blocks between reports.
+Lesson 05 SHALL update the A0 reading and corresponding D3 PWM command every 100 milliseconds from a timer interrupt while the foreground loop reports the latest values every 1,000 milliseconds and blocks between reports.
 
 #### Scenario: Adjust the RV while the foreground waits
-- **WHEN** a student changes the RV position during the foreground loop's 500-millisecond wait
+- **WHEN** a student changes the RV position during the foreground loop's 1,000-millisecond wait
 - **THEN** timer interrupts continue updating the motor command at 100-millisecond intervals before the next serial report
 
 #### Scenario: Report shared interrupt data safely

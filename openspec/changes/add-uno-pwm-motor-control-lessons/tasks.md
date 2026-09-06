@@ -2,7 +2,7 @@
 
 - [x] 1.1 Create `03-pwm-motor-ramp`, `04-adc-pwm-motor-control`, and `05-interrupt-driven-motor-control` as independent Arduino Uno PlatformIO projects using the established `atmelavr`, `uno`, and `arduino` configuration.
 - [x] 1.2 Add the existing PlatformIO IDE extension recommendation and serial monitor configuration needed by each lesson.
-- [x] 1.3 Update `platformio-uno-lessons/README.md` with the three new lessons, their prerequisites, and the progression from PWM through blocking ADC control to interrupt-driven control.
+- [x] 1.3 Update `platformio-uno-lessons/README.md` with the three new lessons, their prerequisites, and the progression from 1,000-millisecond blocking ADC control to 100-millisecond interrupt-driven control with 1,000-millisecond reporting.
 
 ## 2. Protected Motor Circuit Instructions
 
@@ -20,24 +20,24 @@
 
 ## 4. Lesson 04 Blocking ADC Motor Control
 
-- [x] 4.1 Implement the lesson-04 sketch to read A0, map 0–1023 directly to D3 PWM 0–255, print labeled ADC and PWM values, and delay 500 milliseconds between updates.
+- [x] 4.1 Implement the lesson-04 sketch to read A0, map 0–1023 directly to D3 PWM 0–255, print labeled ADC and PWM values, and delay 1,000 milliseconds between updates.
 - [x] 4.2 Document the RV outer-terminal connections to Arduino 5 V and GND and the center-wiper connection to A0 without connecting B1 positive to the ADC circuit.
-- [x] 4.3 Explain that the 500-millisecond delay makes serial output readable while also making motor-control response intentionally sluggish.
-- [x] 4.4 Add build, upload, serial-monitor, multi-position observation, recording, and troubleshooting steps that relate RV position, ADC value, PWM value, and motor behavior.
+- [x] 4.3 Explain that the 1,000-millisecond delay makes serial output readable while making the intentionally sluggish motor-control response easier to observe.
+- [x] 4.4 Add build, upload, serial-monitor, multi-position observation, recording, and troubleshooting steps that relate RV position, ADC value, PWM value, motor behavior, and the 1,000-millisecond update cadence.
 
 ## 5. Lesson 05 Interrupt-Driven Motor Control
 
-- [ ] 5.1 Configure Timer1 in compare mode for a 100-millisecond interrupt without changing Timer0 or D3's Timer2 PWM configuration.
-- [ ] 5.2 Implement the interrupt handler to read A0, derive and apply the 0–255 D3 PWM command, update `volatile` shared values, and perform no serial output.
-- [ ] 5.3 Implement a consistent foreground snapshot of the shared ADC and PWM values, report it over serial, and block for 500 milliseconds between reports.
-- [ ] 5.4 Explain foreground work, interrupt work, `volatile` data, atomic snapshots, and the deliberate trade-off of using synchronous `analogRead()` in this bounded 10 Hz demonstration.
-- [ ] 5.5 Add an observation activity that compares lesson 04 and lesson 05 responsiveness while retaining the same RV, motor circuit, and 500-millisecond serial-report interval.
-- [ ] 5.6 Add timer-specific troubleshooting for a stationary motor, unchanging ADC values, missing serial output, and evidence that Timer1 updates continue during foreground delays.
+- [x] 5.1 Configure Timer1 in compare mode for a 100-millisecond interrupt without changing Timer0 or D3's Timer2 PWM configuration.
+- [x] 5.2 Implement the interrupt handler to read A0, derive and apply the 0–255 D3 PWM command, update `volatile` shared values, and perform no serial output.
+- [x] 5.3 Implement a consistent foreground snapshot of the shared ADC and PWM values, report it over serial, and block for 1,000 milliseconds between reports.
+- [x] 5.4 Explain foreground work, interrupt work, `volatile` data, atomic snapshots, and the deliberate trade-off of using synchronous `analogRead()` in this bounded 10 Hz demonstration.
+- [x] 5.5 Add an observation activity that compares lesson 04 and lesson 05 responsiveness while retaining the same RV, motor circuit, and 1,000-millisecond serial-report interval.
+- [x] 5.6 Add timer-specific troubleshooting for a stationary motor, unchanging ADC values, missing serial output, and evidence that Timer1 updates continue during foreground delays.
 
 ## 6. Verification
 
-- [ ] 6.1 Build each of lessons 03, 04, and 05 independently with PlatformIO and confirm that no other lesson source is compiled.
-- [ ] 6.2 Review all three procedures against the protected power-stage specification, including MOSFET function, diode polarity, separate positive supplies, shared ground, and secured-motor cautions.
-- [ ] 6.3 Review lesson timing and mappings against the delta spec: approximately eight seconds for lesson 03, 500-millisecond control updates for lesson 04, and 100-millisecond interrupt updates with 500-millisecond reports for lesson 05.
-- [ ] 6.4 Verify lesson 05 leaves Timer0 and Timer2 roles intact, keeps serial operations outside the ISR, and copies the 16-bit ADC value atomically.
-- [ ] 6.5 Run strict OpenSpec validation for `add-uno-pwm-motor-control-lessons` and resolve any reported issues.
+- [x] 6.1 Build each of lessons 03, 04, and 05 independently with PlatformIO and confirm that no other lesson source is compiled.
+- [x] 6.2 Review all three procedures against the protected power-stage specification, including MOSFET function, diode polarity, separate positive supplies, shared ground, and secured-motor cautions.
+- [x] 6.3 Review lesson timing and mappings against the delta spec: approximately eight seconds for lesson 03, 1,000-millisecond control updates for lesson 04, and 100-millisecond interrupt updates with 1,000-millisecond reports for lesson 05.
+- [x] 6.4 Verify lesson 05 leaves Timer0 and Timer2 roles intact, keeps serial operations outside the ISR, and copies the 16-bit ADC value atomically.
+- [x] 6.5 Run strict OpenSpec validation for `add-uno-pwm-motor-control-lessons` and resolve any reported issues.
