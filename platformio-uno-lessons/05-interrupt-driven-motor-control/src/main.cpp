@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <avr/interrupt.h>
+#include <util/atomic.h>
 
 // The PWM-capable pin that controls the MOSFET gate.
 const int MOTOR_PWM_PIN = 3;
@@ -12,6 +13,10 @@ const int ADC_MIN = 0;
 const int ADC_MAX = 1023;
 const int PWM_MIN = 0;
 const int PWM_MAX = 255;
+
+// The foreground reports the latest values twice per second.
+const unsigned long REPORT_DELAY_MS = 500;
+const unsigned long SERIAL_BAUD = 9600;
 
 // Timer1 receives 250,000 clock ticks per second after the 64:1 prescaler.
 // Counting from 0 through 24,999 therefore produces one interrupt every 100 ms.
@@ -57,8 +62,25 @@ void setup() {
 	pinMode(MOTOR_PWM_PIN, OUTPUT);
 	analogWrite(MOTOR_PWM_PIN, PWM_MIN);
 
+	Serial.begin(SERIAL_BAUD);
 	configureTimer1For100MillisecondInterrupt();
 }
 
 void loop() {
+	uint16_t adcSnapshot;
+	uint8_t pwmSnapshot;
+
+	// Copy one consistent pair, then restore interrupts before serial output.
+	ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+		adcSnapshot = latestAdcReading;
+		pwmSnapshot = latestPwmCommand;
+	}
+
+	Serial.print("ADC reading: ");
+	Serial.print(adcSnapshot);
+	Serial.print(" | PWM command: ");
+	Serial.println(pwmSnapshot);
+
+	// Timer1 interrupts keep updating the motor while the foreground waits.
+	delay(REPORT_DELAY_MS);
 }
