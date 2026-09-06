@@ -31,7 +31,7 @@ By the end of the lesson, you will be able to:
 > **Use only the B1 holder with its two teacher-approved AA cells and the B1/R1/S2 circuit in this lesson. Never place the probes in a household or wall outlet, power strip, appliance, or any other power source. Stop and tell the teacher if a part, lead, or meter is damaged, hot, wet, or smells unusual.**
 
 - Remove both AA cells before building, changing a connection, or changing to or from current mode.
-- Measure resistance only when B1 is empty and R1 is isolated.
+- Measure resistance only in the documented layout with S2 released, the S2-to-B1-positive gap open, and no alternate path around either opening. The cells may remain installed because B1 cannot energize R1 through those two open points. If the exact layout cannot be confirmed, remove the cells.
 - Measure voltage in parallel only while the red lead is in the voltage/resistance jack.
 - Measure current only in the teacher-verified series path. Never place a current-mode meter directly across B1 or another component.
 - Turn the meter off after each measurement. After current measurement, remove the cells before returning the red lead to the voltage/resistance jack.
@@ -53,7 +53,7 @@ Complete this checklist before students begin:
 - [ ] Remove power and inspect B1, R1, and S2 for damage, loose snaps, corrosion, or overheating.
 - [ ] Record the installed AA cell type and its nominal voltage per cell: ____________________.
 - [ ] Set up the meter for DC voltage and measure B1 with S2 released. Actual battery voltage: __________ V.
-- [ ] Disconnect B1, isolate R1 from other paths, and measure it in resistance mode. Actual resistance: __________ Ω.
+- [ ] Keep S2 released and the S2-to-B1-positive gap open, verify that no alternate path completes the battery circuit, and measure directly across R1 in resistance mode. The cells may remain installed in this exact setup. Actual resistance: __________ Ω.
 - [ ] Find and record R1's power rating from the manufacturer, supplier, or teacher inventory record. Power rating: __________ W. Do not approve the activity if the rating is unknown.
 - [ ] Calculate expected current using the measured values: $I = V / R$. Expected current: __________ A = __________ mA.
 - [ ] Calculate expected resistor power using $P = V \times I$ or $P = V^2 / R$. Expected power: __________ W. Confirm that it is below R1's verified power rating.
@@ -103,19 +103,19 @@ R1 is also a **fixed resistor**. Fixed means its resistance is designed to stay 
 
 ## Measure R1 Resistance First
 
-**Resistance must be measured with all power removed. Never use resistance mode on a powered circuit.**
+**Resistance mode may be used only while R1 is electrically unpowered. In this exact layout, released S2 and the open S2-to-B1-positive gap provide two breaks, so B1 cannot energize R1 even when the cells are installed. If either open point or the exact layout cannot be confirmed, remove the cells before measuring. Never use resistance mode on a powered component.**
 
 Resistance tells how strongly a part limits current. The meter marks resistance with the omega symbol (`Ω`). Measure R1 before measuring voltage or current:
 
-1. Confirm that both AA cells are removed from B1. Show the empty holder to the teacher.
-2. Keep the intentional gap between the free end of S2 and B1 positive open.
-3. Unsnap the R1 end that connects to B1 negative. Leave that R1 terminal lifted so R1 has no complete path through B1 or S2. The [`sample_circuit/resistance.jpg`](sample_circuit/resistance.jpg) photo shows this isolated-resistor setup.
+1. Keep S2 released. Do not press it while the meter is connected to R1.
+2. Keep the intentional gap between the free end of S2 and B1 positive open. Do not bridge that gap with a wire, probe, or meter lead.
+3. Leave R1 snapped between B1 negative and S2, exactly as shown in [`sample_circuit/resistance.jpg`](sample_circuit/resistance.jpg). Do not add another connection. With S2 released and the S2-to-B1-positive gap open, there is no complete battery-powered path through R1. The AA cells may remain installed.
 4. Turn the meter off while checking the leads. Put the black lead in **COM** and the red lead in the jack marked for voltage and resistance, usually **VΩ**. The red lead must not be in a current jack.
 5. Turn the dial to resistance (`Ω`). For a manual-ranging meter, begin on a teacher-approved range above 100 Ω, then select a lower suitable range if the meter manual allows it. An auto-ranging meter chooses the range itself.
-6. Ask the teacher to verify the empty B1 holder, lifted R1 terminal, lead jacks, and resistance setting before the probes touch R1.
+6. Ask the teacher to verify that R1 connects only between B1 negative and S2, S2 is released, the S2-to-B1-positive gap is open, no alternate path completes the battery circuit, the leads use the correct jacks, and the dial is set to resistance. If the teacher cannot confirm every condition, remove the cells before the probes touch R1.
 7. Touch one probe tip to each metal terminal of R1. Probe color and direction do not matter for this resistor. Keep fingers off the metal probe tips and wait for a steady number.
 8. Read both the number and its unit. Record the measured resistance as __________ Ω. If the meter displays kilo-ohms (`kΩ`), ask the teacher to help convert it to ohms before recording.
-9. Remove the probes and turn the meter off. Snap R1 back onto B1 negative, but leave the free S2 terminal and B1 positive unconnected for the later current measurement. Ask the teacher to recheck the layout before any cells are installed.
+9. Remove the probes and turn the meter off. Leave R1 snapped between B1 negative and S2, and keep the free S2 terminal and B1 positive unconnected. Ask the teacher to recheck the layout before measuring B1 voltage.
 
 The `100 Ω` printed on R1 is its labeled value. The measured value may be somewhat different, so use the measured value in the later Ohm's law prediction.
 
@@ -123,8 +123,8 @@ The `100 Ω` printed on R1 is its labeled value. The measured value may be somew
 
 Voltage is the electrical push supplied by the battery. A voltage measurement is made **in parallel**, which means the two probes touch the two B1 battery terminals at the same time. Keep the intentional gap between S2 and B1 positive open during this measurement.
 
-1. Confirm that R1 is snapped back onto B1 negative and that the free S2 terminal is still not connected to B1 positive.
-2. Install the two teacher-approved AA cells in B1 in the directions marked on the holder. Do not press S2.
+1. Confirm that R1 remains snapped onto B1 negative and that the free S2 terminal is still not connected to B1 positive.
+2. Install the two teacher-approved AA cells in B1 in the directions marked on the holder, or confirm that cells left in place during the verified resistance measurement are installed correctly. Do not press S2.
 3. Turn the meter off while checking the leads. Put the black lead in **COM** and the red lead in the voltage jack, usually marked **VΩ**. The red lead must not be in a current jack.
 4. Turn the dial to DC voltage, shown as `V` with a straight line. Do not use the AC voltage setting. For a manual-ranging meter, begin on a teacher-approved DC voltage range above B1's expected voltage. An auto-ranging meter chooses the range itself.
 5. Ask the teacher to verify the lead jacks, DC voltage setting, installed cells, and open gap between S2 and B1 positive.
@@ -183,7 +183,7 @@ When a reading is unexpected, release S2, remove the probes, and remove both AA 
 
 | Problem | Safe check |
 | --- | --- |
-| The meter mode does not match the measurement. | With power removed and the meter off, choose resistance (`Ω`) for isolated R1, DC voltage for B1, or the teacher-approved DC current range for the series-current procedure. |
+| The meter mode does not match the measurement. | Remove the probes and turn the meter off. Choose resistance (`Ω`) only for R1 in the teacher-verified two-open-point setup, DC voltage for B1, or the teacher-approved DC current range for the powered-down series-current procedure. |
 | A lead is in the wrong port. | Check that black is in **COM**. Red belongs in **VΩ** for resistance and voltage. Move red to a current jack only during the powered-down, teacher-verified current procedure, then return it to **VΩ** afterward. |
 | B1 voltage has a minus sign. | Remove the probes. Put black on B1 negative (`−`) and red on B1 positive (`+`), then measure again in DC voltage mode. |
 | The display shows `OL`, `1`, or another overload symbol. | Remove the probes and power. The range may be too low, or the resistance path may be open. The teacher checks the meter manual, chooses a safe higher range if appropriate, and checks probe contact before trying again. |
