@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "control_mapping.h"
 
 // The joystick's two analog outputs.
 const int MOTOR_CONTROL_INPUT_PIN = A0;
@@ -10,7 +11,7 @@ const int SERVO_SIGNAL_PIN = 9;
 
 // Start with motor power off and a middle servo position command.
 const uint8_t INITIAL_MOTOR_PWM_COMMAND = 0;
-const uint16_t INITIAL_SERVO_PULSE_US = 1500;
+const uint16_t INITIAL_SERVO_PULSE_US = SERVO_CENTER_PULSE_US;
 
 uint8_t motorPwmCommand = INITIAL_MOTOR_PWM_COMMAND;
 uint16_t servoPulseCommandUs = INITIAL_SERVO_PULSE_US;
@@ -37,5 +38,6 @@ void setup() {
 }
 
 void loop() {
-	// Joystick mapping, interrupt control, and reporting follow in tasks 1.2–1.4.
+	// Task 1.3 will call the mapping functions from the control ISR.
+	// Interrupt control and reporting follow in tasks 1.3–1.4.
 }
