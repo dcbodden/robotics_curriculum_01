@@ -1,6 +1,6 @@
 ## 1. Standalone project and control firmware
 
-- [ ] 1.1 Create lesson 06's standalone Uno PlatformIO configuration and source, with joystick A0/A1 inputs, D3 motor output, D9 servo output, zero initial motor command, and middle initial servo command.
+- [x] 1.1 Create lesson 06's standalone Uno PlatformIO configuration and source, with joystick A0/A1 inputs, D3 motor output, D9 servo output, zero initial motor command, and middle initial servo command.
 - [ ] 1.2 Implement bounded center-off motor mapping with named neutral/deadband constants and bounded servo pulse mapping. Verify center, deadband boundaries, inactive travel, active endpoint, and servo endpoints with meaningful mapping checks.
 - [ ] 1.3 Verify Timer1 frame, overflow phase, and buffered compare behavior against the ATmega328P documentation; configure hardware servo pulses on a 20 ms frame and update both ADC-derived commands in the once-per-frame ISR, preserving Timer0 and Timer2. Check ADC channel settling and ISR duration; exclude waits and serial output from the ISR.
 - [ ] 1.4 Publish and atomically snapshot both ADC readings and commands for roughly one-second 9600-baud reporting, retaining the foreground delay and restoring interrupts before serial output.
