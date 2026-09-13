@@ -8,7 +8,7 @@
 ## 2. Teacher guidance and discovery
 
 - [x] 2.1 Create `robot-attention-teacher-guide.md` with preparation, a short lesson sequence, expected answers, the teacher example hypothesis about more noticeable lag with 1000 ms checks, guidance to accept student-written hypotheses and evidence-based conclusions, comparable numbered trial instructions, and links to existing B1/RV wiring, build/upload, and safety guidance.
-- [ ] 2.2 Explain motor coasting and starting thresholds, command updates versus PWM pulses and serial messages, the need for additional sensors in transfer examples, and the limits of the demonstration's checking rate.
+- [x] 2.2 Explain motor coasting and starting thresholds, command updates versus PWM pulses and serial messages, the need for additional sensors in transfer examples, and the limits of the demonstration's checking rate.
 - [ ] 2.3 Link worksheet source, PDF, and teacher guide from lessons 04 and 05 and identify the comparison in `platformio-uno-lessons/README.md`.
 
 ## 3. Printable output and verification

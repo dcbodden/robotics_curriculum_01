@@ -51,3 +51,37 @@ These three paired trials match the worksheet. The existing lesson 05 README off
 | Robot-problem reflection | Accept an appropriate information source and reason for frequent checks: obstacle distance to respond to a blocked path, a control reading to notice changed instructions, or temperature to notice a hot motor. The RV activity tests control changes; the other examples are discussion scenarios. |
 
 Judge the reasoning by whether the prediction is testable, the observations are recorded honestly, and the conclusion follows the evidence. A hypothesis need not be supported for the experiment to be useful. If the result is unclear, discuss what another matching trial could help establish instead of replacing the recorded answer with the expected one.
+
+## Interpret the timing and motor behavior
+
+### Three different rhythms
+
+| What happens | Lesson 04 | Lesson 05 |
+| --- | --- | --- |
+| Read the RV and apply its PWM power command | About once per second; the loop waits 1000 ms between passes. | Every 100 ms in the ISR: ten checks and command updates per second. |
+| Generate PWM on/off pulses on D3 | Hardware continues the selected power setting during the wait. | Hardware continues the selected power setting between ISR updates. Ten updates per second does not mean ten PWM pulses per second. |
+| Print numbers in the serial monitor | About once per second. | About once per second; reports show snapshots, so they do not display every ISR update. |
+
+Lesson 05 still calls `delay(REPORT_DELAY_MS)` in `loop()`. Its timer interrupt briefly pauses regular work, reads and updates the control, and returns. The two routines do not run simultaneously. The useful observation is a motor response between computer messages; the message pace alone cannot demonstrate the difference in checking rates.
+
+Lesson 04's lag depends on when the RV moves. Moving just after a reading can leave almost a full second before the next command update, while moving just before a reading leaves a short wait. Moving just after a serial report makes the longer wait easier to observe. Lesson 05 normally applies the new command at its next 100 ms check, but that is a command-update interval, not a promise that the motor reaches a new speed within 100 ms.
+
+### Coasting and starting thresholds
+
+A spinning motor can **coast** after its command drops to zero. Listen for when its sound begins to change rather than assume all continued motion means the program missed the RV change. A faster command update does not provide instant stopping or active braking in this circuit.
+
+A motor can also have a **starting threshold**: very small nonzero PWM commands may not be enough to start it. Its observed speed may not change evenly with the command numbers. Use the same clearly separated low and high RV positions for both programs; tiny changes can make the comparison hard to judge. Never hold the shaft or deliberately stall the motor to create a response. Follow the preparation safety check if it fails to turn when commanded to run.
+
+If these physical effects obscure the comparison, accept “hard to tell,” discuss the difference between the power command and actual motion, and consider additional matching trials only after checking the setup. Preserve the student's original records.
+
+## Transfer the idea to robot safety
+
+The RV is a changing **control input**. Neither program measures obstacle distance or motor temperature. Discuss those examples without creating collisions or overheating the motor.
+
+| Robot problem | Information it would need | Possible response after checking |
+| --- | --- | --- |
+| An obstacle appears in its path | An obstacle or distance sensor reading | Reduce movement, stop, or change direction. |
+| A person changes the control instruction | A fresh control reading, like the RV reading here | Apply the new power command sooner. |
+| A motor becomes too hot | A temperature sensor reading | Reduce or remove motor power and signal a problem. |
+
+Checking helps only when the robot has the appropriate information and instructions for responding to it. **Ten checks per second is this demonstration's rate**, not a universally safe rate for robots. A suitable rate depends on how fast the robot and surroundings change, sensor behavior, processing time, and how long movement takes to slow or stop. Frequent checks can reduce the time spent acting on old information, but they do not guarantee collision avoidance or prevent every kind of damage.
