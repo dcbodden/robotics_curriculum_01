@@ -2,7 +2,7 @@
 
 - [x] 1.1 Create the self-contained `robot-attention-worksheet.html` in lesson 05 with two US Letter pages, monochrome print styling, name/date fields, and usable writing space.
 - [x] 1.2 Add fifth-grade robot-attention text, faithful excerpts explaining lesson 04's read/map/apply/report/delay sequence, and the near-one-second possible command lag.
-- [ ] 1.3 Add the contrasting ISR excerpt and timer-reminder explanation, a correctly labeled timing diagram, and the distinction between 100 ms command checks and one-second reporting while delay() remains in lesson 05.
+- [x] 1.3 Add the contrasting ISR excerpt and timer-reminder explanation, a correctly labeled timing diagram, and the distinction between 100 ms command checks and one-second reporting while delay() remains in lesson 05.
 - [ ] 1.4 Add prediction, at least three paired B1/RV low/high trials, observation fields, and reflection questions about old commands, ten checks per second, and the information needed for collision, damage, or overheating scenarios.
 
 ## 2. Teacher guidance and discovery

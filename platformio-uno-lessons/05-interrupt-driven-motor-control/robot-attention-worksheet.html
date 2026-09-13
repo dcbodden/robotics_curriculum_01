@@ -7,7 +7,7 @@
   <style>
     @page {
       size: letter;
-      margin: 0.65in;
+      margin: 0.5in;
     }
 
     * { box-sizing: border-box; }
@@ -18,12 +18,12 @@
       background: #fff;
       font-family: Arial, Helvetica, sans-serif;
       font-size: 12pt;
-      line-height: 1.35;
+      line-height: 1.25;
     }
 
     .page {
-      width: 7.2in;
-      min-height: 9.65in;
+      width: 7.5in;
+      min-height: 9.95in;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -39,14 +39,14 @@
     h1, h2, p { margin: 0; }
     h1 { font-size: 22pt; line-height: 1.15; }
     h2 { font-size: 14pt; line-height: 1.25; margin-bottom: 0.08in; }
-    p + p { margin-top: 0.08in; }
+    p + p { margin-top: 0.06in; }
 
     .subtitle { margin-top: 0.06in; }
 
     .student-details {
       display: flex;
       gap: 0.25in;
-      margin: 0.14in 0 0.16in;
+      margin: 0.1in 0 0.12in;
     }
 
     .field { display: flex; align-items: baseline; gap: 0.08in; }
@@ -88,7 +88,7 @@
       padding: 0.08in;
       border: 1px solid #000;
       font-size: 10pt;
-      line-height: 1.3;
+      line-height: 1.15;
       white-space: pre-wrap;
       overflow-wrap: anywhere;
       break-inside: avoid;
@@ -98,19 +98,26 @@
     th, td { padding: 0.08in; border: 1px solid #000; vertical-align: top; }
     th { text-align: left; font-weight: bold; }
     tr { break-inside: avoid; page-break-inside: avoid; }
-    .code-steps { margin: 0.08in 0; table-layout: fixed; border: 1px solid #000; }
-    .code-steps td { padding: 0.04in 0.06in; }
-    .code-steps td:first-child { width: 52%; }
-    .code-steps code {
-      font-size: 10pt;
-      overflow-wrap: anywhere;
+    .lesson-comparison {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 0.18in;
+      break-inside: avoid;
     }
+    .lesson-comparison pre { width: 100%; min-width: 0; }
+    .lesson-comparison > section > h2 { min-height: 0.5in; }
+    .excerpt-label { margin-top: 0.08in; font-size: 10pt; }
+    .timeline { border: 1px solid #000; margin: 0.04in 0; table-layout: fixed; font-size: 10pt; }
+    .timeline th { width: 1.1in; }
+    .timeline td, .timeline th { padding: 0.035in; }
+    .timeline td { text-align: left; }
+    .timeline-key { font-size: 10pt; }
 
     .page-footer {
       break-inside: avoid;
       page-break-inside: avoid;
       margin-top: auto;
-      padding-top: 0.1in;
+      padding-top: 0.06in;
       border-top: 1px solid #000;
       display: flex;
       justify-content: space-between;
@@ -123,7 +130,7 @@
       .page {
         width: 8.5in;
         min-height: 11in;
-        padding: 0.65in;
+        padding: 0.5in;
         margin-bottom: 0.3in;
         outline: 1px solid #000;
       }
@@ -151,59 +158,32 @@
       <section class="worksheet-section" aria-labelledby="attention-title">
         <h2 id="attention-title">Follow the plan and keep checking</h2>
         <div class="introduction-space">
-          <p>Walking across a room, you follow a plan and watch for chairs or people.
-            Robots need fresh information too: has a control changed? Is the path clear?
-            Is the motor too hot? Checking often can help avoid collisions and damage.</p>
+          <p>Walking, you follow a plan and watch for people or chairs. Robots need
+            fresh information too: has a control changed? Is the path clear? Is the motor
+            too hot? Frequent checks can help avoid collisions and damage.</p>
           <p>Today we check the RV control. Obstacles and heat would need other sensors.</p>
         </div>
       </section>
 
-      <section class="worksheet-section" aria-labelledby="lesson-four-title">
-        <h2 id="lesson-four-title">Lesson 04: Check, act, and wait</h2>
-        <div class="explanation-space">
-          <p>The <code>loop()</code> repeats five steps. Find these code pieces in lesson 04:</p>
-          <table class="code-steps" aria-label="Lesson 04 code and its meaning">
-            <tbody>
-              <tr>
-                <td><code>analogRead(ANALOG_INPUT_PIN)</code></td>
-                <td><strong>1. Read.</strong> Get the RV reading on A0: 0 to 1023.</td>
-              </tr>
-              <tr>
-                <td><code>map(adcReading, ADC_MIN, ADC_MAX, PWM_MIN, PWM_MAX)</code></td>
-                <td><strong>2. Map.</strong> Change the reading to a power command: 0 to 255.</td>
-              </tr>
-              <tr>
-                <td><code>analogWrite(MOTOR_PWM_PIN, pwmCommand)</code></td>
-                <td><strong>3. Apply.</strong> Send the PWM power setting to the motor circuit on D3.</td>
-              </tr>
-              <tr>
-                <td><code>Serial.print(adcReading);</code><br><code>Serial.println(pwmCommand);</code></td>
-                <td><strong>4. Report.</strong> Show both numbers on the computer.</td>
-              </tr>
-              <tr>
-                <td><code>delay(CONTROL_UPDATE_DELAY_MS);</code></td>
-                <td><strong>5. Wait.</strong> This delay value is 1000 milliseconds: one second.</td>
-              </tr>
-            </tbody>
-          </table>
-          <p>The wait is <strong>blocking</strong>: the loop does not read the RV again
-            during it. The motor keeps receiving its old PWM power setting.</p>
+      <div class="lesson-comparison">
+        <section class="worksheet-section" aria-labelledby="lesson-four-title">
+          <h2 id="lesson-four-title">Lesson 04: Check, act, and wait</h2>
+          <p>The <code>loop()</code> repeats: <strong>read</strong> A0 (0–1023),
+            <strong>map</strong> to PWM (0–255), <strong>apply</strong> on D3,
+            <strong>report</strong> the numbers, then <strong>wait</strong>.</p>
+          <p class="excerpt-label">Code pieces, in order:</p>
+          <pre><code>analogRead(ANALOG_INPUT_PIN)
+map(adcReading, ADC_MIN, ADC_MAX, PWM_MIN, PWM_MAX)
+analogWrite(MOTOR_PWM_PIN, pwmCommand)
+Serial.print(adcReading);
+Serial.println(pwmCommand);
+delay(CONTROL_UPDATE_DELAY_MS);</code></pre>
+          <p>The delay is <strong>1000 ms: one second</strong>.
+            It is <strong>blocking</strong>: no new RV reads during the wait.
+            The motor keeps its old PWM power setting.</p>
           <p>Move the RV just after a reading: the command can lag by <strong>about
-            one second</strong>. Move it just before the next reading: the wait is shorter.
-            An old “go” command could keep a robot moving toward a chair.</p>
-        </div>
-      </section>
-
-      <section class="worksheet-section" aria-labelledby="lesson-five-title">
-        <h2 id="lesson-five-title">Lesson 05: A timer reminds the robot to check</h2>
-        <div class="explanation-space"><!-- ISR explanation and code excerpts: task 1.3. --></div>
-      </section>
-
-      <section class="worksheet-section" aria-labelledby="timing-title">
-        <h2 id="timing-title">Compare the checks</h2>
-        <div class="diagram-space"><!-- Labeled timing diagram: task 1.3. --></div>
-      </section>
-
+            one second</strong>. Just before the next reading, the wait is shorter.
+            An old “go” command could cause a collision.</p>
       <section class="worksheet-section" aria-labelledby="prediction-title">
         <h2 id="prediction-title">My prediction</h2>
         <!-- Prediction prompt: task 1.4. -->
@@ -211,6 +191,41 @@
           <div class="writing-line"></div>
           <div class="writing-line"></div>
         </div>
+      </section>
+
+        </section>
+
+        <section class="worksheet-section" aria-labelledby="lesson-five-title">
+          <h2 id="lesson-five-title">Lesson 05: A timer reminds the robot to check</h2>
+          <p>Every <strong>100 ms</strong> (one tenth of a second), a timer
+            <strong>interrupt</strong> pauses regular work for a brief checking
+            routine: the <strong>ISR</strong>. Then regular work continues.</p>
+          <p class="excerpt-label">Inside <code>ISR(TIMER1_COMPA_vect)</code>:<br>
+            selected code pieces, in order</p>
+          <pre><code>analogRead(ANALOG_INPUT_PIN)
+map(adcReading, ADC_MIN, ADC_MAX, PWM_MIN, PWM_MAX)
+analogWrite(MOTOR_PWM_PIN, pwmCommand)</code></pre>
+          <p>It reads, maps, and applies the PWM power setting <strong>10 times a
+            second</strong>, even with the RV still. PWM's fast on/off pulses
+            have a separate rhythm.</p>
+          <p><code>loop()</code> still waits with
+            <code>delay(REPORT_DELAY_MS);</code> (1000 ms). Both print about once a
+            second. ISR checks continue, updating power <strong>before the next
+            computer message</strong>.</p>
+        </section>
+      </div>
+
+      <section class="worksheet-section" aria-labelledby="timing-title">
+        <h2 id="timing-title">Compare the checks: one second</h2>
+        <p class="timeline-key">● = read the RV and update the power setting. Each box spans 100 ms.</p>
+        <table class="timeline" aria-label="One second divided into ten 100-millisecond intervals. Lesson 04 checks once at the start; lesson 05 checks at the start of every interval. The next second begins after the last box.">
+          <tbody>
+            <tr><th scope="row">Time (ms)</th><td>0</td><td>100</td><td>200</td><td>300</td><td>400</td><td>500</td><td>600</td><td>700</td><td>800</td><td>900</td></tr>
+            <tr><th scope="row">Lesson 04</th><td>●</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><th scope="row">Lesson 05</th><td>●</td><td>●</td><td>●</td><td>●</td><td>●</td><td>●</td><td>●</td><td>●</td><td>●</td><td>●</td></tr>
+          </tbody>
+        </table>
+        <p class="timeline-key">1000 ms starts the next second. This sketch shows the checking rhythm; real timing is approximate.</p>
       </section>
 
       <footer class="page-footer"><span>Lessons 04 and 05 · B1 battery and RV control</span><span>Page 1 of 2</span></footer>
