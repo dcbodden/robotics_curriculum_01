@@ -1,11 +1,22 @@
 ## ADDED Requirements
 
 ### Requirement: Printable robot attention comparison worksheet
-The curriculum SHALL provide an editable student worksheet source and matching two-page printable PDF comparing lessons 04 and 05 in fifth-grade language. The worksheet SHALL include name and date fields, short explanations, readable code excerpts, a timing diagram, prediction and observation prompts, and space for handwritten answers. It SHALL remain legible in black-and-white on US Letter paper without clipped content or split observation rows.
+The curriculum SHALL provide an editable student worksheet source and matching three-page printable PDF comparing lessons 04 and 05 in fifth-grade language. The worksheet SHALL include name and date fields, short explanations, readable code excerpts, a timing diagram, a clearly posed investigation question, a student-written hypothesis, experimental steps, observation prompts, and an evidence-based conclusion, and space for handwritten answers. It SHALL remain legible in black-and-white on US Letter paper without clipped content or split observation rows.
 
 #### Scenario: Print the student activity
 - **WHEN** a teacher prints the worksheet PDF on US Letter paper
-- **THEN** the student receives two readable pages with code, diagrams, and usable writing space, without needing the IDE or teacher guide to understand the questions
+- **THEN** the student receives three readable pages with code, diagrams, and usable writing space, without needing the IDE or teacher guide to understand the questions
+
+### Requirement: Student hypothesis and evidence-based conclusion
+The worksheet SHALL ask whether waiting 1000 ms between RV checks in lesson 04 produces more noticeable lag in motor response than checking every 100 ms in lesson 05. It SHALL define a hypothesis as a testable prediction, provide a clearly labeled space for the student to write one in their own words before testing, and ask for a reason. After the experiment, it SHALL ask whether the 100 ms version seemed more responsive, invite evidence from recorded trials, and ask whether the observations supported the student's hypothesis. It SHALL allow faster, similar, mixed, or unclear responses rather than assume the expected outcome was observed.
+
+#### Scenario: Write a hypothesis before testing
+- **WHEN** a student reaches the investigation question before running the comparison
+- **THEN** the student has a clear question and ample writing space to predict which checking interval will produce more noticeable lag and explain why
+
+#### Scenario: Draw a conclusion from observations
+- **WHEN** a student has recorded results for both programs
+- **THEN** the student reports whether the 100 ms version responded better, cites trial observations, and explains whether they support the hypothesis or leave the result uncertain
 
 ### Requirement: Accurate student explanation of control timing
 The worksheet SHALL explain lesson 04's read, map, apply, report, and blocking 1,000-millisecond wait sequence, and that an RV change just after sampling can take about one second to affect the motor command. It SHALL explain lesson 05's timer interrupt and ISR as a brief checking routine that reads A0 and adjusts the D3 PWM command every 100 milliseconds, or ten times per second, while its main loop still waits between roughly one-second serial reports. The explanation SHALL distinguish repeated control checks from the PWM signal's switching frequency and state that the previous motor power command continues during lesson 04's wait. Student understanding SHALL NOT depend on asynchronous programming, timer register calculations, volatile variables, or atomic snapshots.
@@ -22,14 +33,14 @@ The worksheet SHALL connect following instructions with repeatedly checking chan
 - **THEN** the activity asks what information the robot would need to check and how checking frequently could help it respond sooner
 
 ### Requirement: Guided B1 and RV responsiveness comparison
-The worksheet and separate teacher guide SHALL use the existing B1 two-AA supply, three-terminal RV on A0, and protected D3 motor circuit for both lessons. The activity SHALL include at least three matching low-to-high or high-to-low trials in each program, use RV movements just after serial reports to make lesson 04's lag observable, and record qualitative motor response rather than require precise reaction-time measurement. Both lessons SHALL link to the shared activity, and the lesson index SHALL identify it.
+The worksheet and separate teacher guide SHALL use the existing B1 two-AA supply, three-terminal RV on A0, and protected D3 motor circuit for both lessons. The activity SHALL provide numbered experimental steps to run lesson 04 first, record its response, switch to lesson 05 with motor power off during upload, repeat the same RV movements, and compare the results. It SHALL include at least three matching low-to-high or high-to-low trials in each program, use RV movements just after serial reports to make lesson 04's lag observable, and record qualitative motor response rather than require precise reaction-time measurement. Both lessons SHALL link to the shared activity, and the lesson index SHALL identify it.
 
 #### Scenario: Compare responsiveness fairly
 - **WHEN** the student and teacher run the two programs using the comparison instructions
 - **THEN** the circuit, supply, RV movements, and reporting pace remain comparable while the control-check schedule changes, and the student records observations for both programs
 
 ### Requirement: Teacher guidance for safe and accurate interpretation
-The teacher guide SHALL provide a short lesson sequence, expected answers, demonstration preparation, and references to existing build, upload, wiring, and safety instructions. It SHALL require the secured bare motor with no wheel or propeller, teacher verification before power, both power sources removed before wiring changes, and motor power off during uploads. It SHALL explain that PWM command updates are distinct from physical motor response, that motors can coast or have starting thresholds, and that ten checks per second is the demonstration rate rather than a universally safe rate for every robot.
+The teacher guide SHALL provide a short lesson sequence, expected answers, an example hypothesis that 1000 ms between checks will produce more noticeable motor-speed response lag than checks every 100 ms, guidance to accept student hypotheses and conclusions based on their own observations, demonstration preparation, and references to existing build, upload, wiring, and safety instructions. It SHALL require the secured bare motor with no wheel or propeller, teacher verification before power, both power sources removed before wiring changes, and motor power off during uploads. It SHALL explain that PWM command updates are distinct from physical motor response, that motors can coast or have starting thresholds, and that ten checks per second is the demonstration rate rather than a universally safe rate for every robot.
 
 #### Scenario: Prepare and interpret the demonstration
 - **WHEN** a teacher follows the guide

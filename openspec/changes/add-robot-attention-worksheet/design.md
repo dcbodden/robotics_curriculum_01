@@ -6,7 +6,7 @@ This design is included because the shared activity spans both lessons and needs
 
 ## Goals / Non-Goals
 
-**Goals:** Keep the student reading, predicting, observing, and explaining cause and effect; provide reproducible print output; keep one shared comparison activity easy to find from either lesson.
+**Goals:** Keep the student reading, forming a testable hypothesis, observing, and explaining cause and effect; provide reproducible print output; keep one shared comparison activity easy to find from either lesson.
 
 **Non-Goals:** Firmware changes, joystick wiring, extra sensors, moving-robot tests, asynchronous programming instruction, or student-level explanations of timer registers and shared-memory mechanics.
 
@@ -18,9 +18,17 @@ Create `platformio-uno-lessons/05-interrupt-driven-motor-control/robot-attention
 
 ### Use printable HTML as the editable worksheet source
 
-Use self-contained HTML with print CSS, US Letter page sizing, deliberate page breaks, readable monochrome type, and no remote assets. Generate and commit the matching PDF and document the generation command in the teacher guide. This gives explicit control over writing space and page boundaries; plain Markdown rendering is less predictable for a fixed two-page worksheet. No image generation or external fonts are needed.
+Use self-contained HTML with print CSS, US Letter page sizing, deliberate page breaks, readable monochrome type, and no remote assets. Generate and commit the matching PDF and document the generation command in the teacher guide. This gives explicit control over writing space and page boundaries; plain Markdown rendering is less predictable for a three-page worksheet. No image generation or external fonts are needed.
 
-Page 1 introduces robot attention, explains lesson 04's five steps, contrasts lesson 05's ISR, and includes a timing diagram and prediction. Page 2 holds the repeated-trial observation table and reflection questions, including the ten-checks-per-second calculation and a transfer scenario. Keep excerpts short and faithful to the current code; explain that the named delay constants equal 1,000 ms rather than present `delay(1000)` as a literal source line. A one-second diagram has ten 100 ms intervals; boundary marks must not be presented as eleven checks within a single second.
+Use three spacious pages rather than compress the investigation into the explanation page:
+
+- Page 1 introduces robot attention, explains lesson 04's five steps, contrasts lesson 05's ISR, and includes the timing diagram. Preserve readable code excerpts and 12 pt body text.
+- Page 2 poses “Will the motor take longer to respond to an RV change when checks are 1000 ms apart than when they are 100 ms apart?” Define a hypothesis as a prediction we can test. Ask the student to write their hypothesis and reason in their own words, with at least four handwriting lines. Follow with numbered experimental steps for running lesson 04, recording observations on page 3, switching to lesson 05, and repeating the comparison.
+- Page 3 provides at least three paired trial records with generous writing areas, then asks whether the 100 ms version seemed more responsive, which trial observations support that conclusion, and whether the student's hypothesis was supported. Retain the ten-checks-per-second calculation and a robot-safety transfer question.
+
+The teacher's example hypothesis is “A 1000 ms delay between checks of the RV position will cause a more noticeable lag in motor-speed response than checking every 100 ms.” Keep this in the teacher guide; the student gets the question and writes their own prediction. Record hypotheses before testing and observations before conclusions. Accept similar, mixed, and unclear observations as well as the expected faster response; discuss evidence rather than grade agreement with the example hypothesis.
+
+Keep excerpts short and faithful to the current code; explain that the named delay constants equal 1,000 ms rather than present `delay(1000)` as a literal source line. A one-second diagram has ten 100 ms intervals; boundary marks must not be presented as eleven checks within a single second.
 
 ### Teach checking frequency with a timer-reminder analogy
 
@@ -30,7 +38,7 @@ Explicitly state that lesson 05 still calls delay(), both programs print about o
 
 ### Reuse the approved B1/RV demonstration
 
-Keep the existing RV voltage divider and protected motor wiring. Use comparable low-to-high and high-to-low movements just after reports and at least three paired trials; teacher notes can suggest additional repetitions if needed. Choose low and high values that make motor behavior audible or visible, and record qualitative delay rather than stopwatch readings. Reference existing wiring and upload instructions rather than duplicate their full tables.
+Keep the existing RV voltage divider and protected motor wiring. Number the procedure: prepare the approved unpowered circuit, upload lesson 04 with B1 off, enable motor power after approval, make and record at least three low/high RV changes just after reports, turn B1 off for the lesson 05 upload, repeat the same movements, then turn B1 off and disconnect USB. Keep all wires unchanged between programs. Use comparable low-to-high and high-to-low movements just after reports and at least three paired trials; teacher notes can suggest additional repetitions if needed. Choose low and high values that make motor behavior audible or visible, and record qualitative delay rather than stopwatch readings. Reference existing wiring and upload instructions rather than duplicate their full tables.
 
 ### Separate the teacher's interpretation from the student's reading
 
@@ -38,7 +46,7 @@ The Markdown teacher guide provides an approximately 20–30 minute sequence, pr
 
 ## Risks / Trade-offs
 
-- [Two pages become crowded] → Shorten explanations before reducing font size; inspect rendered pages and preserve answer space.
+- [Investigation becomes crowded or ambiguous] → Separate background, hypothesis/procedure, and observations/conclusion across three pages; use explicit prompts and preserve handwriting space.
 - [Computer messages are mistaken for control checks] → State the shared reporting pace and direct observation of motor changes between messages in both materials.
 - [Motor inertia hides timing differences] → Use repeated large RV changes and qualitative observations, with teacher guidance on coasting and starting thresholds.
 - [Frequent checks are treated as automatic safety] → Ask what sensor and response a robot needs; avoid guaranteed stopping or collision-prevention claims.
@@ -46,4 +54,4 @@ The Markdown teacher guide provides an approximately 20–30 minute sequence, pr
 
 ## Migration Plan
 
-Add the three activity files and README links without altering firmware or wiring instructions. Render the PDF, inspect page count and layout, and verify all links and timing claims against the source programs. The materials can be withdrawn by removing the activity files and their links; there is no runtime migration.
+Add the three activity files and README links without altering firmware or wiring instructions. Render the PDF, inspect the three-page layout and question-to-conclusion sequence, and verify all links and timing claims against the source programs. The materials can be withdrawn by removing the activity files and their links; there is no runtime migration.

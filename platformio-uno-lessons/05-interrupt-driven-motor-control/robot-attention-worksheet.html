@@ -18,7 +18,7 @@
       background: #fff;
       font-family: Arial, Helvetica, sans-serif;
       font-size: 12pt;
-      line-height: 1.25;
+      line-height: 1.3;
     }
 
     .page {
@@ -55,17 +55,15 @@
     .field-line { flex: 1; min-height: 0.25in; border-bottom: 1px solid #000; }
 
     .worksheet-section {
-      margin-bottom: 0.1in;
+      margin-bottom: 0.14in;
       break-inside: avoid;
       page-break-inside: avoid;
     }
 
-    /* Reserved areas are filled by the later content tasks. Grow naturally
-       rather than hide overflow if a revision needs more room. */
+    /* Sections grow naturally; no overflow is hidden. */
     .introduction-space { min-height: 0.75in; }
-    .explanation-space { min-height: 1.45in; }
-    .diagram-space { min-height: 0.55in; }
-    .explanation-space:empty, .diagram-space:empty { min-height: 0; }
+    .question-space { min-height: 0.8in; }
+    .procedure-space { min-height: 3.25in; }
 
     .writing-space {
       width: 100%;
@@ -77,10 +75,14 @@
       border-bottom: 1px solid #000;
     }
 
-    .observation-space {
-      min-height: 2.25in;
-      border: 1px solid #000;
-    }
+    .trial-records { table-layout: fixed; margin-top: 0.08in; }
+    .trial-records th:first-child { width: 1.45in; }
+    .trial-records tbody th, .trial-records tbody td { height: 0.55in; }
+    .experiment-steps { margin: 0; padding-left: 0.25in; }
+    .experiment-steps li { margin-bottom: 0.1in; }
+    .response-prompt { margin-top: 0.08in; }
+    .answer-blank { display: inline-block; width: 0.65in; border-bottom: 1px solid #000; }
+
 
     pre, code { font-family: "Courier New", Courier, monospace; }
     pre {
@@ -184,15 +186,6 @@ delay(CONTROL_UPDATE_DELAY_MS);</code></pre>
           <p>Move the RV just after a reading: the command can lag by <strong>about
             one second</strong>. Just before the next reading, the wait is shorter.
             An old “go” command could cause a collision.</p>
-      <section class="worksheet-section" aria-labelledby="prediction-title">
-        <h2 id="prediction-title">My prediction</h2>
-        <!-- Prediction prompt: task 1.4. -->
-        <div class="writing-space" aria-label="Space for a written prediction">
-          <div class="writing-line"></div>
-          <div class="writing-line"></div>
-        </div>
-      </section>
-
         </section>
 
         <section class="worksheet-section" aria-labelledby="lesson-five-title">
@@ -228,13 +221,73 @@ analogWrite(MOTOR_PWM_PIN, pwmCommand)</code></pre>
         <p class="timeline-key">1000 ms starts the next second. This sketch shows the checking rhythm; real timing is approximate.</p>
       </section>
 
-      <footer class="page-footer"><span>Lessons 04 and 05 · B1 battery and RV control</span><span>Page 1 of 2</span></footer>
+      <footer class="page-footer"><span>Lessons 04 and 05 · B1 battery and RV control</span><span>Page 1 of 3</span></footer>
     </section>
 
     <section class="page" aria-labelledby="page-two-title">
       <header>
-        <h1 id="page-two-title">Try It and Explain</h1>
-        <p class="subtitle">Compare the two programs with the same RV control.</p>
+        <h1 id="page-two-title">Plan the Experiment</h1>
+        <p class="subtitle">Write your hypothesis before testing the two programs.</p>
+        <div class="student-details">
+          <div class="field name-field">Name: <span class="field-line"></span></div>
+          <div class="field date-field">Date: <span class="field-line"></span></div>
+        </div>
+      </header>
+
+      <section class="worksheet-section" aria-labelledby="question-title">
+        <h2 id="question-title">Our investigation question</h2>
+        <div class="question-space">
+          <p><strong>Will the motor take longer to respond to an RV change when
+            checks are 1000 ms apart than when they are 100 ms apart?</strong></p>
+          <p>We will listen to and watch the motor to find out.</p>
+        </div>
+      </section>
+
+      <section class="worksheet-section" aria-labelledby="hypothesis-title">
+        <h2 id="hypothesis-title">My hypothesis and reason</h2>
+        <p>A <strong>hypothesis</strong> is a prediction we can test. Before running
+          either program, write what you think will happen and why, in your own words.</p>
+        <p>You can begin: “I think the motor will respond … because …”</p>
+        <div class="writing-space" aria-label="Space for a written hypothesis and reason">
+          <div class="writing-line"></div>
+          <div class="writing-line"></div>
+          <div class="writing-line"></div>
+          <div class="writing-line"></div>
+        </div>
+      </section>
+
+      <section class="worksheet-section" aria-labelledby="procedure-title">
+        <h2 id="procedure-title">Experimental steps</h2>
+        <div class="procedure-space">
+          <ol class="experiment-steps">
+            <li><strong>Prepare.</strong> Use the same B1, RV, and motor circuit.
+              Remove USB and B1 power before wiring. Have your teacher check it.
+              Secure the bare motor with no wheel or propeller; keep its shaft clear.</li>
+            <li><strong>Run lesson 04.</strong> With B1 off, follow its README to build,
+              upload, and open the monitor at 9600 baud.</li>
+            <li><strong>Set the RV.</strong> With B1 off, choose a low position near zero
+              power and a high position. Return to low; turn B1 on after teacher approval.</li>
+            <li><strong>Test and record on page 3.</strong> Just after a computer message,
+              move low to high and hold. Notice how soon the motor responds. Repeat
+              high to low, then low to high, each just after a message.</li>
+            <li><strong>Run lesson 05.</strong> Turn B1 off; leave the wires unchanged.
+              Follow its README to build, upload, and reopen the 9600-baud monitor.</li>
+            <li><strong>Repeat.</strong> With B1 off, return to low. After teacher approval,
+              turn B1 on. Repeat the same three moves just after messages; record on page 3.</li>
+            <li><strong>Finish safely.</strong> Turn B1 off and disconnect USB after closing
+              the monitor. Stop and tell your teacher if anything gets hot or acts unexpectedly.</li>
+            <li><strong>Conclude.</strong> Compare the trial records. Use what you noticed
+              to answer page 3. “Hard to tell” is a useful observation too.</li>
+          </ol>
+        </div>
+      </section>
+
+      <footer class="page-footer"><span>Lessons 04 and 05 · B1 battery and RV control</span><span>Page 2 of 3</span></footer>
+    </section>
+
+    <section class="page" aria-labelledby="page-three-title">
+      <header>
+        <h1 id="page-three-title">Record Results and Conclude</h1>
         <div class="student-details">
           <div class="field name-field">Name: <span class="field-line"></span></div>
           <div class="field date-field">Date: <span class="field-line"></span></div>
@@ -243,35 +296,57 @@ analogWrite(MOTOR_PWM_PIN, pwmCommand)</code></pre>
 
       <section class="worksheet-section" aria-labelledby="observations-title">
         <h2 id="observations-title">My observations</h2>
-        <!-- Trial instructions and observation table: task 1.4. -->
-        <div class="observation-space" aria-label="Space for observation records"></div>
+        <p>Describe what you heard or saw: “noticeable wait,” “quick change,” or “hard to tell.”</p>
+        <table class="trial-records" aria-label="Matching RV trials for lessons 04 and 05">
+          <thead>
+            <tr><th scope="col">Trial and RV move</th><th scope="col">Lesson 04<br>1000 ms checks</th><th scope="col">Lesson 05<br>100 ms checks</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">1: Low to high</th><td></td><td></td></tr>
+            <tr><th scope="row">2: High to low</th><td></td><td></td></tr>
+            <tr><th scope="row">3: Low to high</th><td></td><td></td></tr>
+          </tbody>
+        </table>
       </section>
 
       <section class="worksheet-section" aria-labelledby="discovery-title">
-        <h2 id="discovery-title">Explain your discovery</h2>
-        <!-- Comparison questions: task 1.4. -->
-        <div class="writing-space" aria-label="Space for written explanations">
-          <div class="writing-line"></div>
-          <div class="writing-line"></div>
-          <div class="writing-line"></div>
-          <div class="writing-line"></div>
+        <h2 id="discovery-title">My conclusion</h2>
+        <p>Did the 100 ms version (lesson 05) respond sooner to your RV moves?<br>
+          Circle: <strong>Yes / No, about the same / No, slower / Mixed results / Hard to tell</strong></p>
+        <p class="response-prompt">What evidence from your trial records supports your answer?</p>
+        <div class="writing-space" aria-label="Space for evidence from the trials">
           <div class="writing-line"></div>
           <div class="writing-line"></div>
         </div>
+        <p class="response-prompt">Did your results support your hypothesis? Explain, or say why you are unsure.</p>
+        <div class="writing-space" aria-label="Space to compare results with the hypothesis">
+          <div class="writing-line"></div>
+          <div class="writing-line"></div>
+        </div>
+      </section>
+
+      <section class="worksheet-section" aria-labelledby="checking-title">
+        <h2 id="checking-title">Explain the checking</h2>
+        <p>What power setting does lesson 04 keep sending during its wait?</p>
+        <div class="writing-space" aria-label="Space to explain the old motor command">
+          <div class="writing-line"></div>
+        </div>
+        <p class="response-prompt">Checking every 100 ms: 1000 ÷ 100 =
+          <span class="answer-blank"></span> checks per second.</p>
       </section>
 
       <section class="worksheet-section" aria-labelledby="robot-problem-title">
         <h2 id="robot-problem-title">Think about a robot problem</h2>
-        <!-- Transfer scenario and reflection prompt: task 1.4. -->
+        <p>Choose a problem: an obstacle could cause a collision and damage, a control
+          instruction changes, or a motor becomes too hot. What information should the
+          robot check, and how could frequent checks help?</p>
         <div class="writing-space" aria-label="Space for a robot-problem reflection">
-          <div class="writing-line"></div>
-          <div class="writing-line"></div>
           <div class="writing-line"></div>
           <div class="writing-line"></div>
         </div>
       </section>
 
-      <footer class="page-footer"><span>Lessons 04 and 05 · B1 battery and RV control</span><span>Page 2 of 2</span></footer>
+      <footer class="page-footer"><span>Lessons 04 and 05 · B1 battery and RV control</span><span>Page 3 of 3</span></footer>
     </section>
   </main>
 </body>

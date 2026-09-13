@@ -4,9 +4,10 @@ Lessons 04 and 05 demonstrate different control response times, but a fifth-grad
 
 ## What Changes
 
-- Add a two-page, fifth-grade student worksheet comparing lesson 04's blocking control loop with lesson 05's timer-driven control checks, with an editable source and printable PDF.
+- Add a three-page, fifth-grade student worksheet comparing lesson 04's blocking control loop with lesson 05's timer-driven control checks, with an editable source and printable PDF.
 - Explain lesson 04's read, map, apply, report, and one-second wait steps using small code excerpts and plain language; contrast these with lesson 05's 100-millisecond ISR checks and ten power-command updates per second.
-- Include a timing diagram, prediction, repeated RV observations, and reflection about collisions, damage, and overheating.
+- Include a timing diagram and a clear investigation sequence: ask whether 1000 ms or 100 ms checks produce more noticeable motor-response lag, write a hypothesis in the student’s own words, run both programs, record observations, and draw a conclusion supported by evidence.
+- Give the teacher an example hypothesis and preserve reflection about collisions, damage, and overheating.
 - Add a separate teacher guide with demonstration steps, answer guidance, safety checkpoints, and distinctions between command timing, serial reporting, and physical motor response.
 - Link the comparison materials from both lesson READMEs and the lesson index.
 - Use the existing Snap Circuits B1 battery holder, RV voltage-divider control, and protected motor circuit for both demonstrations.
