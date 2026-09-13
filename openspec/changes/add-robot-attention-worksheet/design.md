@@ -50,7 +50,7 @@ The Markdown teacher guide provides an approximately 20–30 minute sequence, pr
 - [Computer messages are mistaken for control checks] → State the shared reporting pace and direct observation of motor changes between messages in both materials.
 - [Motor inertia hides timing differences] → Use repeated large RV changes and qualitative observations, with teacher guidance on coasting and starting thresholds.
 - [Frequent checks are treated as automatic safety] → Ask what sensor and response a robot needs; avoid guaranteed stopping or collision-prevention claims.
-- [PDF drifts from source] → Regenerate after every worksheet edit and inspect both pages before completion.
+- [PDF drifts from source] → Regenerate after every worksheet edit and inspect all three pages before completion.
 
 ## Migration Plan
 

@@ -13,7 +13,16 @@
 
 ## 3. Printable output and verification
 
-- [ ] 3.1 Generate the matching `robot-attention-worksheet.pdf` from the HTML and document the reproducible generation command in the teacher guide.
-- [ ] 3.2 Inspect all three rendered PDF pages for US Letter sizing, exactly three pages, readable black-and-white text/code/diagram, unclipped content, intact rows, at least four hypothesis/reason lines, and sufficient observation/conclusion handwriting space; revise and regenerate if needed.
-- [ ] 3.3 Review explanations and teacher answers against both existing programs, verify B1/RV terminology and local links, and confirm firmware and wiring requirements remain unchanged.
-- [ ] 3.4 Validate the OpenSpec change and summarize completed artifact checks; report any unperformed physical demonstration separately from document verification.
+- [x] 3.1 Generate the matching `robot-attention-worksheet.pdf` from the HTML and document the reproducible generation command in the teacher guide.
+- [x] 3.2 Inspect all three rendered PDF pages for US Letter sizing, exactly three pages, readable black-and-white text/code/diagram, unclipped content, intact rows, at least four hypothesis/reason lines, and sufficient observation/conclusion handwriting space; revise and regenerate if needed.
+- [x] 3.3 Review explanations and teacher answers against both existing programs, verify B1/RV terminology and local links, and confirm firmware and wiring requirements remain unchanged.
+- [x] 3.4 Validate the OpenSpec change and summarize completed artifact checks; report any unperformed physical demonstration separately from document verification.
+
+## Verification record
+
+- Regenerated the PDF from the HTML using the command documented in the teacher guide.
+- Confirmed exactly three US Letter pages (612 × 792 points) and visually inspected every rendered page: readable monochrome text/code/timing diagram, no clipping or split trial rows, name/date fields, four hypothesis lines, and usable observation/conclusion writing space.
+- Reviewed student explanations and teacher answers against both programs: lesson 04's 1000 ms control delay, lesson 05's 100 ms ISR, A0/D3 mapping, continuing hardware PWM, and roughly one-second reporting in both.
+- Verified all 23 local links in the teacher guide, both lesson READMEs, and lesson index, including heading anchors. Confirmed the existing B1 two-AA motor supply and Arduino-powered RV voltage divider terminology; firmware, configuration, and wiring requirements are unchanged.
+- `openspec validate add-robot-attention-worksheet --strict` and `git diff --check` passed.
+- Physical demonstration: not performed. Motor-response expectations are teacher guidance, not measured results; the student will record actual observations during the B1/RV trials.

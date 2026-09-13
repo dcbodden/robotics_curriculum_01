@@ -74,6 +74,19 @@ A motor can also have a **starting threshold**: very small nonzero PWM commands 
 
 If these physical effects obscure the comparison, accept “hard to tell,” discuss the difference between the power command and actual motion, and consider additional matching trials only after checking the setup. Preserve the student's original records.
 
+## Generate and print the worksheet
+
+The [editable HTML](robot-attention-worksheet.html) is the source for the [printable PDF](robot-attention-worksheet.pdf). After changing the HTML, regenerate the PDF with Google Chrome. From this lesson's directory, run:
+
+```bash
+google-chrome --headless --no-sandbox --disable-gpu \
+  --no-pdf-header-footer \
+  --print-to-pdf="$PWD/robot-attention-worksheet.pdf" \
+  "file://$PWD/robot-attention-worksheet.html"
+```
+
+The HTML sets US Letter paper and page breaks. Check that the regenerated PDF has exactly three pages and inspect every page for clipping and handwriting space. Print all three pages at actual size (100%), in black and white, on US Letter paper. Chrome is only needed to regenerate the PDF; students can use the printed copy without a browser or IDE.
+
 ## Transfer the idea to robot safety
 
 The RV is a changing **control input**. Neither program measures obstacle distance or motor temperature. Discuss those examples without creating collisions or overheating the motor.
