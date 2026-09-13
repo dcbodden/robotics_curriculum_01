@@ -1,0 +1,53 @@
+# Robot Attention: Teacher Guide
+
+Use the [three-page student worksheet](robot-attention-worksheet.html) to investigate whether a motor responds more promptly when its RV control is checked every 100 ms rather than about once per second. The learning goal is: **follow the plan and keep checking what has changed**. Plan approximately 20–30 minutes after the circuit is ready.
+
+## Prepare the demonstration
+
+Use the Arduino Uno, Snap Circuits B1 two-AA battery holder, three-terminal RV control, and protected motor circuit already documented in lessons 04 and 05. Keep the same circuit for both programs.
+
+- Follow lesson 04's [motor and gate connections](../04-adc-pwm-motor-control/README.md#connect-the-low-side-motor-and-gate-paths), [RV-to-A0 connections](../04-adc-pwm-motor-control/README.md#connect-the-rv-voltage-divider-to-a0), and [flywheel diode instructions](../04-adc-pwm-motor-control/README.md#add-the-1n5817-flywheel-diode).
+- Complete the [safety check before powering the circuit](../04-adc-pwm-motor-control/README.md#complete-the-safety-check-before-powering-the-circuit). Remove both USB and B1 power before wiring changes. Verify MOSFET terminals, gate resistors, shared ground, separate positive supplies, RV wiring, and diode polarity.
+- Secure the bare motor with no wheel, propeller, gear, or other shaft attachment. Keep hands, hair, clothing, and objects clear of the shaft. The teacher approves the circuit before power is applied and keeps B1 off during every upload.
+- Review lesson 04's [build, upload, and monitor instructions](../04-adc-pwm-motor-control/README.md#build-upload-and-open-the-serial-monitor) and lesson 05's [program comparison instructions](README.md#compare-lesson-04-and-lesson-05-responsiveness). Both monitors use 9600 baud.
+- Have all three worksheet pages available. With B1 off and USB connected after wiring approval, choose recognizable low and high RV positions. Use a low position near a zero PWM command and a high position that gives clear motor motion in the approved setup. Return to low before enabling B1.
+
+If the motor fails to turn when commanded to run, parts become hot, unusual smells, smoke, or sparks appear, or wiring moves unexpectedly, switch B1 off and disconnect USB immediately. Follow the existing safety instructions before considering another trial.
+
+## Lesson sequence
+
+1. **Connect to everyday attention (3 minutes).** Discuss walking across a room: a destination does not remove the need to notice people or chairs. Read page 1 together. Identify the read, map, apply, report, and wait steps in lesson 04, then the timer's checking routine in lesson 05. Keep the discussion focused on how often new information is used.
+2. **Write a hypothesis (4 minutes).** Read page 2's investigation question. Explain that a hypothesis is a prediction we can test. Ask the student to write what they expect and why before either motor test. Accept either predicted outcome when it answers the question and has a reason; help clarify vague wording without supplying the answer.
+3. **Run the comparison (10–15 minutes).** Follow the numbered procedure below and record observations on page 3 as each trial finishes. Encourage concrete observations of sound or motion; no stopwatch measurements are required.
+4. **Draw a conclusion (5 minutes).** Ask the student to compare the two columns, choose a response, cite trial evidence, and revisit their hypothesis. Complete the checking questions and one robot-problem reflection.
+
+### Teacher example hypothesis
+
+> A 1000 ms delay between checks of the RV position will cause a more noticeable lag in motor-speed response than checking every 100 ms.
+
+Use this as preparation guidance. Give the student the question and opportunity to formulate their own hypothesis. A useful prediction might say which program will react sooner and connect that expectation to the time between checks.
+
+## Numbered trial procedure
+
+1. With B1 off and wiring approved, build and upload lesson 04, then open its 9600-baud monitor. Return the RV to the chosen low position and confirm the reported PWM command is near zero. Recheck that the motor is secured and its shaft is clear before enabling B1.
+2. Just after a new serial message appears, move the RV quickly **low to high**. Hold the new position until the response is clear, and record lesson 04's trial 1 observation.
+3. Just after a later message, move **high to low**, hold, and record trial 2. Repeat **low to high** for trial 3. Use the same low and high positions each time.
+4. Switch B1 off. Leave every wire unchanged, build and upload lesson 05, and reopen the monitor at 9600 baud. Return to low and confirm the near-zero command before enabling B1 after teacher approval.
+5. Repeat the same three movements, each just after a message: **low to high**, **high to low**, **low to high**. Record each observation in lesson 05's column. Keep the circuit, RV positions, movements, and observation method comparable.
+6. Switch B1 off, close the monitor, and disconnect USB. Compare the recorded responses and complete the conclusion.
+
+These three paired trials match the worksheet. The existing lesson 05 README offers a longer comparison if additional repetitions are useful; record those separately rather than overwrite the original observations.
+
+## Expected answers and evidence
+
+| Worksheet item | Teacher guidance |
+| --- | --- |
+| Investigation and hypothesis | A testable prediction compares the noticeable lag with 1000 ms and 100 ms checks. The student's wording and predicted outcome can differ from the teacher example. |
+| Trial observations | Expect a more noticeable wait with lesson 04 and a quicker response with lesson 05, particularly after moving just after a report. These are expectations, not results to fill in for the student. Accept descriptions such as “the sound changed quickly” or “I noticed a pause.” |
+| Did lesson 05 respond sooner? | The expected answer is yes, but accept about the same, slower, mixed, or hard to tell when consistent with the student's records. Ask which trials led to the answer. |
+| Evidence and hypothesis support | A useful answer refers to recorded observations, for example “I wrote ‘noticeable wait’ for 04 and ‘quick change’ for 05 in trials 1 and 3.” Require the student to use their actual evidence. Similar or unclear observations can leave the hypothesis unsupported or inconclusive. |
+| Power setting during lesson 04's wait | The previous PWM power setting. Moving the RV does not update the command until the next reading. |
+| Checks per second | 1000 ÷ 100 = **10**. |
+| Robot-problem reflection | Accept an appropriate information source and reason for frequent checks: obstacle distance to respond to a blocked path, a control reading to notice changed instructions, or temperature to notice a hot motor. The RV activity tests control changes; the other examples are discussion scenarios. |
+
+Judge the reasoning by whether the prediction is testable, the observations are recorded honestly, and the conclusion follows the evidence. A hypothesis need not be supported for the experiment to be useful. If the result is unclear, discuss what another matching trial could help establish instead of replacing the recorded answer with the expected one.
