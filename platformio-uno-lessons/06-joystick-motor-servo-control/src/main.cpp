@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <avr/interrupt.h>
+#include <util/atomic.h>
 #include "control_mapping.h"
 
 // The joystick's two analog outputs.
@@ -16,6 +17,8 @@ const uint16_t INITIAL_SERVO_PULSE_US = SERVO_CENTER_PULSE_US;
 
 volatile uint8_t motorPwmCommand = INITIAL_MOTOR_PWM_COMMAND;
 volatile uint16_t servoPulseCommandUs = INITIAL_SERVO_PULSE_US;
+volatile uint16_t latestMotorAdcReading = MOTOR_NEUTRAL_ADC;
+volatile uint16_t latestServoAdcReading = SERVO_CENTER_ADC;
 
 // Timer1: 16 MHz / 8 = 2 MHz, or two ticks per microsecond.
 constexpr uint16_t SERVO_FRAME_US = 20000;
@@ -62,9 +65,12 @@ ISR(TIMER1_OVF_vect) {
 	OCR1A = newServoCommand * TIMER1_TICKS_PER_US;
 	motorPwmCommand = newMotorCommand;
 	servoPulseCommandUs = newServoCommand;
+	latestMotorAdcReading = motorReading;
+	latestServoAdcReading = servoReading;
 }
 
 const unsigned long SERIAL_BAUD = 9600;
+const unsigned long REPORT_DELAY_MS = 1000;
 
 void setup() {
 	// Read joystick voltages without enabling input pullups.
@@ -85,5 +91,29 @@ void setup() {
 }
 
 void loop() {
-	// Serial snapshots and the foreground reporting delay follow in task 1.4.
+	uint16_t motorAdcSnapshot;
+	uint16_t servoAdcSnapshot;
+	uint8_t motorPwmSnapshot;
+	uint16_t servoPulseSnapshotUs;
+
+	// Copy one consistent set from the ISR, including the 16-bit values.
+	// Restore interrupts before serial output so control checks can continue.
+	ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+		motorAdcSnapshot = latestMotorAdcReading;
+		servoAdcSnapshot = latestServoAdcReading;
+		motorPwmSnapshot = motorPwmCommand;
+		servoPulseSnapshotUs = servoPulseCommandUs;
+	}
+
+	Serial.print("Motor ADC: ");
+	Serial.print(motorAdcSnapshot);
+	Serial.print(" | Motor PWM command: ");
+	Serial.print(motorPwmSnapshot);
+	Serial.print(" | Servo ADC: ");
+	Serial.print(servoAdcSnapshot);
+	Serial.print(" | Servo pulse command (us): ");
+	Serial.println(servoPulseSnapshotUs);
+
+	// Reports are snapshots, not a printout of every 20 ms control update.
+	delay(REPORT_DELAY_MS);
 }
