@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Robot Attention — Student Worksheet</title>
+  <style>
+    @page {
+      size: letter;
+      margin: 0.5in;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: #000;
+      background: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12pt;
+      line-height: 1.3;
+    }
+
+    .page {
+      width: 7.5in;
+      min-height: 9.95in;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      break-after: page;
+      page-break-after: always;
+    }
+
+    .page:last-child {
+      break-after: auto;
+      page-break-after: auto;
+    }
+
+    h1, h2, p { margin: 0; }
+    h1 { font-size: 22pt; line-height: 1.15; }
+    h2 { font-size: 14pt; line-height: 1.25; margin-bottom: 0.08in; }
+    p + p { margin-top: 0.06in; }
+
+    .subtitle { margin-top: 0.06in; }
+
+    .student-details {
+      display: flex;
+      gap: 0.25in;
+      margin: 0.1in 0 0.12in;
+    }
+
+    .field { display: flex; align-items: baseline; gap: 0.08in; }
+    .name-field { flex: 1; }
+    .date-field { width: 2.25in; }
+    .field-line { flex: 1; min-height: 0.25in; border-bottom: 1px solid #000; }
+
+    .worksheet-section {
+      margin-bottom: 0.14in;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    /* Sections grow naturally; no overflow is hidden. */
+    .introduction-space { min-height: 0.75in; }
+    .question-space { min-height: 0.8in; }
+    .procedure-space { min-height: 3.25in; }
+
+    .writing-space {
+      width: 100%;
+      background: none;
+    }
+
+    .writing-line {
+      height: 0.32in;
+      border-bottom: 1px solid #000;
+    }
+
+    .trial-records { table-layout: fixed; margin-top: 0.08in; }
+    .trial-records th:first-child { width: 1.45in; }
+    .trial-records tbody th, .trial-records tbody td { height: 0.55in; }
+    .experiment-steps { margin: 0; padding-left: 0.25in; }
+    .experiment-steps li { margin-bottom: 0.1in; }
+    .response-prompt { margin-top: 0.08in; }
+    .answer-blank { display: inline-block; width: 0.65in; border-bottom: 1px solid #000; }
+
+
+    pre, code { font-family: "Courier New", Courier, monospace; }
+    pre {
+      margin: 0.08in 0;
+      padding: 0.08in;
+      border: 1px solid #000;
+      font-size: 10pt;
+      line-height: 1.15;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      break-inside: avoid;
+    }
+
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 0.08in; border: 1px solid #000; vertical-align: top; }
+    th { text-align: left; font-weight: bold; }
+    tr { break-inside: avoid; page-break-inside: avoid; }
+    .lesson-comparison {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 0.18in;
+      break-inside: avoid;
+    }
+    .lesson-comparison pre { width: 100%; min-width: 0; }
+    .lesson-comparison > section > h2 { min-height: 0.5in; }
+    .excerpt-label { margin-top: 0.08in; font-size: 10pt; }
+    .timeline { border: 1px solid #000; margin: 0.04in 0; table-layout: fixed; font-size: 10pt; }
+    .timeline th { width: 1.1in; }
+    .timeline td, .timeline th { padding: 0.035in; }
+    .timeline td { text-align: left; }
+    .timeline-key { font-size: 10pt; }
+
+    .page-footer {
+      break-inside: avoid;
+      page-break-inside: avoid;
+      margin-top: auto;
+      padding-top: 0.06in;
+      border-top: 1px solid #000;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.2in;
+      font-size: 10pt;
+    }
+
+    @media screen {
+      body { padding: 0.3in; }
+      .page {
+        width: 8.5in;
+        min-height: 11in;
+        padding: 0.5in;
+        margin-bottom: 0.3in;
+        outline: 1px solid #000;
+      }
+      .page:last-child { margin-bottom: 0; }
+    }
+
+    @media print {
+      body { padding: 0; }
+      .page { padding: 0; outline: none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="page" aria-labelledby="page-one-title">
+      <header>
+        <h1 id="page-one-title">Robot Attention</h1>
+        <p class="subtitle">How often should a robot check?</p>
+        <div class="student-details">
+          <div class="field name-field">Name: <span class="field-line"></span></div>
+          <div class="field date-field">Date: <span class="field-line"></span></div>
+        </div>
+      </header>
+
+      <section class="worksheet-section" aria-labelledby="attention-title">
+        <h2 id="attention-title">Follow the plan and keep checking</h2>
+        <div class="introduction-space">
+          <p>Walking, you follow a plan and watch for people or chairs. Robots need
+            fresh information too: has a control changed? Is the path clear? Is the motor
+            too hot? Frequent checks can help avoid collisions and damage.</p>
+          <p>Today we check the RV control. Obstacles and heat would need other sensors.</p>
+        </div>
+      </section>
+
+      <div class="lesson-comparison">
+        <section class="worksheet-section" aria-labelledby="lesson-four-title">
+          <h2 id="lesson-four-title">Lesson 04: Check, act, and wait</h2>
+          <p>The <code>loop()</code> repeats: <strong>read</strong> A0 (0–1023),
+            <strong>map</strong> to PWM (0–255), <strong>apply</strong> on D3,
+            <strong>report</strong> the numbers, then <strong>wait</strong>.</p>
+          <p class="excerpt-label">Code pieces, in order:</p>
+          <pre><code>analogRead(ANALOG_INPUT_PIN)
+map(adcReading, ADC_MIN, ADC_MAX, PWM_MIN, PWM_MAX)
+analogWrite(MOTOR_PWM_PIN, pwmCommand)
+Serial.print(adcReading);
+Serial.println(pwmCommand);
+delay(CONTROL_UPDATE_DELAY_MS);</code></pre>
+          <p>The delay is <strong>1000 ms: one second</strong>.
+            It is <strong>blocking</strong>: no new RV reads during the wait.
+            The motor keeps its old PWM power setting.</p>
+          <p>Move the RV just after a reading: the command can lag by <strong>about
+            one second</strong>. Just before the next reading, the wait is shorter.
+            An old “go” command could cause a collision.</p>
+        </section>
+
+        <section class="worksheet-section" aria-labelledby="lesson-five-title">
+          <h2 id="lesson-five-title">Lesson 05: A timer reminds the robot to check</h2>
+          <p>Every <strong>100 ms</strong> (one tenth of a second), a timer
+            <strong>interrupt</strong> pauses regular work for a brief checking
+            routine: the <strong>ISR</strong>. Then regular work continues.</p>
+          <p class="excerpt-label">Inside <code>ISR(TIMER1_COMPA_vect)</code>:<br>
+            selected code pieces, in order</p>
+          <pre><code>analogRead(ANALOG_INPUT_PIN)
+map(adcReading, ADC_MIN, ADC_MAX, PWM_MIN, PWM_MAX)
+analogWrite(MOTOR_PWM_PIN, pwmCommand)</code></pre>
+          <p>It reads, maps, and applies the PWM power setting <strong>10 times a
+            second</strong>, even with the RV still. PWM's fast on/off pulses
+            have a separate rhythm.</p>
+          <p><code>loop()</code> still waits with
+            <code>delay(REPORT_DELAY_MS);</code> (1000 ms). Both print about once a
+            second. ISR checks continue, updating power <strong>before the next
+            computer message</strong>.</p>
+        </section>
+      </div>
+
+      <section class="worksheet-section" aria-labelledby="timing-title">
+        <h2 id="timing-title">Compare the checks: one second</h2>
+        <p class="timeline-key">● = read the RV and update the power setting. Each box spans 100 ms.</p>
+        <table class="timeline" aria-label="One second divided into ten 100-millisecond intervals. Lesson 04 checks once at the start; lesson 05 checks at the start of every interval. The next second begins after the last box.">
+          <tbody>
+            <tr><th scope="row">Time (ms)</th><td>0</td><td>100</td><td>200</td><td>300</td><td>400</td><td>500</td><td>600</td><td>700</td><td>800</td><td>900</td></tr>
+            <tr><th scope="row">Lesson 04</th><td>●</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><th scope="row">Lesson 05</th><td>●</td><td>●</td><td>●</td><td>●</td><td>●</td><td>●</td><td>●</td><td>●</td><td>●</td><td>●</td></tr>
+          </tbody>
+        </table>
+        <p class="timeline-key">1000 ms starts the next second. This sketch shows the checking rhythm; real timing is approximate.</p>
+      </section>
+
+      <footer class="page-footer"><span>Lessons 04 and 05 · B1 battery and RV control</span><span>Page 1 of 3</span></footer>
+    </section>
+
+    <section class="page" aria-labelledby="page-two-title">
+      <header>
+        <h1 id="page-two-title">Plan the Experiment</h1>
+        <p class="subtitle">Write your hypothesis before testing the two programs.</p>
+        <div class="student-details">
+          <div class="field name-field">Name: <span class="field-line"></span></div>
+          <div class="field date-field">Date: <span class="field-line"></span></div>
+        </div>
+      </header>
+
+      <section class="worksheet-section" aria-labelledby="question-title">
+        <h2 id="question-title">Our investigation question</h2>
+        <div class="question-space">
+          <p><strong>Will the motor take longer to respond to an RV change when
+            checks are 1000 ms apart than when they are 100 ms apart?</strong></p>
+          <p>We will listen to and watch the motor to find out.</p>
+        </div>
+      </section>
+
+      <section class="worksheet-section" aria-labelledby="hypothesis-title">
+        <h2 id="hypothesis-title">My hypothesis and reason</h2>
+        <p>A <strong>hypothesis</strong> is a prediction we can test. Before running
+          either program, write what you think will happen and why, in your own words.</p>
+        <p>You can begin: “I think the motor will respond … because …”</p>
+        <div class="writing-space" aria-label="Space for a written hypothesis and reason">
+          <div class="writing-line"></div>
+          <div class="writing-line"></div>
+          <div class="writing-line"></div>
+          <div class="writing-line"></div>
+        </div>
+      </section>
+
+      <section class="worksheet-section" aria-labelledby="procedure-title">
+        <h2 id="procedure-title">Experimental steps</h2>
+        <div class="procedure-space">
+          <ol class="experiment-steps">
+            <li><strong>Prepare.</strong> Use the same B1, RV, and motor circuit.
+              Remove USB and B1 power before wiring. Have your teacher check it.
+              Secure the bare motor with no wheel or propeller; keep its shaft clear.</li>
+            <li><strong>Run lesson 04.</strong> With B1 off, follow its README to build,
+              upload, and open the monitor at 9600 baud.</li>
+            <li><strong>Set the RV.</strong> With B1 off, choose a low position near zero
+              power and a high position. Return to low; turn B1 on after teacher approval.</li>
+            <li><strong>Test and record on page 3.</strong> Just after a computer message,
+              move low to high and hold. Notice how soon the motor responds. Repeat
+              high to low, then low to high, each just after a message.</li>
+            <li><strong>Run lesson 05.</strong> Turn B1 off; leave the wires unchanged.
+              Follow its README to build, upload, and reopen the 9600-baud monitor.</li>
+            <li><strong>Repeat.</strong> With B1 off, return to low. After teacher approval,
+              turn B1 on. Repeat the same three moves just after messages; record on page 3.</li>
+            <li><strong>Finish safely.</strong> Turn B1 off and disconnect USB after closing
+              the monitor. Stop and tell your teacher if anything gets hot or acts unexpectedly.</li>
+            <li><strong>Conclude.</strong> Compare the trial records. Use what you noticed
+              to answer page 3. “Hard to tell” is a useful observation too.</li>
+          </ol>
+        </div>
+      </section>
+
+      <footer class="page-footer"><span>Lessons 04 and 05 · B1 battery and RV control</span><span>Page 2 of 3</span></footer>
+    </section>
+
+    <section class="page" aria-labelledby="page-three-title">
+      <header>
+        <h1 id="page-three-title">Record Results and Conclude</h1>
+        <div class="student-details">
+          <div class="field name-field">Name: <span class="field-line"></span></div>
+          <div class="field date-field">Date: <span class="field-line"></span></div>
+        </div>
+      </header>
+
+      <section class="worksheet-section" aria-labelledby="observations-title">
+        <h2 id="observations-title">My observations</h2>
+        <p>Describe what you heard or saw: “noticeable wait,” “quick change,” or “hard to tell.”</p>
+        <table class="trial-records" aria-label="Matching RV trials for lessons 04 and 05">
+          <thead>
+            <tr><th scope="col">Trial and RV move</th><th scope="col">Lesson 04<br>1000 ms checks</th><th scope="col">Lesson 05<br>100 ms checks</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">1: Low to high</th><td></td><td></td></tr>
+            <tr><th scope="row">2: High to low</th><td></td><td></td></tr>
+            <tr><th scope="row">3: Low to high</th><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="worksheet-section" aria-labelledby="discovery-title">
+        <h2 id="discovery-title">My conclusion</h2>
+        <p>Did the 100 ms version (lesson 05) respond sooner to your RV moves?<br>
+          Circle: <strong>Yes / No, about the same / No, slower / Mixed results / Hard to tell</strong></p>
+        <p class="response-prompt">What evidence from your trial records supports your answer?</p>
+        <div class="writing-space" aria-label="Space for evidence from the trials">
+          <div class="writing-line"></div>
+          <div class="writing-line"></div>
+        </div>
+        <p class="response-prompt">Did your results support your hypothesis? Explain, or say why you are unsure.</p>
+        <div class="writing-space" aria-label="Space to compare results with the hypothesis">
+          <div class="writing-line"></div>
+          <div class="writing-line"></div>
+        </div>
+      </section>
+
+      <section class="worksheet-section" aria-labelledby="checking-title">
+        <h2 id="checking-title">Explain the checking</h2>
+        <p>What power setting does lesson 04 keep sending during its wait?</p>
+        <div class="writing-space" aria-label="Space to explain the old motor command">
+          <div class="writing-line"></div>
+        </div>
+        <p class="response-prompt">Checking every 100 ms: 1000 ÷ 100 =
+          <span class="answer-blank"></span> checks per second.</p>
+      </section>
+
+      <section class="worksheet-section" aria-labelledby="robot-problem-title">
+        <h2 id="robot-problem-title">Think about a robot problem</h2>
+        <p>Choose a problem: an obstacle could cause a collision and damage, a control
+          instruction changes, or a motor becomes too hot. What information should the
+          robot check, and how could frequent checks help?</p>
+        <div class="writing-space" aria-label="Space for a robot-problem reflection">
+          <div class="writing-line"></div>
+          <div class="writing-line"></div>
+        </div>
+      </section>
+
+      <footer class="page-footer"><span>Lessons 04 and 05 · B1 battery and RV control</span><span>Page 3 of 3</span></footer>
+    </section>
+  </main>
+</body>
+</html>

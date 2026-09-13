@@ -2,6 +2,14 @@
 
 This lesson uses the adjustable RV voltage from lesson 02 to control the PWM command sent to an externally powered DC motor.
 
+## Robot Attention Investigation
+
+Compare lessons 04 and 05 using the same B1 battery, RV control, and protected motor circuit. The three-page activity guides a student-written hypothesis, matching trials, and a conclusion about the motor's response to 1000 ms versus 100 ms control checks.
+
+- [Printable student worksheet (PDF)](../05-interrupt-driven-motor-control/robot-attention-worksheet.pdf)
+- [Student worksheet source (HTML)](../05-interrupt-driven-motor-control/robot-attention-worksheet.html)
+- [Teacher guide: preparation, experiment steps, and answer guidance](../05-interrupt-driven-motor-control/robot-attention-teacher-guide.md)
+
 ## Why the Control Update Waits
 
 Each pass through the program reads A0, maps that ADC reading to a PWM value, sends the new value to D3, and prints the ADC and PWM values. It then calls `delay(1000)` before starting the next pass. The one-second pause spaces the serial-monitor lines far enough apart to make them easy to read.
