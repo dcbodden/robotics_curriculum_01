@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Robot Attention — Student Worksheet</title>
+  <style>
+    @page {
+      size: letter;
+      margin: 0.65in;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: #000;
+      background: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12pt;
+      line-height: 1.35;
+    }
+
+    .page {
+      width: 7.2in;
+      min-height: 9.65in;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      break-after: page;
+      page-break-after: always;
+    }
+
+    .page:last-child {
+      break-after: auto;
+      page-break-after: auto;
+    }
+
+    h1, h2, p { margin: 0; }
+    h1 { font-size: 22pt; line-height: 1.15; }
+    h2 { font-size: 14pt; line-height: 1.25; margin-bottom: 0.08in; }
+    p + p { margin-top: 0.08in; }
+
+    .subtitle { margin-top: 0.06in; }
+
+    .student-details {
+      display: flex;
+      gap: 0.25in;
+      margin: 0.14in 0 0.16in;
+    }
+
+    .field { display: flex; align-items: baseline; gap: 0.08in; }
+    .name-field { flex: 1; }
+    .date-field { width: 2.25in; }
+    .field-line { flex: 1; min-height: 0.25in; border-bottom: 1px solid #000; }
+
+    .worksheet-section {
+      margin-bottom: 0.1in;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    /* Reserved areas are filled by the later content tasks. Grow naturally
+       rather than hide overflow if a revision needs more room. */
+    .introduction-space { min-height: 0.75in; }
+    .explanation-space { min-height: 1.45in; }
+    .diagram-space { min-height: 0.55in; }
+    .explanation-space:empty, .diagram-space:empty { min-height: 0; }
+
+    .writing-space {
+      width: 100%;
+      background: none;
+    }
+
+    .writing-line {
+      height: 0.32in;
+      border-bottom: 1px solid #000;
+    }
+
+    .observation-space {
+      min-height: 2.25in;
+      border: 1px solid #000;
+    }
+
+    pre, code { font-family: "Courier New", Courier, monospace; }
+    pre {
+      margin: 0.08in 0;
+      padding: 0.08in;
+      border: 1px solid #000;
+      font-size: 10pt;
+      line-height: 1.3;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      break-inside: avoid;
+    }
+
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 0.08in; border: 1px solid #000; vertical-align: top; }
+    th { text-align: left; font-weight: bold; }
+    tr { break-inside: avoid; page-break-inside: avoid; }
+    .code-steps { margin: 0.08in 0; table-layout: fixed; border: 1px solid #000; }
+    .code-steps td { padding: 0.04in 0.06in; }
+    .code-steps td:first-child { width: 52%; }
+    .code-steps code {
+      font-size: 10pt;
+      overflow-wrap: anywhere;
+    }
+
+    .page-footer {
+      break-inside: avoid;
+      page-break-inside: avoid;
+      margin-top: auto;
+      padding-top: 0.1in;
+      border-top: 1px solid #000;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.2in;
+      font-size: 10pt;
+    }
+
+    @media screen {
+      body { padding: 0.3in; }
+      .page {
+        width: 8.5in;
+        min-height: 11in;
+        padding: 0.65in;
+        margin-bottom: 0.3in;
+        outline: 1px solid #000;
+      }
+      .page:last-child { margin-bottom: 0; }
+    }
+
+    @media print {
+      body { padding: 0; }
+      .page { padding: 0; outline: none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="page" aria-labelledby="page-one-title">
+      <header>
+        <h1 id="page-one-title">Robot Attention</h1>
+        <p class="subtitle">How often should a robot check?</p>
+        <div class="student-details">
+          <div class="field name-field">Name: <span class="field-line"></span></div>
+          <div class="field date-field">Date: <span class="field-line"></span></div>
+        </div>
+      </header>
+
+      <section class="worksheet-section" aria-labelledby="attention-title">
+        <h2 id="attention-title">Follow the plan and keep checking</h2>
+        <div class="introduction-space">
+          <p>Walking across a room, you follow a plan and watch for chairs or people.
+            Robots need fresh information too: has a control changed? Is the path clear?
+            Is the motor too hot? Checking often can help avoid collisions and damage.</p>
+          <p>Today we check the RV control. Obstacles and heat would need other sensors.</p>
+        </div>
+      </section>
+
+      <section class="worksheet-section" aria-labelledby="lesson-four-title">
+        <h2 id="lesson-four-title">Lesson 04: Check, act, and wait</h2>
+        <div class="explanation-space">
+          <p>The <code>loop()</code> repeats five steps. Find these code pieces in lesson 04:</p>
+          <table class="code-steps" aria-label="Lesson 04 code and its meaning">
+            <tbody>
+              <tr>
+                <td><code>analogRead(ANALOG_INPUT_PIN)</code></td>
+                <td><strong>1. Read.</strong> Get the RV reading on A0: 0 to 1023.</td>
+              </tr>
+              <tr>
+                <td><code>map(adcReading, ADC_MIN, ADC_MAX, PWM_MIN, PWM_MAX)</code></td>
+                <td><strong>2. Map.</strong> Change the reading to a power command: 0 to 255.</td>
+              </tr>
+              <tr>
+                <td><code>analogWrite(MOTOR_PWM_PIN, pwmCommand)</code></td>
+                <td><strong>3. Apply.</strong> Send the PWM power setting to the motor circuit on D3.</td>
+              </tr>
+              <tr>
+                <td><code>Serial.print(adcReading);</code><br><code>Serial.println(pwmCommand);</code></td>
+                <td><strong>4. Report.</strong> Show both numbers on the computer.</td>
+              </tr>
+              <tr>
+                <td><code>delay(CONTROL_UPDATE_DELAY_MS);</code></td>
+                <td><strong>5. Wait.</strong> This delay value is 1000 milliseconds: one second.</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>The wait is <strong>blocking</strong>: the loop does not read the RV again
+            during it. The motor keeps receiving its old PWM power setting.</p>
+          <p>Move the RV just after a reading: the command can lag by <strong>about
+            one second</strong>. Move it just before the next reading: the wait is shorter.
+            An old “go” command could keep a robot moving toward a chair.</p>
+        </div>
+      </section>
+
+      <section class="worksheet-section" aria-labelledby="lesson-five-title">
+        <h2 id="lesson-five-title">Lesson 05: A timer reminds the robot to check</h2>
+        <div class="explanation-space"><!-- ISR explanation and code excerpts: task 1.3. --></div>
+      </section>
+
+      <section class="worksheet-section" aria-labelledby="timing-title">
+        <h2 id="timing-title">Compare the checks</h2>
+        <div class="diagram-space"><!-- Labeled timing diagram: task 1.3. --></div>
+      </section>
+
+      <section class="worksheet-section" aria-labelledby="prediction-title">
+        <h2 id="prediction-title">My prediction</h2>
+        <!-- Prediction prompt: task 1.4. -->
+        <div class="writing-space" aria-label="Space for a written prediction">
+          <div class="writing-line"></div>
+          <div class="writing-line"></div>
+        </div>
+      </section>
+
+      <footer class="page-footer"><span>Lessons 04 and 05 · B1 battery and RV control</span><span>Page 1 of 2</span></footer>
+    </section>
+
+    <section class="page" aria-labelledby="page-two-title">
+      <header>
+        <h1 id="page-two-title">Try It and Explain</h1>
+        <p class="subtitle">Compare the two programs with the same RV control.</p>
+        <div class="student-details">
+          <div class="field name-field">Name: <span class="field-line"></span></div>
+          <div class="field date-field">Date: <span class="field-line"></span></div>
+        </div>
+      </header>
+
+      <section class="worksheet-section" aria-labelledby="observations-title">
+        <h2 id="observations-title">My observations</h2>
+        <!-- Trial instructions and observation table: task 1.4. -->
+        <div class="observation-space" aria-label="Space for observation records"></div>
+      </section>
+
+      <section class="worksheet-section" aria-labelledby="discovery-title">
+        <h2 id="discovery-title">Explain your discovery</h2>
+        <!-- Comparison questions: task 1.4. -->
+        <div class="writing-space" aria-label="Space for written explanations">
+          <div class="writing-line"></div>
+          <div class="writing-line"></div>
+          <div class="writing-line"></div>
+          <div class="writing-line"></div>
+          <div class="writing-line"></div>
+          <div class="writing-line"></div>
+        </div>
+      </section>
+
+      <section class="worksheet-section" aria-labelledby="robot-problem-title">
+        <h2 id="robot-problem-title">Think about a robot problem</h2>
+        <!-- Transfer scenario and reflection prompt: task 1.4. -->
+        <div class="writing-space" aria-label="Space for a robot-problem reflection">
+          <div class="writing-line"></div>
+          <div class="writing-line"></div>
+          <div class="writing-line"></div>
+          <div class="writing-line"></div>
+        </div>
+      </section>
+
+      <footer class="page-footer"><span>Lessons 04 and 05 · B1 battery and RV control</span><span>Page 2 of 2</span></footer>
+    </section>
+  </main>
+</body>
+</html>
