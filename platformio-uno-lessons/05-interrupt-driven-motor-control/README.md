@@ -10,6 +10,10 @@ Compare lessons 04 and 05 using the same B1 battery, RV control, and protected m
 - [Student worksheet source (HTML)](robot-attention-worksheet.html)
 - [Teacher guide: preparation, experiment steps, and answer guidance](robot-attention-teacher-guide.md)
 
+## Next Lesson: Two Joystick Controls
+
+Continue with [lesson 06: joystick motor and servo control](../06-joystick-motor-servo-control/README.md) to control motor power and servo position with two joystick axes checked every 20 milliseconds. Lesson 06 uses a new regulated 5 V actuator supply and joystick circuit. Prepare that circuit with its [teacher guide](../06-joystick-motor-servo-control/teacher-guide.md).
+
 ## How the Two Parts of the Program Share Work
 
 The **foreground** is the normal work in `setup()` and `loop()`. In this lesson, `loop()` copies the latest ADC and PWM values, prints them, and then waits 1,000 milliseconds. That wait blocks the foreground, just as it did in lesson 04.
