@@ -13,6 +13,7 @@ Use the number prefix to keep lessons in learning order.
 3. [`03-pwm-motor-ramp`](03-pwm-motor-ramp/) - Use PWM on digital pin 3 to ramp an externally powered motor command smoothly up and down.
 4. [`04-adc-pwm-motor-control`](04-adc-pwm-motor-control/) - Map the adjustable A0 voltage to motor PWM and observe the response of a blocking 1,000-millisecond control loop.
 5. [`05-interrupt-driven-motor-control`](05-interrupt-driven-motor-control/) - Use timer interrupts to update ADC-controlled motor PWM every 100 milliseconds while the main loop reports values every 1,000 milliseconds.
+6. [`06-joystick-motor-servo-control`](06-joystick-motor-servo-control/) - Check two joystick axes every 20 milliseconds to coordinate center-off motor power and servo position. Use its [teacher guide](06-joystick-motor-servo-control/teacher-guide.md) to prepare regulated external 5 V actuator power and verify the actual hardware.
 
 ## Robot Attention Investigation: Lessons 04 and 05
 
@@ -28,5 +29,6 @@ Use the same B1 battery, RV control, and motor circuit to investigate how checki
 - Before lesson 03, students should complete lessons 01 and 02 so they recognize transistor switching, shared ground, numeric mapping, and the difference between Arduino logic power and an external circuit's power. Lesson 03 introduces PWM and a teacher-verified external MOSFET motor circuit.
 - Before lesson 04, students should understand lesson 03's PWM values from 0 to 255. Lesson 04 reuses the lesson 02 RV voltage divider to control those PWM values and intentionally updates only once every 1,000 milliseconds.
 - Before lesson 05, students should observe lesson 04's blocking response. Lesson 05 keeps the same motor and RV controls but uses a timer interrupt so motor updates can continue while the main program waits between serial reports.
+- Before lesson 06, students should understand lesson 05's frequent checks during foreground waits. Lesson 06 introduces a two-axis joystick, bounded servo position commands, and 50 checks per second. The teacher verifies its new regulated 5 V actuator supply, shared ground, and travel limits before use.
 
-The sequence moves from a program-controlled PWM ramp, to direct but blocking ADC control, and finally to interrupt-driven ADC control. Open only one numbered lesson folder at a time so PlatformIO builds that lesson independently.
+The sequence moves from a program-controlled PWM ramp, to direct but blocking ADC control, to interrupt-driven ADC control, and then to coordinated motor and servo commands. Open only one numbered lesson folder at a time so PlatformIO builds that lesson independently.

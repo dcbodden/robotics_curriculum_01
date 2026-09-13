@@ -10,8 +10,8 @@
 - [x] 2.1 Write lesson 06's fifth-grade README with prerequisites, joystick/servo wiring and polarity, protected motor stage, shared ground, separate positive supplies, USB power, and regulated external 5 V actuator power. Include combined-current selection and teacher verification rather than assuming kit power-module capacity.
 - [x] 2.2 Add build/upload and power checkpoints, neutral/deadband verification with actuator power off, conservative servo limits, secured motor/servo precautions, and troubleshooting for binding, buzzing, motor starting thresholds, heat, and unstable power.
 - [x] 2.3 Add an observation activity for each axis separately and both together, with records and reflection on 50 checks per second, servo frame timing, motor PWM, serial snapshots, coasting, and physical response.
-- [ ] 2.4 Create the teacher guide with supply-current and voltage checks for the actual hardware, local decoupling and branch-routing guidance, neutral and travel adjustments, source links for SG90 voltage and timer behavior, and the distinction between this hardware timer approach and Arduino Servo library interrupts.
-- [ ] 2.5 Link lesson 06 from lesson 05 and the lesson index; verify links and preserve earlier firmware, wiring, and the robot-attention worksheet.
+- [x] 2.4 Create the teacher guide with supply-current and voltage checks for the actual hardware, local decoupling and branch-routing guidance, neutral and travel adjustments, source links for SG90 voltage and timer behavior, and the distinction between this hardware timer approach and Arduino Servo library interrupts.
+- [x] 2.5 Link lesson 06 from lesson 05 and the lesson index; verify links and preserve earlier firmware, wiring, and the robot-attention worksheet.
 
 ## 3. Verification and completion
 

@@ -8,6 +8,8 @@ Our program checks both joystick directions every **20 milliseconds**, or **50 t
 
 Complete [lesson 05](../05-interrupt-driven-motor-control/README.md) with your teacher. You should recognize analog inputs, motor power commands, and timer reminders. Your teacher handles power-supply selection and verifies the circuit before power is applied.
 
+Teachers: use the [preparation and timing guide](teacher-guide.md) for actual-hardware power checks, orange/red/brown servo connections, and neutral/travel adjustments.
+
 This lesson uses the kit joystick instead of the RV snap, and an external regulated 5 V supply instead of B1. Keep B1 and RV out of this circuit.
 
 ## What You Need
