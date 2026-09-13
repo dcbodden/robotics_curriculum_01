@@ -14,6 +14,14 @@ Use the number prefix to keep lessons in learning order.
 4. [`04-adc-pwm-motor-control`](04-adc-pwm-motor-control/) - Map the adjustable A0 voltage to motor PWM and observe the response of a blocking 1,000-millisecond control loop.
 5. [`05-interrupt-driven-motor-control`](05-interrupt-driven-motor-control/) - Use timer interrupts to update ADC-controlled motor PWM every 100 milliseconds while the main loop reports values every 1,000 milliseconds.
 
+## Robot Attention Investigation: Lessons 04 and 05
+
+Use the same B1 battery, RV control, and motor circuit to investigate how checking frequency affects response. The three-page activity includes a hypothesis, paired trials, and a conclusion supported by observations.
+
+- [Printable student worksheet (PDF)](05-interrupt-driven-motor-control/robot-attention-worksheet.pdf)
+- [Student worksheet source (HTML)](05-interrupt-driven-motor-control/robot-attention-worksheet.html)
+- [Teacher guide](05-interrupt-driven-motor-control/robot-attention-teacher-guide.md)
+
 ## Learning Order and Prerequisites
 
 - Before lesson 02, students should understand the lesson 01 transistor/LED circuit, shared ground, digital HIGH and LOW output on pin 8, and using `delay()` to control blink timing.

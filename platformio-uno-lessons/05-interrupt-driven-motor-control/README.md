@@ -2,6 +2,14 @@
 
 This lesson uses timer interrupts to keep an RV-controlled motor command responsive while the main program waits between serial reports.
 
+## Robot Attention Investigation
+
+Compare lessons 04 and 05 using the same B1 battery, RV control, and protected motor circuit. The three-page activity guides a student-written hypothesis, matching trials, and a conclusion about the motor's response to 1000 ms versus 100 ms control checks.
+
+- [Printable student worksheet (PDF)](robot-attention-worksheet.pdf)
+- [Student worksheet source (HTML)](robot-attention-worksheet.html)
+- [Teacher guide: preparation, experiment steps, and answer guidance](robot-attention-teacher-guide.md)
+
 ## How the Two Parts of the Program Share Work
 
 The **foreground** is the normal work in `setup()` and `loop()`. In this lesson, `loop()` copies the latest ADC and PWM values, prints them, and then waits 1,000 milliseconds. That wait blocks the foreground, just as it did in lesson 04.
