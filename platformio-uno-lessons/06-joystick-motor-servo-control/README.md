@@ -175,6 +175,8 @@ The two “50 times per second” rhythms have different jobs: one checks the co
 
 A power or position **command** is an instruction, not a measurement of actual speed or angle. A motor may need a larger command to start, may coast after zero power, and may change speed unevenly. A servo takes time to move. Frequent checks help the program use fresh instructions sooner; they do not make either actuator move or stop instantly.
 
+At joystick center, the DC motor receives zero power command and the servo receives its middle position command. The servo can still use power to hold that position even when it looks stopped.
+
 ### Reflect on Your Evidence
 
 1. Which axis controlled motor power, and which controlled servo position? What records support your answer?
