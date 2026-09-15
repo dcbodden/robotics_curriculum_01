@@ -2,12 +2,40 @@
 
 This lesson uses a three-terminal potentiometer to send an adjustable voltage to analog pin A0. The Arduino reads that voltage and uses it to change the pin-8 blink delay.
 
-## Optional Related Activities
+## Recommended Prior Learning
 
-- Before this lesson, [Multimeter and Ohm's Law](../../electronics-fundamentals-lessons/01-multimeter-ohms-law/) offers optional practice measuring voltage, resistance, and current.
-- After this lesson, [Manual Voltage Mapping](../../electronics-fundamentals-lessons/02-manual-voltage-mapping/) offers optional reinforcement by sorting measured voltages into eight digital levels.
+Complete [lesson 01: GPIO Transistor Switch](../01-gpio-transistor-switch/) first. Reuse the teacher-approved Snap Circuits transistor-and-LED assembly from that lesson, including its protected D8 control connection, shared Arduino ground, and approved assembly power source. Keep the assembly intact. The earlier [Multimeter and Ohm's Law](../../electronics-fundamentals-lessons/01-multimeter-ohms-law/) and [Coding Fundamentals](../../coding-fundamentals-lessons/) lessons prepare you for measurement, Build, Upload, and blinking output.
 
-These activities are helpful connections, not prerequisites. You can build and upload this lesson without completing either one.
+## Core Mission: Turn the RV, Compare Two Blinks
+
+**Goal:** Watch a change in the Snap Circuits RV position change the `ADC reading`, the printed `Delay`, and the speed of the lesson 01 LED blink.
+
+**Prepare and stay safe:** Start with the approved lesson 01 assembly. Keep its **own approved power source off** and **unplug Arduino USB** before adding or checking RV wires. Do not rebuild the LED/transistor assembly or move its protected D8 control lead or shared-ground lead. Never connect Arduino 5 V to the assembly's power circuit. Ask a teacher to check the RV, the approved assembly, and both power sources before restoring power. If a part gets hot, a wire comes loose, or the LED behaves unexpectedly, turn off assembly power, unplug USB, and ask the teacher to inspect the setup. Never move wires while powered.
+
+1. With **USB unplugged and assembly power off**, connect the RV's two outer terminals to **Arduino 5 V and GND**. Connect its center sliding terminal, called the **wiper**, to **A0**. The outer terminals may trade places; that changes which sliding direction raises the reading. Leave lesson 01's **D8-to-protected-transistor-control** and **Arduino-GND-to-assembly-ground** connections as approved. Use the [wiring table and photos](#wire-the-potentiometer) if you need to find the RV terminals.
+2. **Teacher checkpoint, still unpowered:** The teacher traces 5 V → RV outer terminal, GND → other RV outer terminal, and wiper → A0; checks that 5 V and GND are not shorted, no external assembly power reaches A0 or Arduino 5 V, and the lesson 01 control and ground connections are still protected and correct. Restore power only after approval.
+3. Open `platformio-uno-lessons/02-adc-variable-delay` as the PlatformIO project in VS Code. Under **Project Tasks > uno > General**, choose **Build** and wait for `SUCCESS`. Close any open Serial Monitor. With the approved circuit fixed and assembly power still off, reconnect USB, choose **Upload**, and wait for `SUCCESS`. Then turn on the assembly's approved power. Do not change wiring during or after upload.
+4. Choose **Monitor** under the same project tasks. It runs at **9,600 baud**. Leave the RV at one position. Read a line like `ADC reading: 512 | Delay: 1050 ms` and watch several LED blinks. Record the actual ADC number, delay, and whether the blink looks faster or slower in the table below.
+5. **Compare one safe change:** Slide the RV to a clearly different position **without touching any wires**. Wait for a new monitor line and several blinks. Record the new numbers and blink speed. If the readings stay nearly the same, ask the teacher to help you choose two positions farther apart; do not rewire while powered.
+
+| RV position | ADC reading | Delay (ms) | Blink speed I saw |
+| --- | --- | --- | --- |
+| First position |  |  |  |
+| Second position |  |  |  |
+
+**Notice:** Which position had the **lower** ADC reading? Did it also have the **shorter** printed delay and **faster** blink? Record what you saw, even if the RV moves in the opposite direction from what you expected.
+
+**Stop safely:** Turn off the assembly's approved power, stop Monitor, then unplug USB. Change or remove wires only after **both** power sources are off. Leave the approved assembly intact.
+
+## Name the Idea: One Reading Changes One Wait
+
+The RV changes the voltage at A0. The Arduino turns that voltage into an **ADC number**. The program uses the number to choose how long to wait while D8 is HIGH or LOW. A shorter wait usually makes the LED blink faster; a longer wait makes it blink slower. The focus lines in [`src/main.cpp`](src/main.cpp) are `analogRead(ANALOG_INPUT_PIN)`, `map(...)`, `digitalWrite(...)`, and `delay(stateDelayMs)`. The program reads A0 again before the next HIGH or LOW wait. You can follow that chain without learning how the ADC hardware works inside.
+
+**Predict and try:** From your two rows, predict what will happen if you move the RV toward the position with the **higher ADC reading**. With the same teacher-approved wiring fixed, reconnect USB and then the assembly's approved power if they are off. Try only that RV movement, observe the printed delay and blink, and stop safely again. Do not change any wire while powered. Was your prediction supported by what you saw?
+
+## Optional Reinforcement and Deeper Reference
+
+After this lesson, [Manual Voltage Mapping](../../electronics-fundamentals-lessons/02-manual-voltage-mapping/) lets you sort measured voltages into eight digital levels. The sections below explain the ADC in more detail, show the approved circuit, and offer help when the first comparison does not work.
 
 ## How the Arduino Turns Voltage Into a Number
 
@@ -30,7 +58,7 @@ Lesson 02 adds the potentiometer connections below; it does not replace the pin-
 
 ## Wire the Potentiometer
 
-Disconnect the USB cable from the Arduino Uno before adding or changing any wires. The board must have no USB power while you build the circuit.
+Disconnect the USB cable and turn off the assembly's approved power before adding or changing any wires. Both sources must be off while you build or inspect the circuit.
 
 A potentiometer has two outer terminals and one center terminal called the **wiper**. Connect it as a voltage divider:
 
@@ -66,16 +94,7 @@ Keep the voltage on A0 between 0 V and 5 V. Use only the Arduino's 5 V and GND p
 
 Make sure the center wiper is securely connected to A0. If A0 is left unconnected, or **floating**, it can pick up electrical noise and produce unstable readings that jump around even when no one turns the knob.
 
-## Build, Upload, and Observe
-
-1. Open the `02-adc-variable-delay` folder in VS Code. Make sure the PlatformIO IDE extension is installed and the teacher-approved circuit is connected. If the PlatformIO icon does not appear in this multi-project workspace, choose **File > Add Folder to Workspace...**, add the `02-adc-variable-delay` folder, and wait for PlatformIO to activate.
-2. Select the PlatformIO icon in the VS Code Activity Bar. Under **Project Tasks**, expand **uno**, expand **General**, and select **Build**. Wait for the terminal to report `SUCCESS`.
-3. Connect the Arduino Uno with its USB cable. In the same **General** task list, select **Upload** and wait for the upload to finish successfully.
-4. Select **Monitor** from the **General** task list. The project opens the serial monitor at 9,600 baud.
-5. Slowly move the potentiometer to a new position. Watch the labeled `ADC reading` and `Delay` values in the serial monitor, and watch the LED blink.
-6. Compare what you see: lower ADC readings should show shorter delays and faster blinking, while higher readings should show longer delays and slower blinking.
-
-## Record Your Observations
+## Optional Three-Position Recording
 
 Test three different potentiometer positions. For each position, copy the ADC reading and delay from the serial monitor, then describe the visible blink speed as fast, medium, or slow.
 
