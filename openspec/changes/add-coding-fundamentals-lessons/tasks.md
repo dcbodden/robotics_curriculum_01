@@ -5,7 +5,7 @@
 
 ## 2. Linux workstation C lessons
 
-- [ ] 2.1 Create lesson 01's warning-clean C hello-world program and fifth-grade instructions for opening a terminal, finding the lesson directory, building with GCC, distinguishing source from executable, running it, predicting output, and troubleshooting.
+- [x] 2.1 Create lesson 01's warning-clean C hello-world program and fifth-grade instructions for opening a terminal, finding the lesson directory, building with GCC, distinguishing source from executable, running it, predicting output, and troubleshooting.
 - [ ] 2.2 Create lesson 02's bounded whole-line name-input program and instructions that explain prompt, input, stored name, and formatted greeting without making buffer or string mechanics a student learning objective; verify a name containing spaces and define simple empty/end-of-input behavior.
 - [ ] 2.3 Create lesson 03's repeating 1-through-5 program with visible one-second Linux waits, prompt flushing, and instructions for counters, finite and indefinite loops, Ctrl+C, prediction/observation, and the POSIX-versus-ISO-C teacher note.
 
