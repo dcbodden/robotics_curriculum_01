@@ -1,0 +1,8 @@
+# Executable files built by the three laptop lessons.
+/01-hello-world/hello-world
+/02-name-greeting/name-greeting
+/03-repeating-counter/repeating-counter
+
+# Files generated locally by PlatformIO and its VS Code integration.
+/04-arduino-led-counting/.pio/
+/04-arduino-led-counting/.vscode/
