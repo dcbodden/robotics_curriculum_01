@@ -31,7 +31,7 @@ The complete route is listed in the [repository guide](../README.md#recommended-
 
 1. [Hello, World](01-hello-world/) — Build and run a C program that sends a greeting to the terminal.
 2. [Name Greeting](02-name-greeting/) — Give the program input and see it use the name it remembers in its output.
-3. [Repeating Counter](03-repeating-counter/) — Use a counter and loops to print 1 through 5, one number per second, over and over.
+3. [Repeating Counter](03-repeating-counter/) — Watch a counter print 1 through 5 once, then watch a second program repeat the sequence.
 4. [Arduino LED Counting](04-arduino-led-counting/) — Build and upload a program that flashes the Uno's built-in LED in groups of one through five.
 
 Each lesson builds on the one before it:
@@ -82,12 +82,6 @@ Building checks whether the source code can become a program. Running or uploadi
 
 ## How Each Lesson Works
 
-The lessons use the same six steps:
-
-```text
-READ → PREDICT → BUILD → RUN OR UPLOAD → OBSERVE → EXPLAIN
-```
-
-First read the short program and predict what it will do. Next build it. Run a laptop program or upload an Arduino program, then record what actually happens and explain which instruction, input, counter, or loop helped produce it. A prediction can be different from the result; the observation is still useful evidence.
+First complete the short **Core Mission** to see one working result. Then name the important idea, predict what one safe change or comparison will do, try it, and explain what you observed. A prediction can be different from the result; the observation is still useful evidence.
 
 Laptop lessons show every terminal command in a box. Run one command at a time from that lesson's folder. Do not change a command unless the lesson asks you to. Your teacher will help prepare GCC and fix computer permissions. The [teacher guide](teacher-guide.md) explains the shared lesson routine and preparation.

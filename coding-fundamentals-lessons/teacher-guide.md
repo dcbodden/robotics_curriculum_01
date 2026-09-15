@@ -22,13 +22,14 @@ Before lesson 01:
 
 Each laptop lesson gives the exact GCC command for its own source and executable name. Have the student type or paste that complete command. Do not replace it with an unexplained build system, shell script, alias, or global executable. A successful GCC command normally returns to the prompt without printing a success message; confirm that the named executable appears with `ls`.
 
-Generated executables are deliberately placed beside their source files so the source/executable distinction can be seen. The collection `.gitignore` excludes only these three expected files:
+Generated executables are deliberately placed beside their source files so the source/executable distinction can be seen. The collection `.gitignore` excludes only these four expected files:
 
 | Lesson | Source retained in the repository | Generated executable ignored by Git |
 | --- | --- | --- |
 | 01 | `01-hello-world/main.c` | `01-hello-world/hello-world` |
 | 02 | `02-name-greeting/main.c` | `02-name-greeting/name-greeting` |
-| 03 | `03-repeating-counter/main.c` | `03-repeating-counter/repeating-counter` |
+| 03 finite stage | `03-repeating-counter/count-once.c` | `03-repeating-counter/count-once` |
+| 03 repeating stage | `03-repeating-counter/main.c` | `03-repeating-counter/repeating-counter` |
 
 The student may remove a generated executable with the lesson's exact `rm` command, then build it again. Never instruct the student to use a wildcard with `rm`. Source code is not a cleanup file. PlatformIO's generated `.pio/` and `.vscode/` directories under lesson 04 are also ignored.
 
@@ -120,7 +121,7 @@ This optional cleanup removes only the generated executable named by that lesson
 
 If a command fails, read the first useful error together. Check the folder with `pwd` and `ls` before changing source code. If `gcc` is missing or access is denied, stop and fix the workstation setup as the teacher rather than adding installation or permission work to the student's programming lesson.
 
-Lesson 03 intentionally continues until Ctrl+C. Introduce Ctrl+C before running it and explain that this requests the terminal program to stop; it is not the letter C being entered into the program. Its one-second `sleep()` call is provided by the Linux/POSIX environment, not by portable ISO C. Keep that distinction in a teacher note unless the student asks.
+Lesson 03 first builds `count-once.c`, which returns to the prompt after displaying 1–5. Then it builds the unchanged `main.c`, which continues until Ctrl+C. Introduce Ctrl+C before the repeating run and explain that it requests the terminal program to stop; it is not the letter C being entered into the program. Both programs' one-second `sleep()` call is provided by the Linux/POSIX environment, not by portable ISO C. Keep that distinction in a teacher note unless the student asks.
 
 For lesson 04, use the PlatformIO buttons and terminology already established in the repository: **Build** checks the project, **Upload** sends it through USB, and **Monitor** displays serial text. Do not suggest that clicking Run executes the Arduino program on the laptop. Keep the activity USB-only and use `LED_BUILTIN`; no external circuit should be present.
 
@@ -137,3 +138,10 @@ The following checks were performed on September 14, 2026. Build and runtime res
 | Lesson 04 upload, Serial groups, and built-in LED | Not applicable to the build check. | **Not performed:** no hardware upload, Serial Monitor observation, or physical LED observation was performed during this verification. |
 
 A passing build does not prove runtime output, timing, an upload, or physical blinking. Mark unavailable hardware checks **not performed** instead of filling them from expected behavior.
+
+Additional lesson 03 checks performed on September 15, 2026:
+
+| Check | Build result | Runtime observation |
+| --- | --- | --- |
+| Finite `count-once` stage | Passed with the documented warnings-as-errors GCC command. | Observed `1, 2, 3, 4, 5` with 1.00-second gaps; the program exited normally after 5. |
+| Unchanged repeating stage | Passed with the documented warnings-as-errors GCC command. | Observed `1, 2, 3, 4, 5, 1` with 1.00-second gaps; SIGINT stopped the run. |
