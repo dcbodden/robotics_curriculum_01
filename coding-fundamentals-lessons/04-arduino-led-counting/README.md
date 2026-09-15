@@ -1,164 +1,138 @@
 # Lesson 04: Arduino LED Counting
 
-In the last lesson, a laptop program printed groups of numbers. This program uses the same counting idea to make a physical output: the Arduino Uno's built-in light blinks in groups of one through five.
+In lesson 03, a laptop program printed 1 through 5, then started again at 1. Here you will use the same counting idea to control a physical output: the Arduino Uno's built-in light.
 
 ## Learning Goals
 
 By the end of this lesson, you will be able to:
 
 - explain the difference between **run** and **upload**;
-- identify one loop that chooses a blink group from 1 through 5;
-- identify another loop that makes the matching number of blinks;
-- match Serial Monitor output with the Uno's built-in LED; and
-- describe how a program keeps running on an Arduino.
+- observe the Uno's built-in LED blinking in groups;
+- match a Serial Monitor group message with the same number of blinks;
+- identify one loop that chooses a group and another that counts its blinks; and
+- describe how the program keeps running while the Uno has power.
 
 ## What You Need
 
+- [lesson 03: Repeating Counter](../03-repeating-counter/) completed;
 - an Arduino Uno;
-- a USB **data** cable that fits the Uno;
-- a Linux laptop with VS Code and the PlatformIO extension; and
-- [lesson 03: Repeating Counter](../03-repeating-counter/) completed.
+- a USB **data** cable that fits the Uno; and
+- a Linux laptop with VS Code and the PlatformIO extension ready.
 
-This lesson uses only the USB cable and the light already built into the Uno. Do not connect a breadboard, external LED, Snap Circuits parts, jumper wires, or an external power supply.
+This lesson uses only USB and the light already built into the Uno. Do not connect a breadboard, external LED, Snap Circuits parts, jumper wires, or an external power supply.
 
-## From Laptop Output to Arduino Output
+## Core Mission: Watch, Match, and Name the Blink Groups
 
-In lessons 01 through 03, you built a program and ran it on the laptop. This time, the laptop builds the program and **uploads** it through the USB cable. Upload means sending the built program to the Arduino. The program then runs on the Arduino.
+**Goal:** Upload the supplied program, watch the built-in LED blink, then match at least one blink group with a Serial Monitor message.
+
+**Prepare:** Ask your teacher to confirm that the Uno, USB data cable, and PlatformIO are ready. Keep all external circuits and power supplies disconnected. Find the small built-in LED marked **L**; it is different from the power LED marked **ON**. Do not change `src/main.cpp`.
+
+### Stage 1: Upload and watch the light
+
+1. Plug only the USB data cable into the Uno and laptop.
+2. In VS Code, choose **File > Open Folder...** and select `coding-fundamentals-lessons/04-arduino-led-counting`. Confirm that Explorer shows `platformio.ini` and the `src` folder. If VS Code asks whether you trust the folder, ask your teacher before continuing.
+3. Wait for PlatformIO to load. Select its alien-head icon in the Activity Bar. Under **Project Tasks**, expand **uno**, then **General**.
+4. Select **Build**. Wait for `SUCCESS` in the terminal. Build prepares and checks the program; it does not send it to the board.
+5. Select **Upload**. Wait for the upload terminal to end with `SUCCESS`. The Uno restarts and runs the program automatically.
+6. Watch the LED marked **L** before opening the Serial Monitor. Look for flashes followed by a longer dark pause.
+
+**Notice 1:** What did the built-in light do?
+
+______________________________________________________________
+
+Could you see a longer pause between groups of flashes? **Yes / No**
+
+### Stage 2: Match messages with flashes
+
+7. In **Project Tasks > uno > General**, select **Monitor**. This project uses 9600 bits per second. Watch the messages and the LED together.
+8. Wait until you see `Blink group: 1`. Count its flashes before the longer pause. Then choose one other group message and count its flashes.
+
+**Notice 2:**
+
+| Message seen | Blinks counted before the longer pause |
+| --- | --- |
+| `Blink group: 1` | ____ |
+| `Blink group: ____` | ____ |
+
+Did the message number match the number of flashes? **Yes / No**
+
+### Stage 3: Name the two jobs
+
+9. Open `src/main.cpp`. Find the comment `The outer loop chooses a group from 1 through 5.` and the comment `The inner loop flashes the LED once for each number in the group.`
+10. Use what you saw to finish two short ideas:
+
+- The **outer loop** chooses group number ____ through ____.
+- The **inner loop** makes the number of blinks chosen by the current ____________.
+
+**Stop safely:** Close Monitor with its close-terminal or trash-can button. When you are done watching the light, unplug USB to turn off the Uno. Remove power before swapping a board or cable; hold the plug by its connector.
+
+## Name What Build, Upload, and Output Mean
+
+In lessons 01–03, GCC built a program and you ran it on the laptop. In this lesson, PlatformIO builds on the laptop and **uploads** the program through USB. The program then **runs on the Uno**.
 
 | Laptop lessons | This Arduino lesson |
 | --- | --- |
-| Build the source code on the laptop. | Build the source code on the laptop. |
+| Build the source on the laptop. | Build the source on the laptop. |
 | Run the program on the laptop. | Upload the program to the Uno. |
-| Read output in the terminal. | Watch the built-in LED and read output in the Serial Monitor. |
+| Read words in the laptop terminal. | Watch the built-in LED and read Serial Monitor messages. |
 
-The USB cable carries the program to the board. It also supplies power and carries Serial Monitor messages back to the laptop.
+The USB cable carries the program to the board. It also supplies power and carries Serial messages back to the laptop. **Output** can be printed words or a physical light. A successful Build does not prove physical blinking; the observation happens after Upload.
 
-## Find the Two Loops
+Closing the Serial Monitor only stops showing messages. It does not stop the program on the board. The program keeps repeating while the Uno has power.
 
-Open `src/main.cpp`. Look for these two instructions:
+## Find the Focus Loops
+
+The supplied source is [`src/main.cpp`](src/main.cpp). The excerpt below keeps the two focus loops and the group message; the complete source also has setup and named timing values.
 
 ```cpp
 for (int groupNumber = FIRST_GROUP; groupNumber <= LAST_GROUP;
      groupNumber++) {
+    Serial.print("Blink group: ");
+    Serial.println(groupNumber);
+
+    // The inner loop flashes the LED once for each number in the group.
+    for (int blinkNumber = 1; blinkNumber <= groupNumber; blinkNumber++) {
+        digitalWrite(LED_BUILTIN, HIGH);
+        delay(LED_ON_TIME_MS);
+        digitalWrite(LED_BUILTIN, LOW);
+        delay(TIME_BETWEEN_BLINKS_MS);
+    }
+    delay(TIME_BETWEEN_GROUPS_MS);
+}
 ```
 
-This outside loop chooses group 1, then group 2, and continues through group 5.
+The outer `for` loop chooses group 1, then 2, through 5. The inner `for` loop makes as many flashes as the current group number. After group 5, Arduino's `loop()` starts the group sequence at 1 again.
 
-Inside it, find:
+The timing names tell the program how long to keep the LED on and how long to wait. The longer pause between groups makes their boundaries easier to see. The `setup()` lines, `Serial` setup, and exact timing numbers help the real program work; you do not need to memorize those helper details.
 
-```cpp
-for (int blinkNumber = 1; blinkNumber <= groupNumber; blinkNumber++) {
-```
+## Try One Comparison Without Changing the Code
 
-This inside loop makes one blink for every number in the current group. When `groupNumber` stores 3, the inside loop makes 3 blinks.
+Use your first observation to make a prediction. You can reconnect USB to restart the same program if you unplugged it; do not attach an external circuit.
 
-The program uses `LED_BUILTIN`, so PlatformIO uses the correct built-in LED pin for the Uno. The timing values have names such as `LED_ON_TIME_MS` and `TIME_BETWEEN_GROUPS_MS`. You do not need to memorize their numbers. Notice that the pause between groups is longer than the short pause between blinks. That makes each group easier to see.
+1. **Predict:** How many flashes do you expect after `Blink group: 2`? How many after `Blink group: 4`?
 
-After group 5, Arduino's `loop()` starts again. The next group is group 1.
+   Group 2: ____ flashes. Group 4: ____ flashes.
 
-## Predict
+2. With the Uno running, open **Monitor** again and watch those two messages and their matching light groups. If you start watching in the middle of a cycle, wait for the next group 1.
 
-Before connecting the Uno, complete these predictions:
+   Group 2 observed: ____ flashes. Group 4 observed: ____ flashes.
 
-1. The Serial Monitor will show these first six group numbers:
+3. **Explain:** The group 4 message led to ____ more flashes than group 2 because the inner loop uses the current ____________ as its blink count.
 
-   ____  ____  ____  ____  ____  ____
+4. Watch after group 5 if you can. Did the next message and light group return to 1? **Yes / No**
 
-2. When the Serial Monitor says `Blink group: 4`, the built-in LED will blink ____ times.
-
-3. After group 5, I predict _______________________________________.
-
-4. I think the longer pause will happen **between blinks / between groups**. Circle one.
-
-## Prepare the Uno
-
-1. Make sure nothing is connected to the Uno except the USB cable used in this lesson.
-2. Check that the cable is a USB **data** cable. A charge-only cable can power the board but cannot upload the program.
-3. Plug the cable into the Uno and the laptop.
-4. Find the small built-in LED marked **L** on the Uno. Its exact position may vary slightly between boards.
-
-## Open the Correct Project
-
-This lesson directory is a complete PlatformIO project. Open it by itself so PlatformIO uses the correct board and program.
-
-1. Open VS Code.
-2. Choose **File > Open Folder...**.
-3. Select `coding-fundamentals-lessons/04-arduino-led-counting`.
-4. Confirm that the Explorer shows `platformio.ini` and the `src` folder.
-5. If VS Code asks whether you trust the folder, ask your teacher before continuing.
-6. Wait for the PlatformIO extension to finish loading.
-
-## Build and Upload
-
-1. Select the PlatformIO alien-head icon in the Activity Bar.
-2. Under **Project Tasks**, expand **uno**, then expand **General**.
-3. Select **Build**. Building checks the source code and prepares a program for the Uno. It does not send the program to the board yet.
-4. Watch the terminal. A successful build ends with `SUCCESS` and no error message.
-5. Select **Upload**. PlatformIO may build again before sending the program through USB.
-6. Wait for the upload terminal to end with `SUCCESS`.
-
-After a successful upload, the Uno restarts and runs the program automatically. You should see the built-in LED blink even before opening the Serial Monitor.
-
-## Open the Serial Monitor
-
-1. In **Project Tasks > uno > General**, select **Monitor**.
-2. The monitor uses 9600 bits per second because `monitor_speed = 9600` appears in `platformio.ini`. The source code stores the same number as `SERIAL_SPEED` and uses it to start Serial.
-3. Watch the messages while you also watch the built-in LED.
-
-The messages should repeat like this:
-
-```text
-Blink group: 1
-Blink group: 2
-Blink group: 3
-Blink group: 4
-Blink group: 5
-Blink group: 1
-```
-
-Each message appears before its matching group of blinks. The LED should blink once for group 1, twice for group 2, and so on. A longer dark pause separates one group from the next.
-
-## Observe and Explain
-
-Record what you actually observe, even if it differs from your prediction.
-
-| Group shown in the monitor | Number of blinks observed |
-| --- | --- |
-| 1 | ____ |
-| 2 | ____ |
-| 3 | ____ |
-| 4 | ____ |
-| 5 | ____ |
-
-Did the monitor return to group 1 after group 5? **Yes / No**
-
-Could you tell where one group ended and the next began? **Yes / No**
-
-Complete the explanations:
-
-- The outside loop ______________________________________________.
-- The inside loop _______________________________________________.
-- The longer pause ______________________________________________.
-- Upload means _________________________________________________.
-
-## Stop and Disconnect
-
-The program keeps repeating while the Uno has power. Closing the Serial Monitor only stops showing its messages; it does not stop the program on the board.
-
-1. Close the Serial Monitor with its trash-can or close-terminal button.
-2. When you are finished observing, unplug the USB cable to turn off the Uno.
-3. Remove power before swapping boards or cables. Hold a plug by its connector instead of pulling on the cable.
+When finished, close Monitor and unplug USB as described in the Core Mission.
 
 ## Troubleshooting
 
 - **`platformio.ini` is missing:** VS Code opened the wrong folder. Reopen `coding-fundamentals-lessons/04-arduino-led-counting` by itself.
-- **Build reports an error:** Read the first error with your teacher. Confirm that `board = uno` appears in `platformio.ini` and that `src/main.cpp` has not been moved.
-- **The Uno lights up, but Upload cannot find it:** Try a known USB data cable and a direct laptop USB port. A charge-only cable cannot upload.
-- **Upload reports that the port is busy:** Close the Serial Monitor and any other program using the Uno, then try Upload again.
+- **Build reports an error:** Read the first error with your teacher. Confirm `board = uno` in `platformio.ini` and that `src/main.cpp` has not been moved.
+- **The Uno lights up, but Upload cannot find it:** Try a known USB data cable and a direct laptop USB port. A charge-only cable can power the board but cannot upload.
+- **Upload reports that the port is busy:** Close Monitor and any other program using the Uno, then try Upload again.
 - **Linux reports permission denied:** Stop and ask the teacher to fix the workstation's serial-device permissions.
-- **Upload succeeds, but you do not see blinking:** Look for the small LED marked **L**, not the power LED marked **ON**. Press the Uno's reset button once and watch again.
-- **The blinks do not match the messages:** Start watching at `Blink group: 1`, count only the flashes before the longer pause, and compare again.
-- **No text appears in the Serial Monitor:** Confirm that the task is **Monitor** under the `uno` environment and that the speed is 9600. Close and reopen Monitor once.
-- **The first message is not group 1:** You may have opened the monitor during a running cycle. Press the Uno's reset button and watch from the beginning.
+- **Upload succeeds, but you do not see blinking:** Look for LED **L**, not power LED **ON**. Press the Uno's reset button once and watch again.
+- **The blinks do not match the messages:** Start watching at `Blink group: 1` and count only the flashes before the longer pause.
+- **No text appears in Monitor:** Confirm you selected **Monitor** under **uno** and the speed is 9600. Close and reopen Monitor once.
+- **The first message is not group 1:** You may have opened Monitor during a running cycle. Wait for the next group 1 or press reset to start over.
 
 You have now used output in two places: text appeared in a monitor, and light appeared on the Arduino. Both outputs followed counters and loops in the program.

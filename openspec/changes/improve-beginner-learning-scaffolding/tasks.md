@@ -8,7 +8,7 @@
 - [x] 2.1 Restructure lesson 01 around a short first-success Core Mission, then add the source/build/run explanation and one bounded greeting edit, rebuild, prediction, observation, and restore-or-compare prompt without changing the supplied `Hello, world!` baseline.
 - [x] 2.2 Restructure lesson 02 around an initial name-greeting success and a focus map for ask, receive, store, and greet; label bounded input, end-of-input, and newline cleanup as helper mechanics while retaining the safe whole-line implementation and multiword-name behavior.
 - [x] 2.3 Add and document a warning-clean `count-once.c` finite precursor with a distinct ignored executable, then revise lesson 03 to observe 1–5 once before building the unchanged repeating counter and observing `1, 2, 3, 4, 5, 1` under controlled stopping.
-- [ ] 2.4 Restructure lesson 04's existing USB-only project guide into staged Core Mission observations—upload and watch the built-in LED, match Serial group messages, then explain the outer and inner loops—while preserving the final firmware and no-external-circuit requirement.
+- [x] 2.4 Restructure lesson 04's existing USB-only project guide into staged Core Mission observations—upload and watch the built-in LED, match Serial group messages, then explain the outer and inner loops—while preserving the final firmware and no-external-circuit requirement.
 
 ## 3. Electronics and Arduino scaffolding
 
