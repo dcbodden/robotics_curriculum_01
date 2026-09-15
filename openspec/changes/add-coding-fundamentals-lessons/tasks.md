@@ -1,7 +1,7 @@
 ## 1. Collection foundation
 
-- [ ] 1.1 Create the `coding-fundamentals-lessons` collection and numbered lesson directories, with a collection index that explains the four-step progression, shared vocabulary, prerequisites, and laptop-versus-Arduino build/run/upload distinction.
-- [ ] 1.2 Add focused student and teacher conventions for exact terminal commands, generated executable cleanup or ignore rules, observation prompts, and scope boundaries that avoid advanced programming topics.
+- [x] 1.1 Create the `coding-fundamentals-lessons` collection and numbered lesson directories, with a collection index that explains the four-step progression, shared vocabulary, prerequisites, and laptop-versus-Arduino build/run/upload distinction.
+- [x] 1.2 Add focused student and teacher conventions for exact terminal commands, generated executable cleanup or ignore rules, observation prompts, and scope boundaries that avoid advanced programming topics.
 
 ## 2. Linux workstation C lessons
 
