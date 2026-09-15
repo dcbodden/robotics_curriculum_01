@@ -2,6 +2,10 @@
 
 In this lesson, an Arduino Uno changes digital pin 8 between **HIGH** and **LOW** every two seconds. Pin 8 controls an NPN transistor in an existing Snap Circuits LED assembly. You will watch the LED and use a digital multimeter to measure what HIGH and LOW mean in volts.
 
+## Recommended Prior Learning
+
+Complete [Arduino LED Counting](../../coding-fundamentals-lessons/04-arduino-led-counting/) first. It uses the Uno's built-in LED to practice building, uploading, counters, loops, and output without an external circuit. This lesson uses those familiar ideas to control a transistor-and-LED assembly through digital pin 8.
+
 ## Learning Goals
 
 By the end of the lesson, you will be able to:
@@ -83,4 +87,3 @@ Use voltage mode only. The meter measures pin 8 **relative to shared ground**, m
 - **The voltage changes but seems a little above 0 V or below 5 V:** Small differences are normal. Record the measured value instead of changing the circuit to force an exact number.
 
 PlatformIO's official [VS Code guide](https://docs.platformio.org/en/latest/integration/ide/vscode.html) describes the Build and Upload actions, and its [`pio device list` guide](https://docs.platformio.org/en/latest/core/userguide/device/cmd_list.html) explains the teacher-facing device check.
-

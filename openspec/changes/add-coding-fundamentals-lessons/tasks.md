@@ -16,6 +16,6 @@
 
 ## 4. Discovery and verification
 
-- [ ] 4.1 Link the new collection from the repository guide and link it forward to the existing PlatformIO Uno sequence; add recommended prior-learning links to the Uno index and lesson 01 without renumbering or changing existing firmware/circuit behavior.
-- [ ] 4.2 Build all three C programs with the documented warnings-as-errors command, verify exact hello and multiword-name output, observe at least `1, 2, 3, 4, 5, 1` from the timed program under controlled termination, and build lesson 04 for Uno.
-- [ ] 4.3 Review all student text for the agreed vocabulary and limited scope, verify local links and expected outputs, run strict OpenSpec and whitespace checks, and record Arduino upload/LED observations as performed or explicitly unperformed.
+- [x] 4.1 Link the new collection from the repository guide and link it forward to the existing PlatformIO Uno sequence; add recommended prior-learning links to the Uno index and lesson 01 without renumbering or changing existing firmware/circuit behavior.
+- [x] 4.2 Build all three C programs with the documented warnings-as-errors command, verify exact hello and multiword-name output, observe at least `1, 2, 3, 4, 5, 1` from the timed program under controlled termination, and build lesson 04 for Uno.
+- [x] 4.3 Review all student text for the agreed vocabulary and limited scope, verify local links and expected outputs, run strict OpenSpec and whitespace checks, and record Arduino upload/LED observations as performed or explicitly unperformed.

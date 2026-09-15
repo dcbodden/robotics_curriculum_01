@@ -6,6 +6,8 @@ Each lesson lives in its own folder (for example, `01-gpio-transistor-switch/`) 
 
 Use the number prefix to keep lessons in learning order.
 
+New programmers should first complete the [Coding Fundamentals Lessons](../coding-fundamentals-lessons/), especially [Arduino LED Counting](../coding-fundamentals-lessons/04-arduino-led-counting/). That USB-only lesson practices building, uploading, loops, and output before lesson 01 adds an external circuit.
+
 ## Lessons
 
 1. [`01-gpio-transistor-switch`](01-gpio-transistor-switch/) - Use digital pin 8 to switch a transistor and blink an LED with fixed delays.
@@ -25,6 +27,7 @@ Use the same B1 battery, RV control, and motor circuit to investigate how checki
 
 ## Learning Order and Prerequisites
 
+- Before lesson 01, [Arduino LED Counting](../coding-fundamentals-lessons/04-arduino-led-counting/) is recommended prior learning. Students use familiar build, upload, counter, loop, and output ideas when they begin controlling an external circuit from pin 8.
 - Before lesson 02, students should understand the lesson 01 transistor/LED circuit, shared ground, digital HIGH and LOW output on pin 8, and using `delay()` to control blink timing.
 - Before lesson 03, students should complete lessons 01 and 02 so they recognize transistor switching, shared ground, numeric mapping, and the difference between Arduino logic power and an external circuit's power. Lesson 03 introduces PWM and a teacher-verified external MOSFET motor circuit.
 - Before lesson 04, students should understand lesson 03's PWM values from 0 to 255. Lesson 04 reuses the lesson 02 RV voltage divider to control those PWM values and intentionally updates only once every 1,000 milliseconds.

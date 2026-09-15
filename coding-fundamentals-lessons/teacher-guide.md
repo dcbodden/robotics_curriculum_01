@@ -89,16 +89,16 @@ Lesson 03 intentionally continues until Ctrl+C. Introduce Ctrl+C before running 
 
 For lesson 04, use the PlatformIO buttons and terminology already established in the repository: **Build** checks the project, **Upload** sends it through USB, and **Monitor** displays serial text. Do not suggest that clicking Run executes the Arduino program on the laptop. Keep the activity USB-only and use `LED_BUILTIN`; no external circuit should be present.
 
-## Teacher Verification Records
+## Teacher Verification Record
 
-Build and runtime verification happen in later implementation tasks. Record them separately:
+The following checks were performed on September 14, 2026. Build and runtime results are recorded separately:
 
 | Check | Build result | Runtime or hardware observation |
 | --- | --- | --- |
-| Lesson 01 exact greeting | | |
-| Lesson 02 multiword name | | |
-| Lesson 03 first restart at 1 | | |
-| Lesson 04 Uno build | | |
-| Lesson 04 upload, serial groups, and built-in LED | | |
+| Lesson 01 exact greeting | Passed with the documented warnings-as-errors GCC command. | Observed exactly `Hello, world!` followed by a newline. |
+| Lesson 02 multiword name | Passed with the documented warnings-as-errors GCC command. | Entered `Ada Lovelace` and observed `Nice to meet you, Ada Lovelace!`. |
+| Lesson 03 first restart at 1 | Passed with the documented warnings-as-errors GCC command. | Observed `1, 2, 3, 4, 5, 1, 2` at about one-second intervals, then stopped it with a 6.2-second timeout. |
+| Lesson 04 Uno build | Passed for the PlatformIO `uno` environment. | A build does not test the board's physical behavior. |
+| Lesson 04 upload, Serial groups, and built-in LED | Not applicable to the build check. | **Not performed:** no hardware upload, Serial Monitor observation, or physical LED observation was performed during this verification. |
 
 A passing build does not prove runtime output, timing, an upload, or physical blinking. Mark unavailable hardware checks **not performed** instead of filling them from expected behavior.

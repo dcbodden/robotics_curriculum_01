@@ -4,6 +4,7 @@ This project is an OpenSpec-driven exploratory robotics curriculum for beginners
 ## Repository layout
 
 - `electronics-reference/` — general electronics reference materials such as Ohm's law cards, multimeter notes, and other foundational artifacts
+- [`coding-fundamentals-lessons/`](coding-fundamentals-lessons/) — four beginner lessons that move from small laptop C programs to counting with the Arduino Uno's built-in LED
 - [`electronics-fundamentals-lessons/`](electronics-fundamentals-lessons/) — numbered, standalone, non-code lessons for hands-on electronics measurement and concepts
 - `experiments/` — standalone experiments such as Snap Circuits activities, breadboard diagrams, and lesson-specific builds
 - `syllabus-and-teacher-materials/` — lesson plans, pedagogy notes, and teacher-training/reference material
@@ -17,6 +18,12 @@ This project is an OpenSpec-driven exploratory robotics curriculum for beginners
 1. Start with [Multimeter and Ohm's Law](electronics-fundamentals-lessons/01-multimeter-ohms-law/) to practice measuring voltage, resistance, and current without writing code.
 2. Continue with [ADC Variable Delay](platformio-uno-lessons/02-adc-variable-delay/) to see an Arduino turn a changing voltage into a digital value.
 3. Follow with [Manual Voltage Mapping](electronics-fundamentals-lessons/02-manual-voltage-mapping/) to reinforce the ADC concept by sorting measured voltages into eight digital levels without building or uploading firmware.
+
+## Suggested Coding Sequence
+
+Start with the four [Coding Fundamentals Lessons](coding-fundamentals-lessons/). They introduce output, input, stored values, counters, loops, building, running, and uploading before the Arduino projects add external circuits.
+
+After the built-in LED activity, continue with the numbered [PlatformIO Uno Lessons](platformio-uno-lessons/).
 
 ## OpenSpec workflow
 
