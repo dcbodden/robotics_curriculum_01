@@ -2,7 +2,38 @@
 
 This lesson uses the adjustable RV voltage from lesson 02 to control the PWM command sent to an externally powered DC motor.
 
-## Robot Attention Investigation
+## Recommended Prior Learning
+
+Complete [Uno lesson 02](../02-adc-variable-delay/) to see the RV change an ADC reading, then [Uno lesson 03](../03-pwm-motor-ramp/) to see the approved D3 PWM motor circuit. Reuse lesson 03's teacher-approved **protected motor circuit**. Add only the lesson 02 RV input after removing all power.
+
+## Core Mission: Turn the RV, Watch the Motor Command
+
+**Goal:** See one RV movement change the printed **ADC reading**, the **PWM command**, and the secured motor's response. Notice that the program checks the RV only **once every 1,000 ms**, so a change just after a check can take about one second to affect the motor command.
+
+**Prepare and stay safe:** Keep **USB unplugged and B1 switched off or its batteries removed** before adding, checking, or changing any wire. Use only a **bare, secured motor** with no wheel, propeller, gear, or other shaft attachment; keep hands, hair, clothing, and loose objects clear of the shaft. Never connect **B1 positive** to Arduino 5 V, VIN, A0, D3, or the RV. Arduino 5 V powers only the RV input; the motor uses B1 and shares ground with the Uno. If the commanded motor never turns, any part or battery gets hot, there is an unusual smell, smoke or sparking, or the motor or wiring moves unexpectedly, **switch off B1 and unplug USB immediately**. Tell the teacher; do not touch a hot part or restore power until the setup is checked. Never move wires while powered.
+
+1. With **both power sources off**, keep the approved lesson 03 motor, MOSFET, two gate resistors, flywheel diode, D3 control, and shared-ground connections fixed. Connect the Snap Circuits RV's two outer terminals to **Arduino 5 V and GND** and its center **wiper to A0**, as in lesson 02. Its sliding direction may be reversed. See the [RV wiring table](#connect-the-rv-voltage-divider-to-a0) if needed.
+2. **Teacher checkpoint, still unpowered:** The teacher traces the RV-to-A0 voltage divider; confirms no 5 V-to-GND short; verifies the RFP30N06LE **Gate, Drain, Source**, the **220–330 Ω series gate resistor** and **10 kΩ gate pulldown**, the shared ground, and **B1 positive only at motor positive**. Confirm the **1N5817 banded end at motor/B1 positive** and its unbanded end at motor/Drain negative. Check that the bare motor cannot roll or pull wires loose and the shaft area is clear. Restore power only after approval.
+3. Open `platformio-uno-lessons/04-adc-pwm-motor-control` as the PlatformIO project in VS Code. Under **Project Tasks > uno > General**, choose **Build** and wait for `SUCCESS`. Keep B1 off, connect Uno USB using a **data** cable, choose **Upload**, and wait for `SUCCESS`. Then choose **Monitor** at **9,600 baud**. A new line appears about once a second, such as `ADC reading: 512 | PWM command: 127`.
+4. With B1 **still off**, move the RV until both printed numbers are near zero. Check the motor's secure position and clear shaft again; ask the teacher for a final power check. After approval, the teacher enables B1 without moving any wire. Record the near-zero line and whether the motor is stopped.
+5. Slide the RV toward a **much higher ADC reading**, without touching wires or the motor. Hold it still until at least two new lines appear. Record the latest ADC and PWM numbers and what the motor actually does. If it does not turn even at a high command, **switch off B1 and unplug USB** and ask the teacher to check the circuit before continuing.
+
+| RV setting | ADC reading | PWM command | Motor observation |
+| --- | ---: | ---: | --- |
+| Near zero |  |  |  |
+| Much higher |  |  |  |
+
+**Notice:** Did the higher ADC number produce a higher PWM command? Did the motor start or change its sound or motion? The PWM number is a **command**, not an exact motor-speed reading.
+
+6. **One quick comparison:** From the higher setting, predict whether sliding the RV quickly back near zero will change the motor command **right away** or at the **next one-second check**. Try only that slider movement. Watch the next printed line and listen or watch from a safe distance. The previous PWM command stays in effect during the wait; the time you notice may vary depending on when you moved the RV.
+
+**Stop safely:** Switch off B1 first, close Monitor, then unplug USB. Change or remove wires only after **both** power sources are off.
+
+## Name the Idea: Read, Map, Apply, Report, Wait
+
+The focus instructions in [`src/main.cpp`](src/main.cpp) are `analogRead(ANALOG_INPUT_PIN)`, `map(...)`, `analogWrite(MOTOR_PWM_PIN, pwmCommand)`, the labeled `Serial` report, and `delay(CONTROL_UPDATE_DELAY_MS)`. The real code uses names for A0, D3, and the 1,000-millisecond wait. Each pass reads the RV once, turns its **0–1023 ADC number** into a **0–255 PWM command**, applies that command to D3, and reports both numbers. During the one-second wait, **D3 continues the selected PWM output** (switching for commands between fully off and fully on), but the program does not read the RV or choose a new command. If you move the RV just after the read, the motor may keep its previous command for about one second. Explain whether your quick comparison matched your prediction: ______________________________
+
+## Optional Robot Attention Investigation
 
 Compare lessons 04 and 05 using the same B1 battery, RV control, and protected motor circuit. The three-page activity guides a student-written hypothesis, matching trials, and a conclusion about the motor's response to 1000 ms versus 100 ms control checks.
 
@@ -10,15 +41,19 @@ Compare lessons 04 and 05 using the same B1 battery, RV control, and protected m
 - [Student worksheet source (HTML)](../05-interrupt-driven-motor-control/robot-attention-worksheet.html)
 - [Teacher guide: preparation, experiment steps, and answer guidance](../05-interrupt-driven-motor-control/robot-attention-teacher-guide.md)
 
-## Why the Control Update Waits
+## Deeper Reference: Circuit and Control Timing
+
+The sections below show component details, full wiring paths, an extended timing explanation, optional extra measurements, and troubleshooting. You can finish the Core Mission before reading them.
+
+### Why the Control Update Waits
 
 Each pass through the program reads A0, maps that ADC reading to a PWM value, sends the new value to D3, and prints the ADC and PWM values. It then calls `delay(1000)` before starting the next pass. The one-second pause spaces the serial-monitor lines far enough apart to make them easy to read.
 
 The delay is **blocking**, which means the main program waits instead of taking another reading. If you move the RV just after A0 is sampled, the motor keeps the previous PWM command until the next pass through the program, so its response can lag by as much as about one second. This longer, intentionally sluggish response is easier to observe and gives you something clear to compare with the faster control updates in lesson 05.
 
-The Arduino's PWM hardware keeps switching D3 at the already selected duty cycle during the delay. The PWM signal does not stop; only the reading and motor-command update wait.
+The Arduino's PWM output keeps the already selected command during the delay. D3 switches for commands between fully off and fully on; only the reading and motor-command update wait.
 
-## What You Need
+### What You Need
 
 - 1 Arduino Uno;
 - 1 USB data cable for the Uno;
@@ -32,7 +67,7 @@ The Arduino's PWM hardware keeps switching D3 at the already selected duty cycle
 - 1 10 kilohm resistor for the gate pulldown; and
 - teacher-approved jumper wires and Snap Circuits-to-breadboard connections.
 
-## Identify the RFP30N06LE Pins
+### Identify the RFP30N06LE Pins
 
 First confirm that the part marking says **RFP30N06LE** or **P30N06LE**. Other TO-220 parts can look identical while using different electrical connections.
 
@@ -47,7 +82,7 @@ Hold the MOSFET with its flat, printed face toward you and its three metal leads
 
 Use the terminal names and functions when tracing the circuit. Do not rely only on “left,” “middle,” and “right,” because turning the part around reverses its apparent order. The [RFP30N06LE manufacturer datasheet](https://www.sparkfun.com/datasheets/Components/General/RFP30N06LE.pdf) shows the TO-220AB Gate, Drain, Source, and Drain-flange assignments.
 
-## Connect the Low-Side Motor and Gate Paths
+### Connect the Low-Side Motor and Gate Paths
 
 The B1 batteries power the motor. The Arduino sends only the control signal and shares the circuit's ground reference.
 
@@ -69,7 +104,7 @@ B1 positive -> motor -> MOSFET Drain -> MOSFET Source -> B1 negative
 
 The Arduino remains USB-powered. **Never connect B1 positive to Arduino 5 V, VIN, A0, D3, or any other Arduino pin.** B1 negative joins Arduino GND only at the documented shared-ground node.
 
-## Connect the RV Voltage Divider to A0
+### Connect the RV Voltage Divider to A0
 
 The three-terminal RV works as a **voltage divider**: its two outer terminals connect across the Arduino's 5 V supply, and its center terminal, called the **wiper**, provides an adjustable voltage for A0.
 
@@ -85,7 +120,7 @@ The two outer terminals may trade places; swapping them changes which adjustment
 
 **Use Arduino 5 V only for the RV's high side. Never connect B1 positive to an RV terminal, A0, Arduino 5 V, or VIN.** B1 positive belongs only to the motor-positive power path. The two circuits share ground through B1 negative and Arduino GND, but their positive supplies remain separate.
 
-## Add the 1N5817 Flywheel Diode
+### Add the 1N5817 Flywheel Diode
 
 Place the 1N5817 directly across the motor terminals, as close to the motor connections as the breadboard permits.
 
@@ -98,7 +133,7 @@ During normal motor power, this orientation keeps the diode from conducting. Whe
 
 Do not reverse the diode. A reversed flywheel diode would conduct across B1 when the MOSFET turns on, creating a short circuit.
 
-## Complete the Safety Check Before Powering the Circuit
+### Complete the Safety Check Before Powering the Circuit
 
 1. Disconnect the USB cable and switch off or remove the batteries from B1. Build or change the circuit only while **both** power sources are disconnected.
 2. Use only the bare motor. Do not attach a wheel, propeller, gear, or anything else to its shaft.
@@ -108,25 +143,11 @@ Do not reverse the diode. A reversed flywheel diode would conduct across B1 when
 
 Immediately switch off B1 and disconnect USB if the motor does not turn when commanded to run, any component or battery becomes hot, there is an unusual smell, smoke or sparking appears, or the motor or wiring moves unexpectedly. Tell the teacher and do not touch a hot component or reconnect power until the circuit has been checked.
 
-## Build, Upload, and Open the Serial Monitor
-
-1. Keep B1 switched off. After the teacher approves the unpowered circuit, connect the Uno to the computer with a USB data cable.
-2. Open the `platformio-uno-lessons/04-adc-pwm-motor-control` folder in VS Code. The folder you open must contain this lesson's `platformio.ini` file.
-3. Select the PlatformIO alien-head icon in the Activity Bar. Under **Project Tasks**, expand **uno**, then expand **General**.
-4. Select **Build** and wait for the terminal to end with `SUCCESS` and no error message.
-5. Select **Upload** and wait for the upload terminal to end with `SUCCESS`.
-6. Select **Monitor** under the same **General** menu. The monitor speed is 9,600 baud, as set in `platformio.ini`.
-7. Check that a new labeled line appears about every second. A middle RV position might produce a line similar to this:
-
-   ```text
-   ADC reading: 512 | PWM command: 127
-   ```
-
-8. While B1 is still off, adjust the RV until the reported ADC and PWM values are near zero. Confirm again that the bare motor is secured and its shaft is clear. Ask the teacher for a final wiring check, then switch on B1 without touching or moving the circuit.
-
-## Observe Several RV Positions
+### Optional Five-Position Recording
 
 The ADC reading shows the RV wiper voltage as a number from 0 through 1023. The program maps that reading directly to a PWM command from 0 through 255, so a higher ADC reading should produce a higher PWM command. The motor may not begin turning at the lowest nonzero commands, and its speed may not increase evenly with the numbers.
+
+If you stopped after the Core Mission, use the **same approved wiring** without moving any lead. Reconnect USB with B1 off, confirm the motor is still secured and the shaft is clear, then ask the teacher to enable B1 before trying these extra positions.
 
 1. Begin with the RV adjusted near an ADC reading of 0. Keep your hands away from the secured motor and its shaft.
 2. Move the RV to each position in the table below. At every position, hold the control still until at least two new serial lines appear, then record the newest ADC and PWM values and observe the motor.
@@ -151,7 +172,7 @@ After recording the readings, answer these questions:
 4. Did larger PWM commands always produce an equally large change in the motor's sound or motion? Explain what you observed.
 5. When you moved the RV quickly, where did you notice the one-second delay: in the reported numbers, the motor response, or both?
 
-## Troubleshooting
+### Troubleshooting
 
 - **Build does not end with `SUCCESS`:** Make sure VS Code opened the `04-adc-pwm-motor-control` folder that contains this lesson's `platformio.ini`. Run **Build** again and read the first error in the terminal.
 - **Upload cannot find the Uno:** Use a known USB data cable, try a direct computer USB port, close any serial monitor or other program using the Uno's port, and try **Upload** again.
