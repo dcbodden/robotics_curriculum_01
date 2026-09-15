@@ -11,6 +11,26 @@ By the end of the lesson, you will be able to:
 - use voltage and resistance to calculate current; and
 - compare a calculated result with a meter reading.
 
+## Core Mission: See an Open and Closed Circuit on the Meter
+
+**Goal:** Compare the near-zero current reading with S2 released to the nonzero reading with S2 pressed, after measuring R1 and B1 and predicting the current.
+
+**Prepare and stay safe:** Use only the teacher-approved two-AA-cell B1 holder, 100 Ω R1, S2, and meter. The teacher must complete [Teacher Preparation](#teacher-preparation--teacher-only), including checking R1's power rating, expected current, the meter fuse, and a safe current jack and range **before you begin**. Never use a wall outlet or another power source. If anything is damaged, hot, wet, or smells unusual, release S2, stop the measurement, and tell the teacher. Remove both cells before disconnecting meter leads or changing the circuit. The teacher chooses meter ranges and approves each powered step. Resistance is measured only with R1 unpowered; voltage uses the meter in parallel; current uses it in series, never directly across B1.
+
+1. **Build with power removed.** Take both AA cells out of B1. Snap B1 negative → R1 → S2 as shown in the [base-layout photo](sample_circuit/base_layout.jpg). Leave the free S2 terminal and B1 positive **unconnected**. Ask the teacher to verify that R1 and S2 are in series and the gap is open before any cells return. With cells still out, release and press S2 to trace the switch path; the separate gap remains open either way.
+2. **Measure R1 with no power.** Keep both cells out, S2 released, and the S2-to-B1-positive gap open; add no alternate path. With the meter off, place black in **COM** and red in **VΩ**, never a current jack. Select teacher-approved resistance (`Ω`) mode. Ask the teacher to verify the two open points, R1 layout, jacks, and mode. Touch one probe to each R1 terminal without touching the metal tips; record the steady reading in ohms. Remove the probes and turn the meter off.
+3. **Measure B1 voltage.** Leave the S2-to-B1-positive gap open and S2 released. Install the two approved AA cells in the marked directions. With the meter off, keep black in **COM** and red in **VΩ**; select teacher-approved **DC voltage** mode and a range above the expected B1 voltage, not AC, resistance, or current. After the teacher checks the setup, touch black to B1 negative and red to B1 positive, keeping the tips apart. Record the steady voltage. Remove the probes, turn off the meter, and **remove both cells** before changing the meter or circuit.
+4. **Predict before current mode.** Divide the measured B1 voltage by the measured R1 resistance: `V ÷ Ω = A`; multiply by 1,000 to get mA. Record the predicted current in the [recording activity](recording-activity.md). Ask the teacher to check the calculation and the selected current jack/range against that predicted value. Keep both cells out and the meter off.
+5. **Prepare current mode with power removed.** Keep black in **COM**. Only now move red from **VΩ** to the teacher-approved fused current jack and select the approved **DC current** range above the predicted current. Connect red to **B1 positive** and black to the **free S2 terminal**. The only path must be `B1 positive → meter → S2 → R1 → B1 negative`. Never connect a current-mode meter directly across B1, R1, or S2. **Teacher checkpoint:** Before restoring cells, the teacher must verify R1 stays in the path, the meter bridges only the intentional gap, S2 is released, black is in COM, red is in the approved current jack, and the dial is on the approved DC current range.
+6. **Observe the switch.** Only after teacher approval, install the cells. With S2 released, record the reading at or near 0 mA. Press and hold S2 only long enough to get a steady reading; record the nonzero current, then release S2. Compare the measured mA with your predicted mA.
+7. **Stop safely.** Remove **both AA cells before disconnecting either lead or changing the dial**. Turn the meter off, disconnect it, return the red lead to **VΩ**, and leave the S2-to-B1 gap open. Complete the [recording activity](recording-activity.md) with teacher-approved values.
+
+**Notice:** What reading showed that the path changed from open to closed? Was the pressed-S2 reading approximately close to your prediction?
+
+Reading with S2 released: ______ mA. Reading with S2 pressed: ______ mA. Predicted current: ______ mA.
+
+**Stop with B1 empty and the meter off.** The teacher may use the [detailed measurement directions](#measure-r1-resistance-first) below for equipment-specific checks; the [electrical words](#electrical-words-you-will-use) and [troubleshooting](#troubleshooting--stop-and-check-safely) are reference material after the required path.
+
 ## Who Does What
 
 - **Student actions:** Directions that say **you** are for the student. You may identify parts, build with the batteries removed, take approved readings, calculate, record, and explain observations. Stop whenever a step says **teacher checkpoint** or **ask the teacher**.
@@ -179,30 +199,15 @@ Current must be measured **in series**, which means the meter becomes one link i
 
 ## Troubleshooting — Stop and Check Safely
 
-When a reading is unexpected, release S2, remove the probes, and remove both AA cells before changing connections, lead jacks, or meter mode. Ask the teacher to help.
+When a reading is unexpected, release S2 and ask the teacher to help. **During current measurement, remove both AA cells before disconnecting either meter lead.** For voltage or resistance, remove the probes and turn the meter off. Keep power removed before changing connections, lead jacks, or meter mode.
 
 | Problem | Safe check |
 | --- | --- |
-| The meter mode does not match the measurement. | Remove the probes and turn the meter off. Choose resistance (`Ω`) only for R1 in the teacher-verified two-open-point setup, DC voltage for B1, or the teacher-approved DC current range for the powered-down series-current procedure. |
+| The meter mode does not match the measurement. | If in current mode, remove both cells first. Then remove the probes and turn the meter off. Choose resistance (`Ω`) only for R1 in the teacher-verified two-open-point setup, DC voltage for B1, or the teacher-approved DC current range for the powered-down series-current procedure. |
 | A lead is in the wrong port. | Check that black is in **COM**. Red belongs in **VΩ** for resistance and voltage. Move red to a current jack only during the powered-down, teacher-verified current procedure, then return it to **VΩ** afterward. |
 | B1 voltage has a minus sign. | Remove the probes. Put black on B1 negative (`−`) and red on B1 positive (`+`), then measure again in DC voltage mode. |
-| The display shows `OL`, `1`, or another overload symbol. | Remove the probes and power. The range may be too low, or the resistance path may be open. The teacher checks the meter manual, chooses a safe higher range if appropriate, and checks probe contact before trying again. |
+| The display shows `OL`, `1`, or another overload symbol. | If in current mode, remove both cells before disconnecting leads. For voltage or resistance, remove the probes and then remove power. The range may be too low, or the resistance path may be open. The teacher checks the meter manual, chooses a safe higher range if appropriate, and checks probe contact before trying again. |
 | Current stays near `0 mA`. | With S2 released, this is expected because the circuit is open. If it stays near zero while S2 is pressed, remove both cells. The teacher checks that the meter bridges only B1 positive and the free S2 terminal, that R1 remains in the path, and that all snaps and lead contacts are secure. |
 | The teacher suspects a blown meter fuse. | Stop using the meter's current ranges and label the meter for teacher inspection. Only a qualified adult following the exact meter manual may inspect or replace its fuse. Never open the meter, bypass a fuse, or substitute a different fuse. |
-
-## Student Instructions
-
-1. Read the safety directions your teacher provides before touching the circuit or meter.
-2. With the circuit unpowered, identify the B1 battery holder, 100 Ω R1 fixed resistor, and S2 press switch.
-3. Follow **Build and Trace the Circuit** to assemble B1, R1, and S2 with no cells installed.
-4. Follow **Observe an Open and Closed Path** to trace what S2 changes. Wait for the later teacher checkpoint before using current mode.
-5. Read **Why R1 Has Two Jobs** and make sure R1 stays in the circuit path.
-6. Follow **Measure R1 Resistance First** and record the measured value before any powered measurements.
-7. Follow **Measure B1 Voltage Next** and record B1's voltage while the intentional S2-to-B1 gap remains open.
-8. Follow **Predict Current with Ohm's Law** and record the predicted current in milliamps before changing the meter setup.
-9. Follow **Measure Current in Series — Teacher Verification Required** only when directed. Stop at every teacher checkpoint.
-10. Record each observation and measurement in [`recording-activity.md`](recording-activity.md).
-11. Compare your predicted current with the later measured current.
-12. Answer the reflection questions in your own words.
 
 This lesson does not require an Arduino, programming, building firmware, or uploading firmware.
