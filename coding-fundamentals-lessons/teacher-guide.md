@@ -1,6 +1,6 @@
 # Coding Fundamentals Teacher Guide
 
-These four lessons prepare a beginner to read and run the small programs used later in the robotics curriculum. Keep the focus on observable behavior: information goes in, instructions run, output comes out, stored values can change, and loops repeat work.
+These four lessons prepare a beginner to read and run the small programs used later in the robotics curriculum. The lesson pattern in this guide also applies to the later beginner electronics and Arduino lessons. Keep the focus on observable behavior: information goes in, instructions run, output comes out, stored values can change, and loops repeat work.
 
 ## Teaching Scope
 
@@ -32,22 +32,57 @@ Generated executables are deliberately placed beside their source files so the s
 
 The student may remove a generated executable with the lesson's exact `rm` command, then build it again. Never instruct the student to use a wildcard with `rm`. Source code is not a cleanup file. PlatformIO's generated `.pio/` and `.vscode/` directories under lesson 04 are also ignored.
 
-## Use the Same Learning Rhythm
+## Begin with a Core Mission
 
-Each lesson should follow this short cycle:
+Put a short **Core Mission** before concept explanations, optional challenges, and detailed reference material. It gives the student a clear path to one observable success. A student should be able to complete it without reading the rest of the lesson first.
+
+Use this structure:
+
+1. **Goal:** Name the one result the student will produce or observe.
+2. **Prepare and stay safe:** Include only the setup and safety directions required for this mission.
+3. **Do:** Give the minimum numbered actions needed to reach the result.
+4. **Notice:** Ask one short question about what actually happened.
+5. **Stop safely:** State the next safe stopping point before an optional change, circuit change, or deeper explanation.
+
+After the Core Mission, place the lesson's main concept explanation, a bounded **Try One Change** or comparison, common troubleshooting, and optional deeper detail under clear headings. There is no fixed word or page limit. The test is whether the required path is easy for a beginner to find and follow.
+
+Safety does not become optional or move out of the Core Mission. A hardware mission must repeat every power-removal step, teacher checkpoint, clear-motion-area direction, and emergency stop instruction needed at that stage. Keep these directions beside the action where the student needs them, even when a teacher guide or earlier lesson also gives them.
+
+## Use a Concrete-First Learning Cycle
+
+For the first encounter with a concept, use this cycle:
 
 ```text
-READ → PREDICT → BUILD → RUN OR UPLOAD → OBSERVE → EXPLAIN
+MAKE IT WORK → NOTICE → NAME → CHANGE OR COMPARE → PREDICT → TRY → EXPLAIN
 ```
 
-- **Read:** Identify the few instructions that matter to this lesson.
-- **Predict:** Write or say what output will appear before running it.
-- **Build:** Turn source code into a program and distinguish build success from runtime behavior.
-- **Run or upload:** Start a laptop program locally, or send an Arduino program to the Uno.
-- **Observe:** Record what actually appeared or happened, even when it differs from the prediction.
-- **Explain:** Connect the observation to input, output, a counter, or a loop in one or two sentences.
+- **Make it work:** Build, run, upload, or safely assemble the supplied baseline.
+- **Notice:** Record one visible, audible, measured, or printed result.
+- **Name:** Give the observed idea a useful name such as input, output, counter, loop, voltage, or PWM.
+- **Change or compare:** Choose one bounded difference that makes the idea easier to see.
+- **Predict:** Say or write what the student expects that one difference to do.
+- **Try:** Make the safe change or run the comparison.
+- **Explain:** Compare the prediction with the result in one or two sentences.
 
-Accept a prediction that turns out to be wrong. The purpose is to compare an idea with evidence, not to reward guessing the expected result. Prompts should allow short answers and concrete observations. Do not turn these activities into long worksheets or grade spelling and punctuation as coding concepts.
+The first prediction comes after the student has observed a working example. In a later lesson, the student may predict before the first run when the relevant idea is already familiar. Accept a prediction that turns out to be wrong; the purpose is to compare an idea with evidence. Prompts should allow short answers and concrete observations. Do not grade spelling or punctuation as though they were the lesson concept.
+
+## Use Guided Release When Helpful
+
+The teacher may divide a new or difficult action into three passes:
+
+- **I show:** The teacher demonstrates one complete safe example while naming the important action.
+- **We do:** The teacher and student complete the action together, with the student making choices and observations.
+- **You try:** The student completes the same kind of action or one bounded variation and explains the result.
+
+This release pattern is optional. Skip a demonstration or shared pass when the student is ready to proceed independently. Add support when tools, wiring, or an unfamiliar command would otherwise hide the lesson's main idea.
+
+## Separate Focus from Helper and Reference Material
+
+Tell the student which small part is the **focus** of the lesson. Focus material is what the student should observe, name, change or compare, and explain. Keep assessment questions on that stated focus.
+
+Label supporting material as **Helper Code**, **Teacher Note**, **Troubleshooting**, or **Deeper Reference**. Examples include safe input bounds, end-of-input handling, newline cleanup, compiler or upload details, Arduino library setup, timer registers, atomic snapshots, servo pulse machinery, component selection, supply sizing, and uncommon failure diagnosis. A student may inspect or ask about this material, but does not need to explain or memorize it to complete the lesson.
+
+Keep correct safety and helper code in the real program. Do not shorten it into unsafe code or hide it behind extra unexplained files merely to make the source look smaller. Instead, mark the few lines or actions that form the current learning surface and explain what the remaining helper work provides.
 
 ## Terminal Command Conventions
 

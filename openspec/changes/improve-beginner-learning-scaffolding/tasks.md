@@ -1,7 +1,7 @@
 ## 1. Shared learning path and teaching pattern
 
 - [x] 1.1 Replace the conflicting root and collection-level recommendations with one linked canonical route from multimeter foundations through coding fundamentals, Uno lessons 01 and 02, manual voltage-mapping reinforcement, and Uno lessons 03–06; keep optional activities clearly labeled without bypassing prerequisites.
-- [ ] 1.2 Update the shared teacher guidance with the Core Mission structure, concrete-first `MAKE IT WORK → NOTICE → NAME → CHANGE OR COMPARE → PREDICT → TRY → EXPLAIN` cycle, optional “I show, we do, you try” release, and rules for separating focus material from helper/reference detail while retaining essential safety in the required path.
+- [x] 1.2 Update the shared teacher guidance with the Core Mission structure, concrete-first `MAKE IT WORK → NOTICE → NAME → CHANGE OR COMPARE → PREDICT → TRY → EXPLAIN` cycle, optional “I show, we do, you try” release, and rules for separating focus material from helper/reference detail while retaining essential safety in the required path.
 
 ## 2. Coding fundamentals scaffolding
 
