@@ -1,89 +1,93 @@
 # Lesson 01: GPIO Transistor Switch
 
-In this lesson, an Arduino Uno changes digital pin 8 between **HIGH** and **LOW** every two seconds. Pin 8 controls an NPN transistor in an existing Snap Circuits LED assembly. You will watch the LED and use a digital multimeter to measure what HIGH and LOW mean in volts.
+The Arduino Uno changes digital pin 8 (`D8`) between **HIGH** and **LOW** every two seconds. First you will measure those states directly. Then the same pin will control the existing teacher-approved Snap Circuits transistor-and-LED assembly.
 
 ## Recommended Prior Learning
 
-Complete [Arduino LED Counting](../../coding-fundamentals-lessons/04-arduino-led-counting/) first. It uses the Uno's built-in LED to practice building, uploading, counters, loops, and output without an external circuit. This lesson uses those familiar ideas to control a transistor-and-LED assembly through digital pin 8.
+Complete [Multimeter and Ohm's Law](../../electronics-fundamentals-lessons/01-multimeter-ohms-law/) and the four [Coding Fundamentals Lessons](../../coding-fundamentals-lessons/) first. Their final [Arduino LED Counting](../../coding-fundamentals-lessons/04-arduino-led-counting/) lesson practices Build, Upload, loops, and output with the Uno's built-in LED before this lesson adds an external circuit.
 
 ## Learning Goals
 
 By the end of the lesson, you will be able to:
 
 - explain that a digital output has a HIGH state and a LOW state;
-- observe a transistor-controlled LED responding to pin 8;
-- measure pin 8 relative to shared ground; and
-- build and upload one PlatformIO project to an Arduino Uno.
+- measure D8 relative to Arduino GND while no external control lead is connected;
+- compare the same D8 states with an approved transistor-controlled LED; and
+- build and upload one PlatformIO project to an Uno.
 
 ## What You Need
 
-- an Arduino Uno;
-- a USB **data** cable that fits the Uno;
-- the existing, teacher-approved Snap Circuits NPN-transistor-and-LED assembly;
-- two teacher-approved jumper connections; and
-- a digital multimeter with insulated probes.
+- an Arduino Uno and USB **data** cable;
+- a digital multimeter with insulated probes;
+- the existing, teacher-approved Snap Circuits NPN-transistor-and-LED assembly and its approved power source; and
+- two teacher-approved jumper connections for the later assembly stage.
 
-Do not rebuild or move parts inside the transistor-and-LED assembly. This lesson adds only the two connections described below.
+Do not rebuild or move parts inside the existing assembly. The Uno adds only a shared-ground connection and D8 control lead after the direct measurement.
 
-## Connect the Existing Snap Circuits Assembly
+## Core Mission: Measure D8, Then Watch the LED
 
-**Disconnect the Uno's USB cable and turn off or remove power from the Snap Circuits assembly before adding, removing, or moving any connection.**
+**Goal:** Observe D8 near the Uno's HIGH and LOW voltages with its external control lead disconnected, then compare those same pin states with the approved assembly's LED.
 
-The Arduino and the existing assembly need exactly two connections:
+**Prepare and stay safe:** Ask the teacher to confirm the approved assembly, its protected NPN base-control point, ground node, power source, meter, and USB data cable. Keep the assembly's power off and its two leads **disconnected from the Uno** during Stage 1. Never use resistance or current mode on a powered circuit or put the red meter lead in a current jack. Disconnect **USB and assembly power before adding, moving, or removing a wire or probe**. If a part becomes hot, a lead is loose, or a reading seems unsafe, turn off assembly power, unplug USB, and ask the teacher to inspect it.
 
-| Arduino Uno | Existing Snap Circuits connection | Why it is needed |
-| --- | --- | --- |
-| GND | The assembly's teacher-identified ground node | Gives both systems the same 0 V reference, called **shared ground**. |
-| Digital pin 8 (`D8`) | The assembly's teacher-identified NPN base control point | Lets pin 8 control the existing transistor switch. |
+### Stage 1: Measure the program's output before adding a circuit
 
-Follow these steps:
+1. Leave **D8 and Arduino GND unconnected to the external assembly**. Connect only the USB data cable to the Uno and laptop.
+2. In VS Code choose **File > Open Folder...** and open `platformio-uno-lessons/01-gpio-transistor-switch` by itself. Confirm that Explorer shows `platformio.ini` and `src/main.cpp`. If asked whether to trust the folder, ask your teacher; wait for PlatformIO to load.
+3. Select the PlatformIO alien-head icon. Under **Project Tasks > uno > General**, choose **Build** and wait for `SUCCESS`. Then choose **Upload** and wait for its `SUCCESS`. A charge-only cable can light the Uno but cannot upload. The Uno restarts and begins alternating D8 HIGH and LOW automatically.
+4. **Unplug USB before placing the meter probes.** With the meter off, put black in **COM** and red in **VΩ**. Set a teacher-approved **DC voltage** range that includes 5 V, not AC, resistance, or current. Place black on **Arduino GND** and red on **D8** without touching a neighboring pin.
+5. **Teacher checkpoint:** The teacher confirms D8 has no external control lead, the assembly is unpowered and disconnected from the Uno, the probes touch only D8 and Arduino GND, and the meter jacks and dial are correct. Reconnect USB only after approval. Do not move the probes while powered.
+6. Watch several two-second HIGH and LOW intervals. Record D8-to-GND voltage in the [recording activity](recording-activity.md): HIGH should be near the Uno's logic-high level (about 5 V), and LOW should be near 0 V. Record actual values, even if they are not exact.
 
-1. Disconnect the USB cable from the Uno.
-2. Turn off or remove power from the Snap Circuits assembly.
-3. Ask the teacher to identify the assembly's ground node and NPN base control point. Do not guess from wire color or move any of the assembly's parts.
-4. Connect an Arduino **GND** pin to the identified Snap Circuits ground node.
-5. Connect Arduino digital pin **8** to the identified NPN base control point.
-6. Check that no wire connects Arduino 5 V to the assembly. The Arduino supplies only shared ground and the pin-8 control signal in this lesson.
-7. **Teacher checkpoint:** The teacher traces both connections, confirms that D8 reaches only the assembly's intended protected base-control point, and confirms that there is no short circuit.
-8. Reconnect power only after the teacher approves the two connections.
+**Notice 1:** What two voltage ranges did the program create at D8?
 
-## Connect, Build, and Upload
+HIGH measured: ______ V. LOW measured: ______ V.
 
-The lesson directory is a complete PlatformIO project. Open this directory by itself so PlatformIO builds only lesson 01.
+7. **Unplug USB before removing the probes or changing any connection.** Turn the meter off. Keep the external assembly unpowered.
 
-1. Use a USB **data** cable to connect the Arduino Uno to the computer. A charge-only cable may light the board but cannot upload a program.
-2. Open VS Code. Choose **File > Open Folder...**, then select the `platformio-uno-lessons/01-gpio-transistor-switch` folder containing `platformio.ini`.
-3. If VS Code asks whether you trust the folder, ask the teacher before continuing. Wait for the PlatformIO IDE extension to finish loading.
-4. Select the PlatformIO alien-head icon in the Activity Bar. Under **Project Tasks**, expand **uno**, then expand **General**.
-5. Select **Build** (the checkmark action). Watch the terminal. A successful build ends with `SUCCESS` and no error message.
-6. Select **Upload** (the right-arrow action). PlatformIO builds the program again, finds the connected Uno, and sends the program to it.
-7. Wait for the upload terminal to end with `SUCCESS`. Messages from `avrdude` may appear during a normal Uno upload.
-8. After a successful upload, the Uno restarts and runs the program automatically. Pin 8 stays HIGH for two seconds, then LOW for two seconds, and repeats.
+**Predict from Stage 1:** When D8 is connected to the approved transistor control point, what do you think the LED will do during HIGH and LOW? Your prediction may differ from the actual assembly response.
 
-## Measure HIGH and LOW with a Multimeter
+HIGH LED prediction: ______. LOW LED prediction: ______.
 
-Use voltage mode only. The meter measures pin 8 **relative to shared ground**, meaning it compares D8 with the ground connection used by both systems.
+### Stage 2: Connect the approved assembly only after power-off approval
 
-> **Never use resistance or current mode on the powered circuit. Never put the red lead in a current jack for this activity.**
+8. With **USB unplugged and assembly power off**, ask the teacher to identify the assembly's ground node and **protected NPN base-control point**. Do not guess by wire color or rebuild its parts. Connect Arduino **GND** to the identified assembly ground node, then connect **D8** only to the identified protected base-control point. **Do not connect Arduino 5 V to the assembly.**
+9. **Teacher checkpoint:** The teacher traces both connections, verifies shared ground and the protected D8 base-control path, confirms there is no short circuit, and approves the assembly's own power. Do not restore either power source until approved.
+10. With power still off, check that the meter remains in DC voltage mode, black in COM, red in VΩ. Put black on **Arduino GND or the verified shared-ground point** and red on **D8**, keeping it clear of neighboring pins. Ask the teacher to check the probes again.
+11. After approval, reconnect USB and the assembly's approved power. Do not move probes or wires while powered. Watch several HIGH and LOW two-second intervals. Record each D8 voltage and whether the assembly LED is on or off in the [recording activity](recording-activity.md). The LED response may depend on the existing transistor arrangement, so write what you actually see.
 
-1. With circuit power removed, turn the meter off and check its leads. Put the black lead in **COM** and the red lead in the voltage/resistance jack, usually marked **VΩ**.
-2. Set the meter to DC voltage on a range that can safely include 5 V. Ask the teacher to verify the jacks and dial.
-3. Connect or hold the black probe on Arduino GND or the teacher-identified shared-ground point.
-4. Connect or hold the red probe on Arduino D8. Keep the probe from touching a neighboring pin.
-5. Ask the teacher to check the probes and the two assembly connections before power is restored.
-6. Reconnect the Uno USB data cable and the teacher-approved assembly power. Do not move the probes while the circuit is powered.
-7. Watch several cycles. A reading near 5 V is the **HIGH** interval; a reading near 0 V is the **LOW** interval. Each interval lasts about two seconds.
-8. During each interval, look at the LED and record whether it is on or off in [`recording-activity.md`](recording-activity.md). Record what you actually observe because the assembly's LED response may depend on how its transistor circuit is arranged.
-9. When both rows are complete, disconnect USB and assembly power before removing the probes or changing any wiring.
+**Notice 2:** During HIGH and LOW, how did the LED state compare with the D8 voltage and your prediction?
 
-## Troubleshooting
+HIGH LED state: ______. LOW LED state: ______.
 
-- **The Uno lights up, but Upload cannot find it:** The cable may carry power only. Try a known USB data cable and a direct computer USB port instead of an unpowered hub.
-- **The board does not appear:** Unplug and reconnect the Uno, try another USB port, and confirm that `board = uno` appears in this lesson's `platformio.ini`. A teacher can open a PlatformIO terminal and run `pio device list` to list detected serial devices.
-- **The upload port is busy or cannot be opened:** Close Arduino IDE, serial monitors, and other programs that may be using the Uno's port. Disconnect and reconnect the board, then try **Upload** again. PlatformIO normally detects the upload port automatically.
-- **Linux reports permission denied:** This is a teacher or system-administrator task. Follow PlatformIO's official [Linux udev-rules instructions](https://docs.platformio.org/en/latest/core/installation/udev-rules.html), or identify the group that owns the detected serial device and add the classroom user to that group. Group names vary by system and may include `dialout`, `plugdev`, or `uucp`; sign out and back in after a group change.
-- **Build fails before upload starts:** Make sure VS Code opened the lesson directory that contains this `platformio.ini`, then choose **Build** again and read the first error in the terminal.
-- **Upload says `SUCCESS`, but the LED does not change:** Disconnect all power. Ask the teacher to recheck shared ground, the D8-to-base-control connection, and the existing assembly's own power. Do not rebuild the assembly.
-- **The voltage changes but seems a little above 0 V or below 5 V:** Small differences are normal. Record the measured value instead of changing the circuit to force an exact number.
+**Stop safely:** Turn off or remove assembly power, then unplug USB. Only after both sources are off may you remove probes or change any connection. Leave the existing assembly intact.
 
-PlatformIO's official [VS Code guide](https://docs.platformio.org/en/latest/integration/ide/vscode.html) describes the Build and Upload actions, and its [`pio device list` guide](https://docs.platformio.org/en/latest/core/userguide/device/cmd_list.html) explains the teacher-facing device check.
+## Name the Idea: One Program, Two Observations
+
+The program made D8 alternate between HIGH and LOW in both stages. In the first stage, you saw that change **as voltage relative to Arduino GND**. In the second, the same output also reached a transistor control point through a protected connection, with a shared ground, and you saw the assembly LED respond.
+
+The focus instructions in [`src/main.cpp`](src/main.cpp) are:
+
+```cpp
+digitalWrite(TRANSISTOR_PIN, HIGH);
+delay(STATE_DURATION_MS);
+digitalWrite(TRANSISTOR_PIN, LOW);
+delay(STATE_DURATION_MS);
+```
+
+`TRANSISTOR_PIN` is D8 and `STATE_DURATION_MS` is 2,000 milliseconds, or two seconds. The `setup()` line that prepares D8 as an output and the PlatformIO project settings help the real program work; you do not need to memorize their syntax.
+
+**Compare:** Were the D8 voltages approximately similar before and after the approved assembly was connected? What new output could you observe in Stage 2?
+
+______________________________________________________________
+
+## Troubleshooting and Teacher Reference
+
+- **Build or Upload fails:** Confirm VS Code opened the folder containing this `platformio.ini`, read the first error with the teacher, and check that the cable carries data. A teacher can use PlatformIO's [device-list guide](https://docs.platformio.org/en/latest/core/userguide/device/cmd_list.html) if the Uno port is not found.
+- **Upload port is busy:** Close serial monitors and other programs using the Uno, then try again.
+- **Linux reports permission denied:** This is a teacher or system-administrator task. Follow PlatformIO's official [Linux udev-rules instructions](https://docs.platformio.org/en/latest/core/installation/udev-rules.html) or check the serial-device owner group; sign out and back in after a group change.
+- **D8 voltage does not change in Stage 1:** Unplug USB before checking the probes. The teacher checks that black is on Arduino GND, red is on D8, the meter is in DC voltage mode, and the supplied source was uploaded. Do not connect the assembly to hide the missing direct result.
+- **D8 voltage changes but the assembly LED does not in Stage 2:** Remove both power sources. Ask the teacher to recheck shared ground, the protected D8-to-base-control connection, and the assembly's own power. Do not rebuild the assembly.
+- **Voltage is a little above 0 V or below 5 V:** Small differences are normal. Record the measured value instead of changing the circuit to force an exact number.
+
+PlatformIO's [VS Code guide](https://docs.platformio.org/en/latest/integration/ide/vscode.html) explains Build and Upload. After completing this lesson, continue to [lesson 02: ADC Variable Delay](../02-adc-variable-delay/).
