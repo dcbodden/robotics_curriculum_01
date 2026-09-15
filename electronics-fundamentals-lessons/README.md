@@ -11,13 +11,18 @@ This collection contains numbered, standalone, non-code electronics lessons for 
 
 ## Recommended Curriculum Sequence
 
-Use these activities in this order:
+These two activities appear at different points on the primary beginner route:
 
-1. Begin the curriculum with [Multimeter and Ohm's Law](01-multimeter-ohms-law/). It gives students hands-on experience with voltage, resistance, and current before they begin the Arduino lessons.
-2. Teach [ADC Variable Delay](../platformio-uno-lessons/02-adc-variable-delay/) before manual voltage mapping. Students first see an Arduino turn a changing voltage into a digital value.
-3. Teach [Manual Voltage Mapping](02-manual-voltage-mapping/) after ADC Variable Delay. Sorting measured voltages into eight levels gives students another way to practice the ADC idea and strengthen retention and comprehension.
+1. Begin with [Multimeter and Ohm's Law](01-multimeter-ohms-law/). It gives students hands-on experience with voltage, resistance, current, and safe meter setup.
+2. Complete the four [Coding Fundamentals Lessons](../coding-fundamentals-lessons/).
+3. Complete [Uno lesson 01: GPIO Transistor Switch](../platformio-uno-lessons/01-gpio-transistor-switch/).
+4. Complete [Uno lesson 02: ADC Variable Delay](../platformio-uno-lessons/02-adc-variable-delay/) so the student first sees an Arduino turn changing voltage into a digital value.
+5. Return to this collection for [Manual Voltage Mapping](02-manual-voltage-mapping/). Sorting measured voltages into eight levels reinforces the ADC idea.
+6. Continue with [Uno lessons 03–06](../platformio-uno-lessons/#lessons) for PWM, motor control, responsive checking, and coordinated joystick control.
 
-Both fundamentals lessons are non-code activities. Students do not build or upload firmware for either one.
+The [repository guide](../README.md#recommended-beginner-sequence) shows the complete route with every lesson linked.
+
+Both fundamentals lessons are non-code activities. Students do not build or upload firmware for either one. They can be revisited as optional review after their place in the primary route, but later activities still keep their own prerequisites.
 
 ## Lessons
 

@@ -6,7 +6,11 @@ Each lesson lives in its own folder (for example, `01-gpio-transistor-switch/`) 
 
 Use the number prefix to keep lessons in learning order.
 
-New programmers should first complete the [Coding Fundamentals Lessons](../coding-fundamentals-lessons/), especially [Arduino LED Counting](../coding-fundamentals-lessons/04-arduino-led-counting/). That USB-only lesson practices building, uploading, loops, and output before lesson 01 adds an external circuit.
+## Where These Lessons Fit
+
+The primary beginner route starts with [Multimeter and Ohm's Law](../electronics-fundamentals-lessons/01-multimeter-ohms-law/), then all four [Coding Fundamentals Lessons](../coding-fundamentals-lessons/). Their final [Arduino LED Counting](../coding-fundamentals-lessons/04-arduino-led-counting/) activity practices building, uploading, loops, and output before lesson 01 adds an external circuit.
+
+Complete Uno lessons 01 and 02 in order. Then use [Manual Voltage Mapping](../electronics-fundamentals-lessons/02-manual-voltage-mapping/) to reinforce the ADC idea before continuing with Uno lessons 03–06. The [repository guide](../README.md#recommended-beginner-sequence) shows the complete route.
 
 ## Lessons
 
@@ -27,9 +31,9 @@ Use the same B1 battery, RV control, and motor circuit to investigate how checki
 
 ## Learning Order and Prerequisites
 
-- Before lesson 01, [Arduino LED Counting](../coding-fundamentals-lessons/04-arduino-led-counting/) is recommended prior learning. Students use familiar build, upload, counter, loop, and output ideas when they begin controlling an external circuit from pin 8.
+- Before lesson 01, complete [Multimeter and Ohm's Law](../electronics-fundamentals-lessons/01-multimeter-ohms-law/) and the four [Coding Fundamentals Lessons](../coding-fundamentals-lessons/). Students bring safe measurement practice and familiar build, upload, counter, loop, and output ideas to the external pin-8 circuit.
 - Before lesson 02, students should understand the lesson 01 transistor/LED circuit, shared ground, digital HIGH and LOW output on pin 8, and using `delay()` to control blink timing.
-- Before lesson 03, students should complete lessons 01 and 02 so they recognize transistor switching, shared ground, numeric mapping, and the difference between Arduino logic power and an external circuit's power. Lesson 03 introduces PWM and a teacher-verified external MOSFET motor circuit.
+- Before lesson 03, students should complete lessons 01 and 02, then use [Manual Voltage Mapping](../electronics-fundamentals-lessons/02-manual-voltage-mapping/) to reinforce how changing voltage becomes a digital value. Lesson 03 builds on transistor switching, shared ground, numeric mapping, and the difference between Arduino logic power and an external circuit's power while introducing PWM and a teacher-verified external MOSFET motor circuit.
 - Before lesson 04, students should understand lesson 03's PWM values from 0 to 255. Lesson 04 reuses the lesson 02 RV voltage divider to control those PWM values and intentionally updates only once every 1,000 milliseconds.
 - Before lesson 05, students should observe lesson 04's blocking response. Lesson 05 keeps the same motor and RV controls but uses a timer interrupt so motor updates can continue while the main program waits between serial reports.
 - Before lesson 06, students should understand lesson 05's frequent checks during foreground waits. Lesson 06 introduces a two-axis joystick, bounded servo position commands, and 50 checks per second. The teacher verifies its new regulated 5 V actuator supply, shared ground, and travel limits before use.

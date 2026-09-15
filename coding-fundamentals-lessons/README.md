@@ -21,6 +21,12 @@ Lesson 04 also requires:
 
 Lesson 04 uses the light already built into the Uno. It needs no breadboard, external LED, jumper wires, Snap Circuits parts, or external power supply.
 
+## Where This Collection Fits
+
+On the primary beginner route, first complete [Multimeter and Ohm's Law](../electronics-fundamentals-lessons/01-multimeter-ohms-law/) for safe measurement practice. Then complete all four lessons in this collection before starting [Uno lesson 01: GPIO Transistor Switch](../platformio-uno-lessons/01-gpio-transistor-switch/).
+
+The complete route is listed in the [repository guide](../README.md#recommended-beginner-sequence). Other activities may be used as optional review, but check their stated prerequisites before changing the order.
+
 ## Follow the Lessons in Order
 
 1. [Hello, World](01-hello-world/) — Build and run a C program that sends a greeting to the terminal.
@@ -40,7 +46,7 @@ count and repeat
 use counting and repetition to control a light
 ```
 
-Complete lessons 01–03 before lesson 04. Before beginning lesson 04, the teacher should also confirm that PlatformIO can find the Uno and that the USB cable carries data. After lesson 04, continue to the [PlatformIO Uno lessons](../platformio-uno-lessons/), where programs control and measure external circuits.
+Complete lessons 01–03 before lesson 04. Before beginning lesson 04, the teacher should also confirm that PlatformIO can find the Uno and that the USB cable carries data. After lesson 04, continue to [Uno lesson 01: GPIO Transistor Switch](../platformio-uno-lessons/01-gpio-transistor-switch/), where familiar build, upload, loop, and output ideas begin controlling and measuring an external circuit.
 
 ## Words We Will Use
 
