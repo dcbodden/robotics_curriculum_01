@@ -11,8 +11,8 @@
 
 ## 3. Arduino physical-output bridge
 
-- [ ] 3.1 Create lesson 04 as an independent Arduino Uno PlatformIO project using `LED_BUILTIN`, serial group announcements, named timing constants, and clear outer group/inner blink loops for repeating one-through-five blink groups.
-- [ ] 3.2 Write lesson 04's fifth-grade instructions for USB-only preparation, opening the correct project, build/upload/monitor steps, the laptop-to-Arduino comparison, prediction and observation, visible group spacing, stopping/disconnecting, and common troubleshooting without external wiring.
+- [x] 3.1 Create lesson 04 as an independent Arduino Uno PlatformIO project using `LED_BUILTIN`, serial group announcements, named timing constants, and clear outer group/inner blink loops for repeating one-through-five blink groups.
+- [x] 3.2 Write lesson 04's fifth-grade instructions for USB-only preparation, opening the correct project, build/upload/monitor steps, the laptop-to-Arduino comparison, prediction and observation, visible group spacing, stopping/disconnecting, and common troubleshooting without external wiring.
 
 ## 4. Discovery and verification
 
