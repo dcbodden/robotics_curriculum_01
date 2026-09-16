@@ -22,5 +22,5 @@
 
 ## 4. Verification and curriculum review
 
-- [ ] 4.1 Build all documented C sources with warnings treated as errors, verify the finite and repeating counter sequences and greeting behaviors, and build every affected PlatformIO Uno project without changing established final firmware behavior.
-- [ ] 4.2 Review every revised Core Mission for one discoverable observable result, focus/helper separation, fifth-grade language, prerequisite consistency, and retained safety gates; verify documented commands and local links, record hardware checks as performed or explicitly unperformed, run strict OpenSpec validation, and run whitespace checks.
+- [x] 4.1 Build all documented C sources with warnings treated as errors, verify the finite and repeating counter sequences and greeting behaviors, and build every affected PlatformIO Uno project without changing established final firmware behavior.
+- [x] 4.2 Review every revised Core Mission for one discoverable observable result, focus/helper separation, fifth-grade language, prerequisite consistency, and retained safety gates; verify documented commands and local links, record hardware checks as performed or explicitly unperformed, run strict OpenSpec validation, and run whitespace checks.
