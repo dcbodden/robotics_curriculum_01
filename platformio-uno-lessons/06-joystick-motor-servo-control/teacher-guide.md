@@ -88,8 +88,21 @@ Lesson 06 gives hardware the pulse edges and uses one overflow ISR per frame for
 
 ## Guide the Investigation
 
-Follow the [student observation sequence](README.md#observe-one-control-then-both): motor alone, servo alone, both together, then movement between reports. Enable actuator power only after neutral/wiring checks. Stop and remove both supplies for binding, sustained buzzing, unexpected heat, resets, or a commanded motor that fails to turn.
+Follow the student's [four gated Core Missions](README.md#four-gated-core-missions-one-approved-circuit): power-off inputs, servo axis only, motor center-off, then both together and movement between reports. The approved circuit stays fixed; “servo only” and “motor only” describe joystick movement, not separate supply or circuit rebuilds. Enable actuator power only after neutral/wiring checks. Stop and remove both supplies for binding, sustained buzzing, unexpected heat, resets, or a commanded motor that fails to turn.
 
 Look for evidence connecting A0 to motor command, A1 to servo command, zero on motor release/inactive travel, and independent diagonal control. Starting thresholds, coasting, servo travel time, and serial snapshots affect observations. Accept “hard to tell” with an explanation rather than requiring a visible timing difference.
 
 Ask why a moving robot should check again before its next computer message. An answer should connect frequent checks with quicker steering or stopping decisions. This joystick circuit does not guarantee collision avoidance. Record physical, waveform, and power measurements separately from successful builds and qualitative motion; leave unperformed checks explicit.
+
+## Detailed Diagnosis
+
+Remove **external actuator power and USB** before checking any wiring, connector, component, or mechanical setup. Keep actuator power off during any rebuild or upload. Record the observed symptom rather than assuming a firmware error.
+
+- **Released motor command is nonzero:** Record repeated A0 neutral readings with actuator power off. Check joystick GND, +5V, and VRx → A0. Adjust `MOTOR_NEUTRAL_ADC` or `MOTOR_DEADBAND_ADC` only after confirming the real neutral variation, then rebuild/upload with external power off and repeat the release check before enabling actuators.
+- **Servo chatters while motor does not move:** First check continuity from Arduino GND to external negative, servo brown, joystick GND, and MOSFET Source. Check split breadboard rails and loose returns. Trace servo orange → D9 and red → external +5 V; verify actual connector polarity and supply behavior. A missing shared ground can produce both symptoms even when positive and signal wires appear correct.
+- **Motor ADC never changes or command stays zero in both directions:** Check joystick orientation and VRx → A0 while all sources are off. After approved USB-only input checks, move in the direction that raises A0 past the neutral band. Very small changes may round to zero.
+- **Motor command is high but motor never turns:** Remove both sources promptly. Inspect the regulated motor-positive branch, D3 → series gate resistor → RFP30N06LE Gate, gate pulldown, Drain/Source wiring, shared ground, motor connections, and 1N5817 polarity. Do not leave a powered motor stalled while diagnosing it.
+- **Very low nonzero command does not start the motor:** A starting threshold can be normal. After verifying power and protection, compare a clearly larger command without touching or blocking the shaft. Stop if it still fails at a high command.
+- **Servo binds or persistently buzzes:** Remove both sources. Check the servo is unloaded and secured, its travel area clear, connector colors correct, and supply stable. Narrow `SERVO_MIN_PULSE_US` or `SERVO_MAX_PULSE_US` toward center if needed; rebuild/upload with actuator power off and recheck small movements. Do not widen travel or force the shaft to seek an advertised angle.
+- **Readings jump, servo chatters, or Uno resets during motion:** Remove both sources. Check joystick connection and common ground; verify external supply capacity, connector polarity, branch ratings, voltage at both loads, and transient stability. Review decoupling separately; capacitors cannot compensate for inadequate supply capacity or wiring.
+- **Hot parts, unusual smell, smoke, sparks, or unexpected motion:** Remove external power and USB immediately, avoid hot parts, inspect the setup, and do not resume until the cause is resolved.

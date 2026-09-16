@@ -13,17 +13,21 @@ This project is an OpenSpec-driven exploratory robotics curriculum for beginners
 - `platformio-esp32-robotics-template/` — an ESP32-WROOM-32 advanced robotics template organized around OV7670 camera work, DRV8833 motor control, an FPV Wi-Fi RC car project, and a follow-on semi-autonomous robotics project
 - `openspec/` — lightweight OpenSpec planning artifacts for repository structure and future curriculum changes
 
-## Suggested Electronics Sequence
+## Recommended Beginner Sequence
 
-1. Start with [Multimeter and Ohm's Law](electronics-fundamentals-lessons/01-multimeter-ohms-law/) to practice measuring voltage, resistance, and current without writing code.
-2. Continue with [ADC Variable Delay](platformio-uno-lessons/02-adc-variable-delay/) to see an Arduino turn a changing voltage into a digital value.
-3. Follow with [Manual Voltage Mapping](electronics-fundamentals-lessons/02-manual-voltage-mapping/) to reinforce the ADC concept by sorting measured voltages into eight digital levels without building or uploading firmware.
+Follow this primary route so each activity builds on ideas and equipment used earlier:
 
-## Suggested Coding Sequence
+1. Start with [Multimeter and Ohm's Law](electronics-fundamentals-lessons/01-multimeter-ohms-law/) to practice safe measurement and recognize open and closed circuit paths.
+2. Complete the four [Coding Fundamentals Lessons](coding-fundamentals-lessons/) to explore output, input, stored values, counters, loops, building, running, and uploading.
+3. Use [Uno lesson 01: GPIO Transistor Switch](platformio-uno-lessons/01-gpio-transistor-switch/) to connect familiar Arduino output to voltage measurements and an external light circuit.
+4. Continue with [Uno lesson 02: ADC Variable Delay](platformio-uno-lessons/02-adc-variable-delay/) to turn a changing voltage into a digital value and a visible change in blink speed.
+5. Reinforce that ADC idea with [Manual Voltage Mapping](electronics-fundamentals-lessons/02-manual-voltage-mapping/) by sorting measured voltages into eight digital levels without building new firmware.
+6. Introduce PWM and motor behavior with [Uno lesson 03: PWM Motor Ramp](platformio-uno-lessons/03-pwm-motor-ramp/).
+7. Control motor PWM directly with [Uno lesson 04: ADC PWM Motor Control](platformio-uno-lessons/04-adc-pwm-motor-control/).
+8. Compare slow and frequent control checks with [Uno lesson 05: Interrupt-Driven Motor Control](platformio-uno-lessons/05-interrupt-driven-motor-control/) and its robot-attention investigation.
+9. Combine two joystick inputs with [Uno lesson 06: Joystick Motor and Servo Control](platformio-uno-lessons/06-joystick-motor-servo-control/).
 
-Start with the four [Coding Fundamentals Lessons](coding-fundamentals-lessons/). They introduce output, input, stored values, counters, loops, building, running, and uploading before the Arduino projects add external circuits.
-
-After the built-in LED activity, continue with the numbered [PlatformIO Uno Lessons](platformio-uno-lessons/).
+The lesson collections also contain optional references and reinforcement activities. Follow each lesson's stated prerequisites before taking an optional side path.
 
 ## OpenSpec workflow
 

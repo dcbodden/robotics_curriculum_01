@@ -21,11 +21,17 @@ Lesson 04 also requires:
 
 Lesson 04 uses the light already built into the Uno. It needs no breadboard, external LED, jumper wires, Snap Circuits parts, or external power supply.
 
+## Where This Collection Fits
+
+On the primary beginner route, first complete [Multimeter and Ohm's Law](../electronics-fundamentals-lessons/01-multimeter-ohms-law/) for safe measurement practice. Then complete all four lessons in this collection before starting [Uno lesson 01: GPIO Transistor Switch](../platformio-uno-lessons/01-gpio-transistor-switch/).
+
+The complete route is listed in the [repository guide](../README.md#recommended-beginner-sequence). Other activities may be used as optional review, but check their stated prerequisites before changing the order.
+
 ## Follow the Lessons in Order
 
 1. [Hello, World](01-hello-world/) — Build and run a C program that sends a greeting to the terminal.
 2. [Name Greeting](02-name-greeting/) — Give the program input and see it use the name it remembers in its output.
-3. [Repeating Counter](03-repeating-counter/) — Use a counter and loops to print 1 through 5, one number per second, over and over.
+3. [Repeating Counter](03-repeating-counter/) — Watch a counter print 1 through 5 once, then watch a second program repeat the sequence.
 4. [Arduino LED Counting](04-arduino-led-counting/) — Build and upload a program that flashes the Uno's built-in LED in groups of one through five.
 
 Each lesson builds on the one before it:
@@ -40,7 +46,7 @@ count and repeat
 use counting and repetition to control a light
 ```
 
-Complete lessons 01–03 before lesson 04. Before beginning lesson 04, the teacher should also confirm that PlatformIO can find the Uno and that the USB cable carries data. After lesson 04, continue to the [PlatformIO Uno lessons](../platformio-uno-lessons/), where programs control and measure external circuits.
+Complete lessons 01–03 before lesson 04. Before beginning lesson 04, the teacher should also confirm that PlatformIO can find the Uno and that the USB cable carries data. After lesson 04, continue to [Uno lesson 01: GPIO Transistor Switch](../platformio-uno-lessons/01-gpio-transistor-switch/), where familiar build, upload, loop, and output ideas begin controlling and measuring an external circuit.
 
 ## Words We Will Use
 
@@ -76,12 +82,6 @@ Building checks whether the source code can become a program. Running or uploadi
 
 ## How Each Lesson Works
 
-The lessons use the same six steps:
-
-```text
-READ → PREDICT → BUILD → RUN OR UPLOAD → OBSERVE → EXPLAIN
-```
-
-First read the short program and predict what it will do. Next build it. Run a laptop program or upload an Arduino program, then record what actually happens and explain which instruction, input, counter, or loop helped produce it. A prediction can be different from the result; the observation is still useful evidence.
+First complete the short **Core Mission** to see one working result. Then name the important idea, predict what one safe change or comparison will do, try it, and explain what you observed. A prediction can be different from the result; the observation is still useful evidence.
 
 Laptop lessons show every terminal command in a box. Run one command at a time from that lesson's folder. Do not change a command unless the lesson asks you to. Your teacher will help prepare GCC and fix computer permissions. The [teacher guide](teacher-guide.md) explains the shared lesson routine and preparation.

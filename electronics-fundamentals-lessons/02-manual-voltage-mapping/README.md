@@ -11,6 +11,26 @@ By the end of the lesson, you will be able to:
 - match each decimal level with a 3-bit value; and
 - explain how many nearby voltages can share the same digital level.
 
+## Core Mission: Measure One Voltage and Find Its Level
+
+**Goal:** Safely measure one RV wiper voltage and use the [voltage-range lookup table](#voltage-range-lookup-table) to give it a decimal level and 3-bit label. This is a hands-on review after [Uno lesson 02: ADC Variable Delay](../../platformio-uno-lessons/02-adc-variable-delay/).
+
+**Prepare and stay safe:** Use a 50K Ω RV Snap, an Arduino Uno, USB data cable, and digital multimeter. The Uno supplies 5 V and GND **through USB only**; do not connect B1, another battery, or external power. Do all wiring with USB disconnected. Never move a probe, wire, or component while USB is connected; move only the RV control. If parts become hot, a connection is loose, or the reading is unstable or outside 0–5 V, disconnect USB and ask the teacher to inspect the setup.
+
+1. Based on the changing ADC value you observed in Uno lesson 02, write your prediction in the [recording activity](recording-activity.md#predict).
+2. **Remove power and set the meter.** Disconnect USB from the Uno. Turn the meter off. Put black in **COM** and red in the **VΩ** voltage/resistance jack, never a current jack. Set the dial to **DC voltage** on a teacher-approved range that includes 5 V; do not use AC voltage, resistance, or current mode for this powered measurement.
+3. **Wire with USB still disconnected.** Connect Arduino 5 V to one **outer** RV terminal and Arduino GND to the other **outer** RV terminal. Put the black probe on Arduino GND and the red probe on the RV **center wiper**. Keep probe tips and bare metal apart so 5 V cannot touch GND directly.
+4. **Teacher checkpoint:** With USB disconnected, ask the teacher to identify the two outer terminals and center wiper, trace every connection, confirm no battery or external voltage is attached, check that black is in COM and red in VΩ, and verify the DC voltage range. Connect USB **only after teacher approval**.
+5. Move only the RV control gently to one endpoint without forcing it. Wait for a steady meter reading. Record the actual voltage and decide whether it is the worksheet's **Minimum** or **Maximum** row. An endpoint does not have to read exactly 0 V or 5 V.
+6. Find the row containing your measured voltage in the [lookup table](#voltage-range-lookup-table). Copy that row's decimal level and 3-bit value into the same worksheet row. An exact range boundary belongs to the row that **starts** at that voltage.
+7. **Stop safely:** Disconnect USB **before** moving or removing any probe or wire. Turn the meter off. Leave the circuit unpowered for your next setup check.
+
+**Notice:** What voltage did you measure, and which two labels did the lookup table give it?
+
+Measured voltage: ______ V. Decimal level: ______. 3-bit value: ______.
+
+**Stop with USB disconnected.** To complete the full lesson, continue with the [required eight-level survey](#measure-and-look-up-all-eight-levels), using the same teacher-approved wiring and repeating the power-off checkpoint before any connection change. The [electrical and digital words](#electrical-and-digital-words-you-will-use), [bucket explanation](#think-of-the-ranges-as-digital-buckets), [Uno ADC comparison](#how-this-model-connects-to-the-uno-adc), and [uncommon troubleshooting](#troubleshooting--disconnect-usb-before-making-changes) follow the immediate mission.
+
 ## Who Does What
 
 - **Student actions:** Directions that say **you** are for the student. You may make predictions, wire only with USB disconnected, move the RV control after approval, read the meter, use the lookup table, and record observations. Stop whenever a step says **teacher checkpoint** or **ask the teacher**.
