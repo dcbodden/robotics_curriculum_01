@@ -1,6 +1,6 @@
 # Lesson 06: Joystick Motor and Servo Control
 
-A joystick gives us two controls in one handle. One direction controls how much power a DC motor receives. The other controls the position of a servo. A **servo** is a motor that moves toward a chosen position rather than just spinning continuously.
+A joystick gives us two controls in one handle. One direction controls how much power a DC motor receives. The other controls the position of a servo. A **servo** is a motor that moves toward a chosen position rather than just spinning continuously. These two moving parts are **actuators**.
 
 Our program checks both joystick directions every **20 milliseconds**, or **50 times per second**. Like lesson 05, it keeps checking while the main loop waits between computer messages. The motor control is **center-off**: releasing the joystick commands zero motor power. Pushing in one direction increases power; pushing the opposite way keeps power off. The servo control moves between two position limits, with a middle command when centered.
 
@@ -22,7 +22,67 @@ This lesson uses the kit joystick instead of the RV snap, and an external regula
 - Breadboard, suitable jumper wires, and secure supports for the motor and unloaded servo;
 - Teacher-approved **regulated 5 V DC actuator supply**, connector, and wiring rated for the combined motor and servo current.
 
-## Two Power Paths
+## Four Gated Core Missions: One Approved Circuit
+
+**Goal:** First check both joystick inputs with actuator power **off**. Then observe the servo alone, the motor alone, and both controls together. The wiring stays **fixed** through all four missions: “servo alone” means you move only the servo joystick axis while motor power is commanded zero; the servo and motor share the same external supply when it is on.
+
+**Prepare and stay safe:** Remove **USB and external actuator power before any wiring or mechanical change**. The Uno's USB powers its electronics; **Arduino 5 V goes only to joystick +5V**. Teacher-approved **external regulated +5 V** goes to **servo red and motor positive only**, through separate teacher-approved branches. Keep these positive supplies separate. Arduino GND, joystick GND, servo **brown**, external negative, and MOSFET Source share ground; **brown never goes to the motor's switched Drain**. Servo **orange** is the D9 signal. Trace original servo colors through any extensions; their colors or connector orientation may differ. Keep the **bare motor secured with no wheel, propeller, gear, or other shaft attachment** and the **unloaded servo secured** with a clear motion area. Keep hands, hair, clothing, and objects away from both. Never hold or block either shaft. If a motor fails to turn with a clear high command, the servo binds or persistently buzzes, a part gets hot, power becomes unstable, smoke/sparks or unusual smells appear, or motion/wiring behaves unexpectedly, **turn off external actuator power and unplug USB immediately**. Tell the teacher; do not touch hot parts or reconnect until the setup is checked. A zero motor command is not an emergency power switch, and a spinning motor can coast.
+
+### Core Mission 1: Check Inputs Before Actuator Power
+
+**Observable result:** With the external supply **off**, see the released joystick report **Motor PWM command: 0** and see A0 and A1 readings change as the stick moves. Neither actuator can move during this input check.
+
+1. With **USB unplugged and external power off**, the teacher prepares the [full wiring tables](#wire-with-all-power-removed). Check the joystick labels: **GND → shared ground, +5V → Arduino 5 V, VRx → A0, VRy → A1, SW unconnected**. Check servo **orange → D9, red → external +5 V, brown → shared ground**. Keep external positive away from Arduino 5 V/VIN and joystick. Check the protected motor path: **D3 → 220–330 Ω resistor → MOSFET Gate**, **Gate → 10 kΩ pulldown → ground**, **motor negative → Drain**, **Source → shared ground**, and **1N5817 banded end → motor positive**, unbanded end → motor negative. The teacher confirms MOSFET terminal identities, shared ground, supply polarity and capacity, no shorts or split-rail mistakes, and both secured clear motion areas. Do not restore any power until approved.
+2. Keep **actuator power off**. Connect Uno USB with a data cable. Open `platformio-uno-lessons/06-joystick-motor-servo-control` as the PlatformIO project in VS Code; opening a `main.cpp` tab alone does not select it. Under **Project Tasks > uno > General**, choose **Build** and wait for `SUCCESS`. Close any open Monitor, choose **Upload** and wait for `SUCCESS`. Keep actuator power off throughout uploads.
+3. Open **Monitor** at **9,600 baud**. Release the joystick several times. Check that the labeled **Motor PWM command stays 0**. A center line may show `Motor ADC: 506 | Motor PWM command: 0 | Servo ADC: 512 | Servo pulse command (us): 1500`; your ADC numbers may differ. A number near 506 is an **ADC reading**, not motor PWM. If release gives a nonzero motor command, **keep actuator power off** and ask the teacher to check neutral and adjust the mapping before rebuilding, uploading, and repeating this check.
+4. With actuator power still off, move **VRx's motor axis** gently in both directions and watch **Motor ADC** and its PWM command. Only the direction that raises A0 above the center-off zone should increase motor power; the opposite direction and release should command 0. Move **VRy's servo axis** gently and watch **Servo ADC** and its position command change. Return the stick to center before the next mission.
+
+**Notice:** Released motor PWM: ______. One changed A0 reading: ______. One changed A1 reading: ______.
+
+**Gate to Mission 2:** External actuator power remains **off**. The teacher confirms repeated motor-zero release readings, changing A0/A1 inputs, approved supply and connector polarity, secure actuators, and clear motion areas. If any check fails, stop here. If ending the lesson now, close Monitor and unplug USB; change wiring only with both sources off.
+
+### Core Mission 2: Move Only the Servo Axis
+
+**Observable result:** The secured unloaded servo moves toward a new position while the motor axis stays released and **Motor PWM command remains 0**.
+
+1. Keep the **same approved circuit fixed**. Release the joystick; the teacher checks a fresh zero motor command and confirms the servo is unloaded, the motor bare and secured, both motion areas clear, and the external supply approved. The teacher then enables actuator power **without moving wires**. The servo may move to its middle position immediately; it may still draw power while holding position.
+2. Keep the **motor axis released**. Move the servo axis a little to one side, then a little to the other. Start near center; approach only the teacher-approved travel limits if motion remains free. Watch the servo move and read a new **Servo ADC** and **Servo pulse command** line. Check that **Motor PWM command stays 0**. Do not push or force the servo shaft.
+
+**Notice:** Servo movement I saw: ____________________. Motor PWM stayed at: ______.
+
+**Gate to Mission 3:** Release the stick. If the servo binds, persistently buzzes, or moves unexpectedly, remove **actuator power and USB** and ask the teacher to inspect and adjust travel before proceeding. Otherwise keep the fixed circuit and approved supply as they are; move only joystick axes in the next mission. If stopping here, turn off actuator power first, close Monitor, then unplug USB.
+
+### Core Mission 3: Test Motor Center-Off
+
+**Observable result:** With the servo axis near center, motor release and inactive travel command **0**, while the active motor direction can command power and turn the secured motor.
+
+1. Keep the **servo axis near center** and clear of its motion area. With the same approved circuit, move the motor axis partway in the direction that **raises Motor ADC**. Hold until two messages appear; record the newest **Motor PWM command** and observe sound or motion from a safe distance. Try a clearly higher approved command if needed. If the motor never turns at a clear high command, remove **actuator power and USB** and ask the teacher to inspect it; do not leave it powered and stalled.
+2. Release the motor axis. Check that **Motor PWM command returns to 0**; the shaft may coast briefly. Then move the motor axis into the **inactive direction** and check that command remains 0. Keep the servo axis near center throughout; the servo may still use power to hold its middle position.
+
+**Notice:** Active-direction command: ______. Released/inactive commands: ______ / ______. Motor motion or coasting I saw: ____________________.
+
+**Gate to Mission 4:** Return the stick to center. Continue only if the motor is secured, its shaft area remains clear, center-off commands are 0, and both actuators behave normally. The wiring and external supply stay fixed. If stopping here, turn off actuator power first, close Monitor, then unplug USB.
+
+### Core Mission 4: Change Both Controls Together
+
+**Observable result:** A moderate diagonal stick movement changes the motor command and servo position together, possibly before the next one-second computer message.
+
+1. With the same approved circuit and clear motion areas, move diagonally toward a **moderate active motor command** and an approved servo position. Do not push either axis beyond its teacher-approved range. Hold for two messages; record the motor and servo commands and what each actuator actually did. Return to center.
+2. **Predict from the earlier missions:** If you move just after a computer message, will either actuator begin responding before the next message? Try one approved diagonal movement just after a line, watch from a safe distance, then release. “Hard to tell” is a valid observation; physical motion can lag behind a command.
+
+**Notice:** Motor changed: ____________________. Servo changed: ____________________. Before next message? ____________________.
+
+**Stop safely:** Turn off **external actuator power first**, close Monitor, then unplug USB. Remove both power sources before any wiring or mechanical change. Leave the approved circuit unchanged until the teacher says it is safe to disassemble.
+
+## Name the Idea: Two Inputs, Two Commands
+
+The focus code is the pair of decisions in [`include/control_mapping.h`](include/control_mapping.h): `motorPwmFromAdc(...)` turns **A0** into a center-off motor power command; `servoPulseFromAdc(...)` turns **A1** into a bounded servo position command. The program checks both axes every **20 ms**, or **50 times per second**, even while its main loop waits between roughly **one-second Serial messages**. That control-check rhythm differs from the servo's repeated **20 ms position-signal frames** and the motor's faster PWM on/off pulses. A message shows one snapshot; it does not show every check. A power or position **command** is an instruction, not an exact measure of speed or angle. The [teacher guide](teacher-guide.md#interpret-the-four-timing-rhythms) explains timer configuration and pulse buffering; those details are not needed for these missions.
+
+## Circuit and Optional Activity Reference
+
+The sections below retain exact wiring tables, an extended recording activity, and troubleshooting. Teachers can use the [preparation guide](teacher-guide.md) for supply sizing, calibration, timing implementation, and detailed diagnosis.
+
+### Two Power Paths
 
 An **actuator** makes something move. Here, the servo and DC motor are our actuators. USB powers the Uno, and the Uno's 5 V pin powers the joystick. The separate actuator supply powers both motors.
 
@@ -38,13 +98,7 @@ An **actuator** makes something move. Here, the servo and DC motor are our actua
 
 Use separate, suitably rated branches from the actuator supply for the servo and motor. The teacher must check breadboard rail breaks and wiring capacity; a rail's colored stripe does not guarantee its voltage or continuity.
 
-### Teacher Supply Check
-
-Before the student connects power, verify that the actual servo permits regulated 5 V and the DC motor is the documented 3–6 V model. Choose a supply whose continuous current capacity exceeds the **combined starting/stall currents with margin**, using the actual parts' specifications or appropriate supervised verification. Idle current alone is insufficient. Students must not block either shaft to measure stall current.
-
-Check the supply's output voltage, polarity, connector, and lead ratings, and verify voltage stability when both actuators move. Do not assume the kit's breadboard power module or the Uno's 5 V pin can supply both actuators. Local capacitors may help with brief voltage dips, but cannot replace an adequate supply. The teacher chooses them and checks their polarity and voltage rating.
-
-## Wire with All Power Removed
+### Wire with All Power Removed
 
 Disconnect USB and disconnect or switch off the external actuator supply before making or changing any connection. Secure the bare DC motor without a wheel or propeller. Secure the unloaded servo and keep its motion area clear. Keep fingers, hair, clothing, and objects away from moving parts.
 
@@ -92,53 +146,9 @@ Use lesson 04's [MOSFET identification instructions](../04-adc-pwm-motor-control
 
 Place the diode close to the motor connections. It gives stored motor current a path when the switch turns off. Reversing it can short the supply when the MOSFET turns on. The servo has its own internal control circuit: its brown wire connects directly to shared ground, **not** to the DC motor's switched Drain terminal.
 
-## Teacher Wiring Checkpoint
+### Optional Extended Recording
 
-With all power removed, trace the joystick labels, servo orange/red/brown connections, MOSFET terminals, both gate resistors, diode band, and all ground connections. Confirm that external +5 V reaches only the actuator power branches and remains separate from Arduino 5 V and VIN. Check for loose wires and accidental shorts, and confirm the secured motor and servo have clear motion areas.
-
-Keep actuator power off during uploads. Before enabling it, the teacher must verify a released joystick reports zero motor command. The servo may move when power is enabled. Remove both power sources before touching wiring again. If parts become hot, smell unusual, smoke, spark, or behave unexpectedly, remove actuator power and USB and tell the teacher; do not reconnect until the setup has been checked.
-
-## Build, Upload, and Check the Controls
-
-1. Keep the external actuator supply off. After the teacher approves the unpowered wiring, connect USB to the Uno.
-2. Open **06-joystick-motor-servo-control** in VS Code. Choose the folder containing this lesson's `platformio.ini`. Opening its `main.cpp` tab alone does not select the project for upload.
-3. In PlatformIO **Project Tasks**, choose this project's **uno → General → Build**. Wait for `SUCCESS`.
-4. Close any monitor using the Uno's port, choose **Upload** for the same project, and wait for `SUCCESS`. Keep actuator power off throughout.
-5. Open **Monitor** at **9600 baud**. Expect labeled lines about once per second. With the joystick released, a line could look like this (your ADC numbers may differ):
-
-   ```text
-   Motor ADC: 506 | Motor PWM command: 0 | Servo ADC: 512 | Servo pulse command (us): 1500
-   ```
-
-6. Leave actuator power off. Release the joystick several times and check that **Motor PWM command stays 0**. Gently move near center and release again. The **deadband** is a small zone around center that ignores tiny changes. Its default center is 512 with a ±40-count zone (472–552). All motor readings through 552 command zero, including travel in the inactive direction. The active direction raises the reading above 552 and increases power toward 255. Very small increases can still round to zero.
-7. If releasing the stick gives a nonzero motor command, keep actuator power off. Have the teacher check wiring and the repeated neutral readings, then adjust `MOTOR_NEUTRAL_ADC` or `MOTOR_DEADBAND_ADC` in [control_mapping.h](include/control_mapping.h) if needed. Rebuild, upload, and repeat the neutral check after any change.
-8. With actuator power still off, move the servo axis and check that **Servo ADC** and its pulse command change. The initial command limits are **1000–2000 microseconds**, with **1500 microseconds** at the nominal center. These are position instructions, not a promise of exact angles or a full 180-degree sweep.
-
-### Enable Actuator Power with the Teacher
-
-Release the joystick. Have the teacher confirm zero motor command, the supply check, secured actuators, and clear shaft/motion areas. Use a secured unloaded servo; do not attach a mechanism for this first check. Enable the external supply only after approval, without moving any wires. The servo may move toward its middle position immediately.
-
-Keep the motor axis released while the teacher checks servo travel with small movements first. Extend toward the chosen limits only if motion is free. **Stop if the servo binds or persistently buzzes.** Remove actuator power and USB; the teacher checks the setup and narrows `SERVO_MIN_PULSE_US` or `SERVO_MAX_PULSE_US` around `SERVO_CENTER_PULSE_US` if necessary. Rebuild and upload with actuator power off, then repeat the checks. Do not push the shaft by hand or widen the range to force more travel.
-
-Keep hands, hair, clothing, and objects clear of both actuators. Never hold or block the DC motor shaft. A zero command removes motor power; a spinning motor can still **coast**. Center-off is a software command, not a physical emergency switch: the teacher must be able to remove actuator power promptly.
-
-When finished, switch off actuator power first, close the monitor, and disconnect USB. Remove both power sources before changing wiring or components.
-
-## Observe One Control, Then Both
-
-Complete the upload, neutral, and teacher power checks above first. Use the same approved circuit and servo limits throughout. Keep both actuators secured and their movement areas clear. Move only the joystick; never touch or block either shaft. Stop and remove both supplies if either actuator binds, fails to move when clearly commanded to run, or behaves unexpectedly.
-
-1. **Start at center.** Release the joystick and record the four reported numbers. Listen and watch: is the motor stopped or still coasting? Where does the servo settle?
-2. **Motor axis only.** Keep the servo axis near center. Move the motor axis partway in its active direction, hold until at least two messages appear, and record the newest numbers and what the motor does. Repeat farther in that direction. Notice whether the servo command stays near its middle value; small sideways hand movements can change it too.
-3. **Release, then try the inactive direction.** Release and observe when the motor's sound or movement starts changing. Record whether it coasts after the command becomes zero. Then move the motor axis in the opposite direction while keeping the servo axis near center. Hold and record: does the motor command remain zero?
-4. **Servo axis only.** Release the motor axis so its command stays zero. Move the servo axis toward one teacher-approved limit, hold, and record. Repeat toward the other limit, then release. Watch the servo position and motor command. Do not force extra travel.
-5. **Both axes together.** Move diagonally to give a moderate active motor command and a changed servo position. Hold and record. Repeat with a different diagonal position inside the approved range. Notice whether you can change both controls together.
-6. **Look between messages.** Just after a computer message, move from a centered position to one of your approved diagonal positions. Observe whether either actuator begins responding before the next message. Repeat twice, returning to center between tries. Describe what you actually notice; no stopwatch is needed, and “hard to tell” is useful evidence.
-7. **Finish.** Release the stick, switch off actuator power, close the monitor, and disconnect USB. Compare your records and answer the reflection questions below.
-
-### Record Commands and Motion
-
-Copy or print this table if you want more writing space. Use the newest serial line after holding each position. Record motion and sound in your own words, such as “motor did not start,” “motor coasted,” or “servo moved then settled.” Leave a result uncertain if you could not judge it. Do not replace an observation with what you expected to happen.
+After completing all four missions, copy or print this table if you want more writing space. If power was removed at the end, use the **same approved wiring**; reconnect USB with external power off, verify released motor command 0 and clear motion areas, and ask the teacher before enabling external power again. Move only the joystick. Record motion and sound in your own words, such as “motor did not start,” “motor coasted,” or “servo moved then settled.” Leave a result uncertain if you could not judge it. Do not replace an observation with what you expected to happen. Finish by turning off external power first, closing Monitor, and unplugging USB.
 
 | Joystick position | Motor ADC | Motor PWM command | Servo ADC | Servo pulse command (µs) | What I heard or saw |
 | --- | --- | --- | --- | --- | --- |
@@ -160,23 +170,6 @@ For each timing try, describe the response **between** messages rather than just
 | 2 | Yes / No / Hard to tell | Yes / No / Hard to tell | |
 | 3 | Yes / No / Hard to tell | Yes / No / Hard to tell | |
 
-### Four Different Rhythms
-
-The computer messages show **snapshots**: one saved set of readings and commands, not every check the robot makes.
-
-| What happens | Its rhythm in lesson 06 |
-| --- | --- |
-| Check both joystick axes and update both commands | Every 20 ms: **50 checks per second** |
-| Send the servo's position pulse | A frame repeats every 20 ms; the pulse length selects position |
-| Switch motor power on and off with PWM | A separate, faster hardware rhythm; the command selects how much of each cycle is on |
-| Print a serial snapshot | About once per second, while control checks continue between messages |
-
-The two “50 times per second” rhythms have different jobs: one checks the controls; the other repeats the servo signal. A new servo command takes effect in the following frame. Hardware continues both output signals while the main loop waits. Fifty updates do not mean fifty different positions or speeds: a still joystick can produce the same command repeatedly.
-
-A power or position **command** is an instruction, not a measurement of actual speed or angle. A motor may need a larger command to start, may coast after zero power, and may change speed unevenly. A servo takes time to move. Frequent checks help the program use fresh instructions sooner; they do not make either actuator move or stop instantly.
-
-At joystick center, the DC motor receives zero power command and the servo receives its middle position command. The servo can still use power to hold that position even when it looks stopped.
-
 ### Reflect on Your Evidence
 
 1. Which axis controlled motor power, and which controlled servo position? What records support your answer?
@@ -187,15 +180,11 @@ At joystick center, the DC motor receives zero power command and the servo recei
 6. Did a larger motor command always mean an equally larger speed change? What evidence showed a starting threshold, coasting, or time needed for servo motion?
 7. Imagine the motor moves a robot and the servo points its steering. Why should the robot keep checking new control instructions while following its plan? What additional sensor would it need to notice an obstacle? Our joystick circuit does not detect obstacles or guarantee an immediate stop.
 
-## Troubleshooting
+### Student Troubleshooting and Stop Conditions
 
-- **Build or upload fails:** Confirm the selected project is lesson 06 and read the first error. For a port error, close the monitor, check the USB data cable and selected Uno port, and try again with actuator power off.
-- **Monitor is blank, garbled, or uses different labels:** Check 9600 baud and explicitly upload lesson 06. Close and reopen its monitor. This program reports motor ADC, motor PWM command, servo ADC, and servo pulse command in microseconds.
-- **A number near 506 appears at center:** Read its label. That is a normal possible **ADC reading**, not a motor PWM command. ADC readings range from 0 to 1023; motor PWM commands range from 0 to 255. Center should command zero motor power.
-- **Servo chatters and the DC motor does not move:** Remove actuator power and USB. Check the shared-ground connection first: **Arduino GND must join external negative, servo brown, joystick GND, and MOSFET Source**. Check rail breaks and loose connections. Also verify orange → D9, red → external +5 V, and supply capacity/polarity.
-- **Motor command remains zero:** With actuator power off and USB connected after wiring approval, try both directions of the motor axis. Only the direction raising A0 above the deadband increases power. If A0 never changes, remove both supplies and check VRx → A0 and joystick power/ground.
-- **Motor has a high command but never turns:** Remove both supplies. The teacher checks external motor power, D3's gate-resistor path, MOSFET terminals, pulldown, and diode polarity. Do not leave a motor powered while it fails to turn.
-- **Motor stays stopped at very low nonzero commands:** A small power command may be below its **starting threshold**. After the approved checks, observe a clearly larger command without touching the shaft. Stop and ask the teacher if it still fails to turn.
-- **Servo binds or keeps buzzing:** Remove both supplies. Check that motion is unobstructed, the servo is unloaded, and its connections are correct. Have the teacher review and narrow the pulse limits before another trial.
-- **Readings jump with the stick held still, or the Uno resets:** Remove both supplies. Check joystick connections, shared ground, supply voltage stability during movement, current capacity, and branch wiring. The teacher reviews local decoupling; do not hide a power problem by changing the mapping.
-- **Parts get hot, smell unusual, smoke, or spark:** Remove actuator power and USB immediately. Tell the teacher, avoid hot parts, and do not reconnect until the circuit has been checked.
+- **Build or upload fails:** Keep actuator power off. Confirm the selected project is lesson 06, close Monitor if it is using the port, check the USB data cable and Uno port, and ask the teacher to read the first error.
+- **Monitor is blank or garbled:** Check **9,600 baud**, close and reopen Monitor, and confirm lesson 06 uploaded. It should label Motor ADC, Motor PWM command, Servo ADC, and Servo pulse command.
+- **A number near 506 appears at center:** Read its label. That can be a normal **ADC reading**, not the motor PWM command. Released motor PWM should read **0** before actuator power is enabled.
+- **Motor command stays zero in both stick directions:** Keep actuator power off and ask the teacher to inspect A0 and joystick connections. Only the direction that raises A0 above the center-off zone should increase the command.
+- **Servo binds or keeps buzzing, a clear high motor command does not turn the motor, or readings/power become unstable:** Remove **external power and USB**. Ask the teacher to inspect the circuit using [detailed diagnosis](teacher-guide.md#detailed-diagnosis). Do not force a shaft or leave a nonmoving commanded motor powered.
+- **Heat, unusual smell, smoke, sparks, or unexpected movement:** Remove **external power and USB immediately**. Tell the teacher, avoid hot parts, and do not reconnect until the setup has been checked.
