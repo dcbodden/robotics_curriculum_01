@@ -7,7 +7,7 @@
 
 ## 2. Lesson 08 Interrupt-Driven Measurement
 
-- [ ] 2.1 Scaffold `08-interrupt-ultrasonic-joystick-control` from lesson 06 as a standalone project, preserving its control mapping, protected actuator circuit, Timer1/Timer2 ownership, and existing mapping checks.
+- [x] 2.1 Scaffold `08-interrupt-ultrasonic-joystick-control` from lesson 06 as a standalone project, preserving its control mapping, protected actuator circuit, Timer1/Timer2 ownership, and existing mapping checks.
 - [ ] 2.2 Add the D2 CHANGE-interrupt acquisition state, rollover-safe Echo timestamps, unmatched-edge rejection, and atomic measurement telemetry snapshots without Serial or floating-point conversion inside the edge ISR.
 - [ ] 2.3 Extend the Timer1 routine to expire incomplete acquisition, perform every existing joystick/control update, divide frames into an 80 ms sensor schedule, and issue the D4 Trigger pulse as the scheduled frame's final operation.
 - [ ] 2.4 Add approximately 500 ms foreground reports that distinguish measurement validity, fractional Echo milliseconds, calculated centimeters, joystick readings, and continuing motor/servo commands.
