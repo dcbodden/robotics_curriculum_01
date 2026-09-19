@@ -29,4 +29,4 @@
 - [x] 4.2 Review all three lessons for consistent D4/D2 wiring, units, trigger spacing, report cadence, terminology, power-removal steps, teacher checkpoints, and stop conditions.
 - [x] 4.3 Run every documented host check and resolve failures or warning-level compiler diagnostics.
 - [x] 4.4 Build lessons 07, 08, and 09 for the Uno with PlatformIO and confirm each project remains independent of sibling lesson directories.
-- [ ] 4.5 Perform a final requirements review against both delta specs and run strict OpenSpec validation for the change.
+- [x] 4.5 Perform a final requirements review against both delta specs and run strict OpenSpec validation for the change.
