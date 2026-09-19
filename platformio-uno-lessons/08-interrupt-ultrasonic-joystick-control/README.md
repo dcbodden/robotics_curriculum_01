@@ -207,4 +207,4 @@ The 4,000 mm host case verifies conversion math, not lesson 08's shorter interru
 - **Servo binds or buzzes, a clear high motor command does not turn the motor, or the Uno resets:** Turn off external power and unplug USB. Do not force or stall a shaft. Have the teacher inspect travel limits, shared ground, supply capacity, branch wiring, MOSFET stage, diode, and local decoupling.
 - **Unexpected motion, unstable power, heat, unusual smell, smoke, or sparks:** Remove external power and USB immediately. Avoid hot parts and do not reconnect until the teacher resolves the cause.
 
-Next, lesson 09 will use the same interrupt measurement to demonstrate distance-aware motor slowdown.
+Next, continue to [lesson 09: Distance-Aware Motor Control](../09-distance-aware-motor-control/) to use the same interrupt measurement for a distance-aware motor slowdown.

@@ -133,3 +133,5 @@ Ultrasonic checks passed: validity, time, 10 cm, and 4,000 mm range.
 - **The measured distance is much too long or intermittent:** Move the target closer, use a larger and harder flat surface, and reduce its angle. Soft or angled targets may not return a strong Echo.
 - **The near and far values seem reversed:** Confirm you recorded fresh lines after moving the target. Keep the target still for several reports at each position.
 - **A part becomes hot, smells unusual, sparks, or smokes:** Unplug USB immediately. Do not touch a hot part or reconnect power; tell the teacher and inspect the 5 V/GND connections.
+
+Next, continue to [lesson 08: Interrupt Ultrasonic and Joystick Control](../08-interrupt-ultrasonic-joystick-control/) to capture Echo edges while joystick motor/servo control continues.

@@ -25,7 +25,7 @@
 
 ## 4. Curriculum Integration and Verification
 
-- [ ] 4.1 Update the PlatformIO Uno lesson index, repository beginner sequence, and prerequisite/next-lesson links to present lessons 07–09 in canonical order.
+- [x] 4.1 Update the PlatformIO Uno lesson index, repository beginner sequence, and prerequisite/next-lesson links to present lessons 07–09 in canonical order.
 - [ ] 4.2 Review all three lessons for consistent D4/D2 wiring, units, trigger spacing, report cadence, terminology, power-removal steps, teacher checkpoints, and stop conditions.
 - [ ] 4.3 Run every documented host check and resolve failures or warning-level compiler diagnostics.
 - [ ] 4.4 Build lessons 07, 08, and 09 for the Uno with PlatformIO and confirm each project remains independent of sibling lesson directories.
