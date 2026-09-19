@@ -1,9 +1,9 @@
 ## 1. Lesson 07 Blocking Distance Measurement
 
-- [ ] 1.1 Scaffold `07-ultrasonic-blocking-distance` as an independent Uno PlatformIO project with the repository's standard editor recommendations and 9,600-baud monitor configuration.
-- [ ] 1.2 Add deterministic Echo-duration conversion helpers and host checks for representative millisecond/centimeter values, the 4,000 mm range, and invalid input handling.
-- [ ] 1.3 Implement D4 Trigger, D2 Echo, a timeout slightly beyond the advertised maximum Echo duration, explicit no-Echo reporting, fractional-millisecond and centimeter output, and the 500 ms blocking loop delay.
-- [ ] 1.4 Write the lesson 07 README and teacher reference with the Core Mission, exact power-off HC-SR04 wiring, target-position activity, round-trip explanation, timeout behavior, troubleshooting, and documented build/test commands.
+- [x] 1.1 Scaffold `07-ultrasonic-blocking-distance` as an independent Uno PlatformIO project with the repository's standard editor recommendations and 9,600-baud monitor configuration.
+- [x] 1.2 Add deterministic Echo-duration conversion helpers and host checks for representative millisecond/centimeter values, the 4,000 mm range, and invalid input handling.
+- [x] 1.3 Implement D4 Trigger, D2 Echo, a timeout slightly beyond the advertised maximum Echo duration, explicit no-Echo reporting, fractional-millisecond and centimeter output, and the 500 ms blocking loop delay.
+- [x] 1.4 Write the lesson 07 README and teacher reference with the Core Mission, exact power-off HC-SR04 wiring, target-position activity, round-trip explanation, timeout behavior, troubleshooting, and documented build/test commands.
 
 ## 2. Lesson 08 Interrupt-Driven Measurement
 
