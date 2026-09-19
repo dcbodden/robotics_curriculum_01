@@ -2,6 +2,7 @@
 #include <avr/interrupt.h>
 #include <util/atomic.h>
 #include "control_mapping.h"
+#include "ultrasonic_math.h"
 
 // The joystick's two analog outputs.
 const int MOTOR_CONTROL_INPUT_PIN = A0;
@@ -160,7 +161,7 @@ ISR(TIMER1_OVF_vect) {
 }
 
 const unsigned long SERIAL_BAUD = 9600;
-const unsigned long REPORT_DELAY_MS = 1000;
+const unsigned long REPORT_DELAY_MS = 500;
 
 void setup() {
 	// Read joystick voltages without enabling input pullups.
@@ -187,10 +188,20 @@ void setup() {
 }
 
 void loop() {
-	// Echo fields join the atomic snapshot now; task 2.4 will report them.
+	// Copy shared ISR data atomically, then convert and print with interrupts on.
 	const TelemetrySnapshot snapshot = takeTelemetrySnapshot();
 
-	Serial.print("Motor ADC: ");
+	if (snapshot.echoMeasurementValid) {
+		Serial.print("Echo: valid | Echo delay: ");
+		Serial.print(roundTripMilliseconds(snapshot.echoDurationUs), 3);
+		Serial.print(" ms | Distance: ");
+		Serial.print(distanceCentimeters(snapshot.echoDurationUs), 1);
+		Serial.print(" cm");
+	} else {
+		Serial.print("Echo: invalid/no echo");
+	}
+
+	Serial.print(" | Motor ADC: ");
 	Serial.print(snapshot.motorAdcReading);
 	Serial.print(" | Motor PWM command: ");
 	Serial.print(snapshot.motorPwmCommand);
@@ -199,6 +210,6 @@ void loop() {
 	Serial.print(" | Servo pulse command (us): ");
 	Serial.println(snapshot.servoPulseCommandUs);
 
-	// Reports are snapshots, not a printout of every 20 ms control update.
+	// Timer1 and INT0 keep handling control frames and Echo edges during this wait.
 	delay(REPORT_DELAY_MS);
 }
