@@ -12,7 +12,7 @@
 - [x] 2.3 Extend the Timer1 routine to expire incomplete acquisition, perform every existing joystick/control update, divide frames into an 80 ms sensor schedule, and issue the D4 Trigger pulse as the scheduled frame's final operation.
 - [x] 2.4 Add approximately 500 ms foreground reports that distinguish measurement validity, fractional Echo milliseconds, calculated centimeters, joystick readings, and continuing motor/servo commands.
 - [x] 2.5 Add or extend host checks for ultrasonic conversion and preserved lesson 06 mappings, then document the commands and expected results.
-- [ ] 2.6 Write the lesson 08 README and teacher timing reference with its Core Mission, complete lesson 06 plus HC-SR04 wiring, 20/80/500 ms rhythm comparison, deliberately bounded Echo window, atomic-data explanation, safety gates, and troubleshooting.
+- [x] 2.6 Write the lesson 08 README and teacher timing reference with its Core Mission, complete lesson 06 plus HC-SR04 wiring, 20/80/500 ms rhythm comparison, deliberately bounded Echo window, atomic-data explanation, safety gates, and troubleshooting.
 
 ## 3. Lesson 09 Distance-Aware Motor Control
 
