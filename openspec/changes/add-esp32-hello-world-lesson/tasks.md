@@ -16,6 +16,6 @@
 
 ## 4. Verify the Lesson
 
-- [ ] 4.1 Build `platformio-esp32-lessons/01-hello-world` with PlatformIO and resolve all compiler or configuration errors.
-- [ ] 4.2 Review the project and documentation against the specification, including the exact serial spelling and capitalization, sequence, timings, standalone folder structure, and absence of external-circuit requirements.
-- [ ] 4.3 Upload to the supported 30-pin ESP32-WROOM DevKit and record whether the 115200-baud messages, onboard LED groups, group boundaries, and restart after five blinks were physically observed; leave the hardware result explicitly unverified until that test is performed.
+- [x] 4.1 Build `platformio-esp32-lessons/01-hello-world` with PlatformIO and resolve all compiler or configuration errors.
+- [x] 4.2 Review the project and documentation against the specification, including the exact serial spelling and capitalization, sequence, timings, standalone folder structure, and absence of external-circuit requirements.
+- [x] 4.3 Upload to the supported 30-pin ESP32-WROOM DevKit and record whether the 115200-baud messages, onboard LED groups, group boundaries, and restart after five blinks were physically observed; leave the hardware result explicitly unverified until that test is performed.
