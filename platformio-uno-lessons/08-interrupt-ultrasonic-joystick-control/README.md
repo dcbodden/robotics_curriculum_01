@@ -39,7 +39,7 @@ With USB unplugged and external actuator power disconnected, build the [complete
 
 **Teacher checkpoint:** Trace every row in the wiring tables. Confirm:
 
-- HC-SR04 VCC → Arduino 5 V, Trig → D4, Echo → D2, and GND → shared ground;
+- HC-SR04 VCC → Arduino 5 V, Trig → D4, Echo → D2/INT0, and GND → shared ground;
 - joystick +5V → Arduino 5 V, GND → shared ground, VRx → A0, and VRy → A1;
 - servo orange → D9, red → external +5 V, and brown → shared ground;
 - the protected D3/MOSFET motor path and diode polarity are correct;
@@ -200,7 +200,7 @@ The 4,000 mm host case verifies conversion math, not lesson 08's shorter interru
 ## Troubleshooting and Stop Conditions
 
 - **Nothing or garbled text in Monitor:** Keep actuator power off. Confirm lesson 08 is the selected project, Build and Upload succeed, Monitor is at 9,600 baud, and no other program owns the port.
-- **Only `Echo: invalid/no echo`:** Keep the circuit powered down while inspecting. Try a broad rigid target at 10–30 cm, then remove both supplies and trace VCC → Arduino 5 V, Trig → D4, Echo → D2, and GND → shared ground. Check for shifted connectors and loose wires.
+- **Only `Echo: invalid/no echo`:** Keep the circuit powered down while inspecting. Try a broad rigid target at 10–30 cm, then remove both supplies and trace VCC → Arduino 5 V, Trig → D4, Echo → D2/INT0, and GND → shared ground. Check for shifted connectors and loose wires.
 - **Short targets work but far targets become invalid:** This can be expected. Lesson 08 expires any Echo not completed before the next 20 ms frame; use lesson 07 for full-range measurements.
 - **Distance jumps or is implausibly short:** Secure the sensor and target, face a broad rigid target toward both transducers, and clear nearby reflecting objects.
 - **Released motor command is nonzero:** Keep actuator power off. Check joystick GND/+5V/VRx and ask the teacher to measure neutral before changing mapping constants.

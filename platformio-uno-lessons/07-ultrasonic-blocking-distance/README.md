@@ -28,10 +28,10 @@ Lesson 07 is a new standalone circuit. Disconnect and set aside lesson 06's joys
    | --- | --- | --- |
    | **VCC** | **5 V** | Powers the 5 V sensor |
    | **Trig** | **D4** | Starts one measurement |
-   | **Echo** | **D2** | Returns a pulse whose width represents round-trip time |
+   | **Echo** | **D2 / INT0** | Returns a pulse whose width represents round-trip time |
    | **GND** | **GND** | Completes the circuit and provides the shared reference |
 
-2. **Teacher checkpoint, still unpowered:** Trace every connection by its printed label. Confirm VCC reaches Arduino 5 V, GND reaches Arduino GND, Trig reaches D4, and Echo reaches D2. Check for loose strands, shifted header connections, or a direct 5 V-to-GND short. Stabilize the sensor so its two round transducers face an open area. Restore USB power only after approval.
+2. **Teacher checkpoint, still unpowered:** Trace every connection by its printed label. Confirm VCC reaches Arduino 5 V, GND reaches Arduino GND, Trig reaches D4, and Echo reaches D2/INT0. Check for loose strands, shifted header connections, or a direct 5 V-to-GND short. Stabilize the sensor so its two round transducers face an open area. Restore USB power only after approval. Lesson 07 reads the pulse directly; lessons 08 and 09 will use D2's INT0 function.
 3. Open `platformio-uno-lessons/07-ultrasonic-blocking-distance` as the PlatformIO project in VS Code. Under **Project Tasks > uno > General**, choose **Build** and wait for `SUCCESS`. Close any open Monitor, connect USB, choose **Upload**, and wait for `SUCCESS`.
 4. Open **Monitor** at **9,600 baud**. Hold the flat target approximately 10 cm in front of the sensor without touching the sensor or wires. Keep the target face roughly parallel to the sensor face. Read several lines such as:
 
@@ -124,10 +124,10 @@ Expected host-test result:
 Ultrasonic checks passed: validity, time, 10 cm, and 4,000 mm range.
 ```
 
-## Troubleshooting
+## Troubleshooting and Stop Conditions
 
 - **Nothing appears in Monitor:** Confirm Build and Upload both ended with `SUCCESS`, select the `uno` environment's Monitor task, and verify 9,600 baud. Close another program that may be using the serial port, then reopen Monitor.
-- **Every line says invalid/no echo:** Keep wires untouched while powered. First use a flat hard target 10–30 cm in front of the sensor. If it still fails, unplug USB and ask the teacher to trace VCC → 5 V, GND → GND, Trig → D4, and Echo → D2 by the sensor's printed labels.
+- **Every line says invalid/no echo:** Keep wires untouched while powered. First use a flat hard target 10–30 cm in front of the sensor. If it still fails, unplug USB and ask the teacher to trace VCC → 5 V, GND → GND, Trig → D4, and Echo → D2/INT0 by the sensor's printed labels.
 - **The number jumps:** Hold the sensor and target still, face the target toward both transducers, and move other objects away from the sound path. Small changes are normal.
 - **The measured distance is much too short:** Nearby objects may be reflecting the sound first. Clear the space in front and to the sides of the sensor.
 - **The measured distance is much too long or intermittent:** Move the target closer, use a larger and harder flat surface, and reduce its angle. Soft or angled targets may not return a strong Echo.

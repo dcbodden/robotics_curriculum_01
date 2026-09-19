@@ -29,7 +29,7 @@ Teachers: prepare the circuit, power gates, threshold activity, and policy expla
 
 **Goal:** Keep the test rig immobile and compare the requested and applied PWM with a stationary target first beyond 10 cm and then closer than 10 cm.
 
-**Prepare and stay safe:** Secure the bare motor with **no wheel, propeller, gear, or shaft attachment**. Secure the unloaded servo and sensor. Keep the motor, servo, and entire rig fixed in place. Move only the target, and only while the joystick is released and hands are outside both actuator motion areas. Remove **USB and external actuator power before every wiring or mechanical change**. Keep external +5 V separate from Arduino 5 V/VIN. A zero command is not an emergency power switch, and the motor can coast.
+**Prepare and stay safe:** Secure the bare motor with **no wheel, propeller, gear, or shaft attachment**. Secure the unloaded servo and sensor. Keep the motor, servo, and entire rig fixed in place. Move only the target, and only while the joystick is released and hands are outside both actuator motion areas. Remove **USB and external actuator power before every wiring or mechanical change**. Keep external +5 V separate from Arduino 5 V/VIN. A zero command is not an emergency power switch, and the motor can coast. This is a stationary demonstration, not collision avoidance or a safety system.
 
 ### 1. Wire and inspect with all power removed
 
@@ -37,7 +37,7 @@ With USB unplugged and external actuator power disconnected, build the [complete
 
 **Teacher checkpoint:** Trace every row in the wiring tables. Confirm:
 
-- HC-SR04 VCC → Arduino 5 V, Trig → D4, Echo → D2, and GND → shared ground;
+- HC-SR04 VCC → Arduino 5 V, Trig → D4, Echo → D2/INT0, and GND → shared ground;
 - joystick +5V → Arduino 5 V, GND → shared ground, VRx → A0, and VRy → A1;
 - servo orange → D9, red → external +5 V, and brown → shared ground;
 - the protected D3/MOSFET motor path and diode polarity are correct;
@@ -114,6 +114,8 @@ The program keeps lesson 08's timing:
 The latest completed policy persists while the next measurement is in progress. A new valid near result can reduce the latest motor request immediately. A valid non-near result or a timeout at the next 20 ms frame restores full control. The program never skips a joystick/control frame to wait for Echo.
 
 An attempt must complete both Echo edges before the next 20 ms control frame. An unfinished attempt becomes invalid, and later unmatched edges are ignored. This deliberately short window comfortably covers the 10 cm decision but not the HC-SR04's full advertised range. Use lesson 07 for full-range blocking measurements.
+
+The 80 ms interval between Trigger pulses is separate from that one-frame validity window. It exceeds the sensor's recommended 60 ms cycle interval while allowing an unfinished attempt to expire promptly.
 
 ## Expect Chatter Near 10 cm
 
@@ -204,7 +206,7 @@ See the [host-check notes](test/README.md) for what each check covers.
 ## Troubleshooting and Stop Conditions
 
 - **Nothing or garbled text in Monitor:** Keep actuator power off. Confirm lesson 09 is selected, Build and Upload succeed, Monitor is at 9,600 baud, and no other program owns the port.
-- **Only `Echo: invalid/no echo`:** Full control is expected by policy, but the measurement is not trustworthy. Keep actuator power off, remove USB before tracing VCC → Arduino 5 V, Trig → D4, Echo → D2, and GND → shared ground. Then try a broad rigid target at 5–20 cm.
+- **Only `Echo: invalid/no echo`:** Full control is expected by policy, but the measurement is not trustworthy. Keep actuator power off, remove USB before tracing VCC → Arduino 5 V, Trig → D4, Echo → D2/INT0, and GND → shared ground. Then try a broad rigid target at 5–20 cm.
 - **Invalid/no Echo makes the applied command rise:** This is the specified demonstration policy: invalid restores the full request. Release the joystick or remove external actuator power. Do not interpret the result as a clear path.
 - **Valid near readings do not slow the motor:** Confirm Echo is below 0.580 ms and `Slowdown: ON (50%)`. Compare labeled requested and applied PWM, not apparent shaft speed. Keep the target stationary and broadside.
 - **Slowdown switches rapidly near 10 cm:** Expected threshold chatter. Test with motor request zero or actuator power off; this lesson intentionally has no filter or hysteresis.

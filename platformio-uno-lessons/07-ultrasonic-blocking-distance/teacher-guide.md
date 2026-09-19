@@ -34,7 +34,7 @@ Keep USB unplugged while wiring or inspecting connections.
 | --- | --- | --- |
 | VCC | 5 V | The sensor uses the Uno's regulated 5 V rail |
 | Trig | D4 | Arduino output that begins a measurement |
-| Echo | D2 | 5 V-compatible Uno input for pulse measurement |
+| Echo | D2/INT0 | 5 V-compatible Uno input for direct pulse measurement in lesson 07 |
 | GND | GND | Shared reference and return path |
 
 Confirm that no connection bridges 5 V directly to GND, no header is shifted by one position, and the sensor is mechanically stable. Lesson 07 does not use an external supply, joystick, servo, motor, MOSFET, or actuator wiring. Those lesson 06 parts should be disconnected and set aside.
@@ -94,10 +94,10 @@ Accept measurements that vary modestly or differ from ruler distance. A good con
 
 Students should focus on the input/output/timing chain rather than memorize helper implementation.
 
-## Troubleshooting Sequence
+## Troubleshooting and Stop Conditions
 
 1. **No Serial output:** Verify the correct lesson directory is open, Build and Upload succeed, Monitor uses 9,600 baud, and no other process owns the port.
-2. **Only invalid results:** Try a rigid target at 10–30 cm. With USB removed, trace the four labeled connections and inspect for a shifted header.
+2. **Only invalid results:** Try a rigid target at 10–30 cm. With USB removed, trace the four labeled connections, including Echo → D2/INT0, and inspect for a shifted header.
 3. **Implausibly short result:** Clear nearby reflecting objects and check that the target is in front of both transducers.
 4. **Intermittent or long result:** Square a broader target to the sensor and reduce its distance. Cloth and angled surfaces can scatter sound.
 5. **Unstable values:** Secure the sensor, target, USB cable, and jumpers; then reduce movement around the measurement path.
