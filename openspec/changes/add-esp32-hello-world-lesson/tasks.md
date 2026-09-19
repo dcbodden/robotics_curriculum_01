@@ -10,7 +10,7 @@
 
 ## 3. Write the Student Lesson
 
-- [ ] 3.1 Create the lesson README with learning goals, supported-board identification, USB-only materials, and a concise Core Mission covering Build, Upload, initial LED observation, and opening Monitor at 115200 baud.
+- [x] 3.1 Create the lesson README with learning goals, supported-board identification, USB-only materials, and a concise Core Mission covering Build, Upload, initial LED observation, and opening Monitor at 115200 baud.
 - [ ] 3.2 Document the expected five-message and five-blink sequence, guide the student to match a serial value to its blink count, and explain the repeated one groups and the additional group pause without turning runtime Fibonacci calculation into a learning requirement.
 - [ ] 3.3 Add focused source explanation and troubleshooting for data cables, upload/reset or BOOT behavior, serial speed, missed initial output, the controllable LED versus the power LED, and clones without a controllable GPIO 2 LED.
 
