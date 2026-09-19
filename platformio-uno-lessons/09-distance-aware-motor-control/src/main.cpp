@@ -43,7 +43,9 @@ uint8_t ultrasonicFrameDivider = 0;
 struct TelemetrySnapshot {
 	uint16_t motorAdcReading;
 	uint16_t servoAdcReading;
-	uint8_t motorPwmCommand;
+	uint8_t requestedMotorPwmCommand;
+	uint8_t appliedMotorPwmCommand;
+	bool motorSlowdownActive;
 	uint16_t servoPulseCommandUs;
 	uint32_t echoDurationUs;
 	bool echoMeasurementValid;
@@ -121,7 +123,9 @@ TelemetrySnapshot takeTelemetrySnapshot() {
 	ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
 		snapshot.motorAdcReading = latestMotorAdcReading;
 		snapshot.servoAdcReading = latestServoAdcReading;
-		snapshot.motorPwmCommand = appliedMotorPwmCommand;
+		snapshot.requestedMotorPwmCommand = requestedMotorPwmCommand;
+		snapshot.appliedMotorPwmCommand = appliedMotorPwmCommand;
+		snapshot.motorSlowdownActive = motorSlowdownActive;
 		snapshot.servoPulseCommandUs = servoPulseCommandUs;
 		snapshot.echoDurationUs = latestEchoDurationUs;
 		snapshot.echoMeasurementValid = latestEchoMeasurementValid;
@@ -222,8 +226,12 @@ void loop() {
 
 	Serial.print(" | Motor ADC: ");
 	Serial.print(snapshot.motorAdcReading);
-	Serial.print(" | Motor PWM command: ");
-	Serial.print(snapshot.motorPwmCommand);
+	Serial.print(" | Requested motor PWM: ");
+	Serial.print(snapshot.requestedMotorPwmCommand);
+	Serial.print(" | Applied motor PWM: ");
+	Serial.print(snapshot.appliedMotorPwmCommand);
+	Serial.print(" | Slowdown: ");
+	Serial.print(snapshot.motorSlowdownActive ? "ON (50%)" : "OFF (full control)");
 	Serial.print(" | Servo ADC: ");
 	Serial.print(snapshot.servoAdcReading);
 	Serial.print(" | Servo pulse command (us): ");
