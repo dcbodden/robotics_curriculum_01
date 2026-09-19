@@ -1,7 +1,7 @@
 ## 1. Establish the ESP32 Lesson Collection
 
 - [x] 1.1 Create `platformio-esp32-lessons/README.md` as the collection index, identify the projects as standalone, and list `01-hello-world` as the first lesson for the supported 30-pin ESP32-WROOM DevKit.
-- [ ] 1.2 Update the root repository guide to include `platformio-esp32-lessons/` in the documented layout without adding it to the existing canonical beginner route.
+- [x] 1.2 Update the root repository guide to include `platformio-esp32-lessons/` in the documented layout without adding it to the existing canonical beginner route.
 
 ## 2. Build the Hello World Project
 
