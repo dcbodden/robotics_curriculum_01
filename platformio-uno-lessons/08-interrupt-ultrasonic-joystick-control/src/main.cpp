@@ -9,6 +9,7 @@ const int SERVO_CONTROL_INPUT_PIN = A1;
 
 // D2 receives the ultrasonic Echo signal through external interrupt INT0.
 const uint8_t ECHO_PIN = 2;
+const uint8_t TRIGGER_PIN = 4;
 
 // D3 controls the protected motor stage; D9 will carry the servo signal.
 const int MOTOR_PWM_PIN = 3;
@@ -33,6 +34,7 @@ volatile EchoAcquisitionState echoAcquisitionState = ECHO_IDLE;
 volatile uint32_t echoRiseTimestampUs = 0;
 volatile uint32_t latestEchoDurationUs = 0;
 volatile bool latestEchoMeasurementValid = false;
+uint8_t ultrasonicFrameDivider = 0;
 
 struct TelemetrySnapshot {
 	uint16_t motorAdcReading;
@@ -47,8 +49,12 @@ struct TelemetrySnapshot {
 constexpr uint16_t SERVO_FRAME_US = 20000;
 constexpr uint16_t TIMER1_TICKS_PER_US = 2;
 constexpr uint16_t TIMER1_TOP = SERVO_FRAME_US * TIMER1_TICKS_PER_US - 1;
+constexpr uint8_t CONTROL_FRAMES_PER_ULTRASONIC_TRIGGER = 4;
+constexpr uint16_t ULTRASONIC_TRIGGER_PULSE_US = 10;
 static_assert(F_CPU == 16000000UL, "This timer configuration requires a 16 MHz Uno");
 static_assert(SERVO_MAX_PULSE_US < SERVO_FRAME_US, "Servo pulse must fit its frame");
+static_assert(static_cast<uint32_t>(CONTROL_FRAMES_PER_ULTRASONIC_TRIGGER) * SERVO_FRAME_US == 80000UL,
+	"Four 20 ms control frames must provide 80 ms Trigger spacing");
 
 uint16_t readSettledJoystickAxis(uint8_t pin) {
 	// Discard one conversion after switching the multiplexer, then keep the next.
@@ -60,6 +66,14 @@ uint16_t readSettledJoystickAxis(uint8_t pin) {
 void beginEchoAcquisition() {
 	// The Timer1 scheduler will call this immediately before a Trigger pulse.
 	echoAcquisitionState = ECHO_WAITING_FOR_RISE;
+}
+
+void expireIncompleteEchoAcquisition() {
+	if (echoAcquisitionState == ECHO_IDLE) return;
+	// A measurement gets one 20 ms control interval to complete both edges.
+	echoAcquisitionState = ECHO_IDLE;
+	latestEchoDurationUs = 0;
+	latestEchoMeasurementValid = false;
 }
 
 void handleEchoChange() {
@@ -117,7 +131,10 @@ void configureTimer1ForServoAndControl() {
 }
 
 ISR(TIMER1_OVF_vect) {
-	// One check of both controls each 20 ms frame. No serial or pulse waits.
+	// Expire the previous ping first, but never skip this frame's control work.
+	expireIncompleteEchoAcquisition();
+
+	// One check of both controls each 20 ms frame. No serial output occurs here.
 	const uint16_t motorReading = readSettledJoystickAxis(MOTOR_CONTROL_INPUT_PIN);
 	const uint16_t servoReading = readSettledJoystickAxis(SERVO_CONTROL_INPUT_PIN);
 	const uint8_t newMotorCommand = motorPwmFromAdc(motorReading);
@@ -129,6 +146,17 @@ ISR(TIMER1_OVF_vect) {
 	servoPulseCommandUs = newServoCommand;
 	latestMotorAdcReading = motorReading;
 	latestServoAdcReading = servoReading;
+
+	// Start a ping every fourth frame: 4 * 20 ms = 80 ms between Triggers.
+	ultrasonicFrameDivider++;
+	if (ultrasonicFrameDivider == CONTROL_FRAMES_PER_ULTRASONIC_TRIGGER) {
+		ultrasonicFrameDivider = 0;
+		beginEchoAcquisition();
+		digitalWrite(TRIGGER_PIN, HIGH);
+		delayMicroseconds(ULTRASONIC_TRIGGER_PULSE_US);
+		// Keep this LOW write as the scheduled frame's final operation.
+		digitalWrite(TRIGGER_PIN, LOW);
+	}
 }
 
 const unsigned long SERIAL_BAUD = 9600;
@@ -139,6 +167,10 @@ void setup() {
 	pinMode(MOTOR_CONTROL_INPUT_PIN, INPUT);
 	pinMode(SERVO_CONTROL_INPUT_PIN, INPUT);
 	pinMode(ECHO_PIN, INPUT);
+
+	// Hold Trigger LOW between the scheduled 10 us pulses.
+	digitalWrite(TRIGGER_PIN, LOW);
+	pinMode(TRIGGER_PIN, OUTPUT);
 
 	// Keep the motor off before any control checks are enabled.
 	digitalWrite(MOTOR_PWM_PIN, LOW);
