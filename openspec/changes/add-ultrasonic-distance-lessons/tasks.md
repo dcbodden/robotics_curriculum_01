@@ -17,7 +17,7 @@
 ## 3. Lesson 09 Distance-Aware Motor Control
 
 - [x] 3.1 Scaffold `09-distance-aware-motor-control` from lesson 08 as a standalone project with the same interrupt acquisition and coordinated joystick/servo baseline.
-- [ ] 3.2 Add pure requested-to-applied PWM policy helpers for the strict 580 microsecond/10 cm boundary, 50 percent slowdown, full-control valid-far behavior, full-control invalid behavior, zero preservation, and 0–255 bounds.
+- [x] 3.2 Add pure requested-to-applied PWM policy helpers for the strict 580 microsecond/10 cm boundary, 50 percent slowdown, full-control valid-far behavior, full-control invalid behavior, zero preservation, and 0–255 bounds.
 - [ ] 3.3 Implement separate acquisition and persistent policy states so a completed near reading immediately reduces the latest request, later Timer1 frames preserve slowdown for new requests, and the next timeout or valid non-near result restores full control.
 - [ ] 3.4 Publish and atomically report measurement validity, Echo time, distance, requested PWM, applied PWM, slowdown status, and existing servo/control telemetry approximately every 500 ms.
 - [ ] 3.5 Extend host checks to cover durations immediately below, at, and above 580 microseconds; representative and maximum PWM requests; invalid results; and unchanged lesson 06 joystick/servo mappings.
