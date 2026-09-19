@@ -21,7 +21,7 @@
 - [x] 3.3 Implement separate acquisition and persistent policy states so a completed near reading immediately reduces the latest request, later Timer1 frames preserve slowdown for new requests, and the next timeout or valid non-near result restores full control.
 - [x] 3.4 Publish and atomically report measurement validity, Echo time, distance, requested PWM, applied PWM, slowdown status, and existing servo/control telemetry approximately every 500 ms.
 - [x] 3.5 Extend host checks to cover durations immediately below, at, and above 580 microseconds; representative and maximum PWM requests; invalid results; and unchanged lesson 06 joystick/servo mappings.
-- [ ] 3.6 Write the lesson 09 README and teacher reference with a stationary-target Core Mission, requested-versus-applied observations, full-control no-Echo policy, threshold chatter expectations, immobile secured-actuator rules, non-safety-system limitation, and troubleshooting.
+- [x] 3.6 Write the lesson 09 README and teacher reference with a stationary-target Core Mission, requested-versus-applied observations, full-control no-Echo policy, threshold chatter expectations, immobile secured-actuator rules, non-safety-system limitation, and troubleshooting.
 
 ## 4. Curriculum Integration and Verification
 
