@@ -7,6 +7,9 @@
 const int MOTOR_CONTROL_INPUT_PIN = A0;
 const int SERVO_CONTROL_INPUT_PIN = A1;
 
+// D2 receives the ultrasonic Echo signal through external interrupt INT0.
+const uint8_t ECHO_PIN = 2;
+
 // D3 controls the protected motor stage; D9 will carry the servo signal.
 const int MOTOR_PWM_PIN = 3;
 const int SERVO_SIGNAL_PIN = 9;
@@ -20,6 +23,26 @@ volatile uint16_t servoPulseCommandUs = INITIAL_SERVO_PULSE_US;
 volatile uint16_t latestMotorAdcReading = MOTOR_NEUTRAL_ADC;
 volatile uint16_t latestServoAdcReading = SERVO_CENTER_ADC;
 
+enum EchoAcquisitionState : uint8_t {
+	ECHO_IDLE,
+	ECHO_WAITING_FOR_RISE,
+	ECHO_WAITING_FOR_FALL
+};
+
+volatile EchoAcquisitionState echoAcquisitionState = ECHO_IDLE;
+volatile uint32_t echoRiseTimestampUs = 0;
+volatile uint32_t latestEchoDurationUs = 0;
+volatile bool latestEchoMeasurementValid = false;
+
+struct TelemetrySnapshot {
+	uint16_t motorAdcReading;
+	uint16_t servoAdcReading;
+	uint8_t motorPwmCommand;
+	uint16_t servoPulseCommandUs;
+	uint32_t echoDurationUs;
+	bool echoMeasurementValid;
+};
+
 // Timer1: 16 MHz / 8 = 2 MHz, or two ticks per microsecond.
 constexpr uint16_t SERVO_FRAME_US = 20000;
 constexpr uint16_t TIMER1_TICKS_PER_US = 2;
@@ -32,6 +55,45 @@ uint16_t readSettledJoystickAxis(uint8_t pin) {
 	// analogRead polls the ADC hardware; it does not need interrupts to complete.
 	analogRead(pin);
 	return analogRead(pin);
+}
+
+void beginEchoAcquisition() {
+	// The Timer1 scheduler will call this immediately before a Trigger pulse.
+	echoAcquisitionState = ECHO_WAITING_FOR_RISE;
+}
+
+void handleEchoChange() {
+	const bool echoIsHigh = digitalRead(ECHO_PIN) == HIGH;
+
+	if (echoIsHigh) {
+		// Ignore rising edges unless a scheduled measurement is waiting for one.
+		if (echoAcquisitionState != ECHO_WAITING_FOR_RISE) return;
+		echoRiseTimestampUs = micros();
+		echoAcquisitionState = ECHO_WAITING_FOR_FALL;
+		return;
+	}
+
+	// Ignore falling edges that do not complete the recognized rising edge.
+	if (echoAcquisitionState != ECHO_WAITING_FOR_FALL) return;
+	const uint32_t echoFallTimestampUs = micros();
+	// Unsigned subtraction remains correct if micros() rolls over between edges.
+	latestEchoDurationUs = echoFallTimestampUs - echoRiseTimestampUs;
+	latestEchoMeasurementValid = true;
+	echoAcquisitionState = ECHO_IDLE;
+}
+
+TelemetrySnapshot takeTelemetrySnapshot() {
+	TelemetrySnapshot snapshot;
+	// Copy one consistent set, including the multi-byte Echo duration.
+	ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+		snapshot.motorAdcReading = latestMotorAdcReading;
+		snapshot.servoAdcReading = latestServoAdcReading;
+		snapshot.motorPwmCommand = motorPwmCommand;
+		snapshot.servoPulseCommandUs = servoPulseCommandUs;
+		snapshot.echoDurationUs = latestEchoDurationUs;
+		snapshot.echoMeasurementValid = latestEchoMeasurementValid;
+	}
+	return snapshot;
 }
 
 void configureTimer1ForServoAndControl() {
@@ -76,6 +138,7 @@ void setup() {
 	// Read joystick voltages without enabling input pullups.
 	pinMode(MOTOR_CONTROL_INPUT_PIN, INPUT);
 	pinMode(SERVO_CONTROL_INPUT_PIN, INPUT);
+	pinMode(ECHO_PIN, INPUT);
 
 	// Keep the motor off before any control checks are enabled.
 	digitalWrite(MOTOR_PWM_PIN, LOW);
@@ -87,32 +150,22 @@ void setup() {
 	pinMode(SERVO_SIGNAL_PIN, OUTPUT);
 
 	Serial.begin(SERIAL_BAUD);
+	attachInterrupt(digitalPinToInterrupt(ECHO_PIN), handleEchoChange, CHANGE);
 	configureTimer1ForServoAndControl();
 }
 
 void loop() {
-	uint16_t motorAdcSnapshot;
-	uint16_t servoAdcSnapshot;
-	uint8_t motorPwmSnapshot;
-	uint16_t servoPulseSnapshotUs;
-
-	// Copy one consistent set from the ISR, including the 16-bit values.
-	// Restore interrupts before serial output so control checks can continue.
-	ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-		motorAdcSnapshot = latestMotorAdcReading;
-		servoAdcSnapshot = latestServoAdcReading;
-		motorPwmSnapshot = motorPwmCommand;
-		servoPulseSnapshotUs = servoPulseCommandUs;
-	}
+	// Echo fields join the atomic snapshot now; task 2.4 will report them.
+	const TelemetrySnapshot snapshot = takeTelemetrySnapshot();
 
 	Serial.print("Motor ADC: ");
-	Serial.print(motorAdcSnapshot);
+	Serial.print(snapshot.motorAdcReading);
 	Serial.print(" | Motor PWM command: ");
-	Serial.print(motorPwmSnapshot);
+	Serial.print(snapshot.motorPwmCommand);
 	Serial.print(" | Servo ADC: ");
-	Serial.print(servoAdcSnapshot);
+	Serial.print(snapshot.servoAdcReading);
 	Serial.print(" | Servo pulse command (us): ");
-	Serial.println(servoPulseSnapshotUs);
+	Serial.println(snapshot.servoPulseCommandUs);
 
 	// Reports are snapshots, not a printout of every 20 ms control update.
 	delay(REPORT_DELAY_MS);
