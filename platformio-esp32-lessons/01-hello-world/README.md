@@ -44,4 +44,24 @@ LED groups observed: **Yes / No**
 
 Serial messages observed: **Yes / No**
 
+### Match the Fibonacci Messages and Blink Groups
+
+Wait for a complete five-group cycle. Each message appears at the start of its group, and its number tells you how many blinks to count before the longer dark pause.
+
+| Group order | Serial Monitor message | Expected blinks | Blinks you counted |
+| --- | --- | ---: | ---: |
+| 1 | `Blinking Fibonacci 1` | 1 | ____ |
+| 2 | `Blinking Fibonacci 1` | 1 | ____ |
+| 3 | `Blinking Fibonacci 2` | 2 | ____ |
+| 4 | `Blinking Fibonacci 3` | 3 | ____ |
+| 5 | `Blinking Fibonacci 5` | 5 | ____ |
+
+The first two groups both contain one blink because the five visible Fibonacci values in this lesson are **1, 1, 2, 3, 5**. The message number is the blink count, not the group's position in the table. After the five-blink group, the sequence starts again with one blink and continues for as long as the board has power.
+
+Each blink keeps the LED on for 250 milliseconds and off for 250 milliseconds. After that normal off phase finishes for the final blink in a group, the program adds a 1,000-millisecond group pause. This means the LED remains dark for about 1,250 milliseconds between the last falling edge of one group and the first rising edge of the next.
+
+This program contains the five values directly so you can focus on confirming the ESP32's output. You do not need to calculate Fibonacci numbers in this lesson.
+
+**Compare:** Did every Serial Monitor number match the number of blinks in the group that followed it? **Yes / No**
+
 **Stop safely:** Close the Serial Monitor with its close-terminal or trash-can button. When you are finished, unplug the USB cable by holding its connector.
