@@ -65,3 +65,35 @@ This program contains the five values directly so you can focus on confirming th
 **Compare:** Did every Serial Monitor number match the number of blinks in the group that followed it? **Yes / No**
 
 **Stop safely:** Close the Serial Monitor with its close-terminal or trash-can button. When you are finished, unplug the USB cable by holding its connector.
+
+## Focus Code: Announce, Then Blink
+
+The complete program is in [`src/main.cpp`](src/main.cpp). The main idea is the `blinkFibonacciGroup` helper: it announces one number, uses a loop to blink that many times, and then waits before the next group.
+
+```cpp
+Serial.print("Blinking Fibonacci ");
+Serial.println(blinkCount);
+
+for (int blinkNumber = 0; blinkNumber < blinkCount; blinkNumber++) {
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(LED_ON_TIME_MS);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(LED_OFF_TIME_MS);
+}
+```
+
+The five lines in `loop()` call that helper with the supplied values `1`, `1`, `2`, `3`, and `5`. When the fifth call finishes, Arduino runs `loop()` again, so the sequence repeats forever.
+
+`setup()` prepares the onboard LED as an output and starts Serial at 115200 baud. The named timing values and other setup lines make the program work, but the focus of this lesson is matching each announced value to its visible blink group. The calls to `delay()` intentionally pause the program during this simple first lesson.
+
+## Troubleshooting
+
+- **PlatformIO builds an Uno project:** Check the upload log. `.pio/build/uno`, `--environment uno`, `firmware.hex`, or `avrdude` means the Uno project is active. Open `platformio-esp32-lessons/01-hello-world` by itself and run tasks under `esp32doit-devkit-v1`. An ESP32 upload uses that environment, creates a `.bin` file, and uses `esptool`.
+- **The board powers on but Upload cannot find it:** Try a known USB data cable and a direct computer USB port. A charge-only cable can light the power LED but cannot upload a program.
+- **Upload remains at `Connecting...`:** First close the Serial Monitor and try Upload again. If automatic reset does not work, hold the board's **BOOT** button when `Connecting...` appears, release it when writing begins, and press **EN** or **RESET** once after upload if the program does not start. Ask your teacher before forcing buttons or changing system settings.
+- **Linux reports permission denied or requests udev rules:** Stop and ask the teacher or system administrator to follow PlatformIO's [official udev-rules instructions](https://docs.platformio.org/en/latest/core/installation/udev-rules.html). This is a workstation setup issue, not a source-code change.
+- **Monitor is empty:** Confirm that `esp32doit-devkit-v1` is the active project environment and that Monitor is using **115200 baud**. Close and reopen Monitor, then press **EN** or **RESET** once if needed.
+- **The first message is not `Blinking Fibonacci 1`:** Monitor may have opened in the middle of a running cycle. Wait for the sequence to repeat, or press **EN** or **RESET** and watch from the beginning.
+- **Monitor text is unreadable:** The monitor speed and `Serial.begin` speed must both be 115200. Stop Monitor, confirm the active ESP32 project, and reopen it.
+- **A light stays on continuously:** That is probably the power indicator, which only proves that the board has power. Watch for the separate program-controlled LED connected to GPIO 2 on the supported board.
+- **Serial messages work but no onboard LED blinks:** Verify that the board is the supported 30-pin DOIT ESP32 DevKit V1 and that its controllable LED is connected to GPIO 2. Some boards sold under similar ESP32 DevKit names omit that LED or wire their onboard LED differently. Successful serial messages still prove that the uploaded program is running; do not add an external circuit as part of this USB-only lesson.
