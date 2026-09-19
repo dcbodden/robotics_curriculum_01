@@ -2,6 +2,7 @@
 #include <avr/interrupt.h>
 #include <util/atomic.h>
 #include "control_mapping.h"
+#include "distance_motor_policy.h"
 #include "ultrasonic_math.h"
 
 // The joystick's two analog outputs.
@@ -20,7 +21,9 @@ const int SERVO_SIGNAL_PIN = 9;
 const uint8_t INITIAL_MOTOR_PWM_COMMAND = 0;
 const uint16_t INITIAL_SERVO_PULSE_US = SERVO_CENTER_PULSE_US;
 
-volatile uint8_t motorPwmCommand = INITIAL_MOTOR_PWM_COMMAND;
+volatile uint8_t requestedMotorPwmCommand = INITIAL_MOTOR_PWM_COMMAND;
+volatile uint8_t appliedMotorPwmCommand = INITIAL_MOTOR_PWM_COMMAND;
+volatile bool motorSlowdownActive = false;
 volatile uint16_t servoPulseCommandUs = INITIAL_SERVO_PULSE_US;
 volatile uint16_t latestMotorAdcReading = MOTOR_NEUTRAL_ADC;
 volatile uint16_t latestServoAdcReading = SERVO_CENTER_ADC;
@@ -65,16 +68,27 @@ uint16_t readSettledJoystickAxis(uint8_t pin) {
 }
 
 void beginEchoAcquisition() {
-	// The Timer1 scheduler will call this immediately before a Trigger pulse.
+	// Starting a new attempt does not erase the latest completed policy.
 	echoAcquisitionState = ECHO_WAITING_FOR_RISE;
+}
+
+void issueAppliedMotorCommand() {
+	const uint8_t newAppliedCommand = appliedMotorPwm(
+		requestedMotorPwmCommand,
+		motorSlowdownActive
+	);
+	analogWrite(MOTOR_PWM_PIN, newAppliedCommand);
+	appliedMotorPwmCommand = newAppliedCommand;
 }
 
 void expireIncompleteEchoAcquisition() {
 	if (echoAcquisitionState == ECHO_IDLE) return;
-	// A measurement gets one 20 ms control interval to complete both edges.
+	// Invalid/no Echo restores full control of the latest joystick request.
 	echoAcquisitionState = ECHO_IDLE;
 	latestEchoDurationUs = 0;
 	latestEchoMeasurementValid = false;
+	motorSlowdownActive = false;
+	issueAppliedMotorCommand();
 }
 
 void handleEchoChange() {
@@ -92,8 +106,12 @@ void handleEchoChange() {
 	if (echoAcquisitionState != ECHO_WAITING_FOR_FALL) return;
 	const uint32_t echoFallTimestampUs = micros();
 	// Unsigned subtraction remains correct if micros() rolls over between edges.
-	latestEchoDurationUs = echoFallTimestampUs - echoRiseTimestampUs;
+	const uint32_t completedEchoDurationUs = echoFallTimestampUs - echoRiseTimestampUs;
+	latestEchoDurationUs = completedEchoDurationUs;
 	latestEchoMeasurementValid = true;
+	motorSlowdownActive = shouldSlowMotorForEcho(true, completedEchoDurationUs);
+	// Apply the completed measurement to the latest joystick request immediately.
+	issueAppliedMotorCommand();
 	echoAcquisitionState = ECHO_IDLE;
 }
 
@@ -103,7 +121,7 @@ TelemetrySnapshot takeTelemetrySnapshot() {
 	ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
 		snapshot.motorAdcReading = latestMotorAdcReading;
 		snapshot.servoAdcReading = latestServoAdcReading;
-		snapshot.motorPwmCommand = motorPwmCommand;
+		snapshot.motorPwmCommand = appliedMotorPwmCommand;
 		snapshot.servoPulseCommandUs = servoPulseCommandUs;
 		snapshot.echoDurationUs = latestEchoDurationUs;
 		snapshot.echoMeasurementValid = latestEchoMeasurementValid;
@@ -138,12 +156,13 @@ ISR(TIMER1_OVF_vect) {
 	// One check of both controls each 20 ms frame. No serial output occurs here.
 	const uint16_t motorReading = readSettledJoystickAxis(MOTOR_CONTROL_INPUT_PIN);
 	const uint16_t servoReading = readSettledJoystickAxis(SERVO_CONTROL_INPUT_PIN);
-	const uint8_t newMotorCommand = motorPwmFromAdc(motorReading);
+	const uint8_t newRequestedMotorCommand = motorPwmFromAdc(motorReading);
 	const uint16_t newServoCommand = servoPulseFromAdc(servoReading);
-	analogWrite(MOTOR_PWM_PIN, newMotorCommand);
+	requestedMotorPwmCommand = newRequestedMotorCommand;
+	// The latest completed Echo policy persists while the next ping is in progress.
+	issueAppliedMotorCommand();
 	// The current pulse is already underway; this buffered write applies next frame.
 	OCR1A = newServoCommand * TIMER1_TICKS_PER_US;
-	motorPwmCommand = newMotorCommand;
 	servoPulseCommandUs = newServoCommand;
 	latestMotorAdcReading = motorReading;
 	latestServoAdcReading = servoReading;
@@ -176,7 +195,7 @@ void setup() {
 	// Keep the motor off before any control checks are enabled.
 	digitalWrite(MOTOR_PWM_PIN, LOW);
 	pinMode(MOTOR_PWM_PIN, OUTPUT);
-	analogWrite(MOTOR_PWM_PIN, motorPwmCommand);
+	analogWrite(MOTOR_PWM_PIN, appliedMotorPwmCommand);
 
 	// Prepare D9 before Timer1 takes ownership of its servo pulse signal.
 	digitalWrite(SERVO_SIGNAL_PIN, LOW);
