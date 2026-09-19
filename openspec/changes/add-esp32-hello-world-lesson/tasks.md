@@ -5,7 +5,7 @@
 
 ## 2. Build the Hello World Project
 
-- [ ] 2.1 Add `platformio-esp32-lessons/01-hello-world/platformio.ini` with an `esp32doit-devkit-v1` Arduino environment and a 115200-baud Serial Monitor.
+- [x] 2.1 Add `platformio-esp32-lessons/01-hello-world/platformio.ini` with an `esp32doit-devkit-v1` Arduino environment and a 115200-baud Serial Monitor.
 - [ ] 2.2 Add the lesson firmware using `LED_BUILTIN`, a blocking blink-group helper, and five explicit group calls for `1, 1, 2, 3, 5`; print `Blinking Fibonacci N` before each group, use 250-millisecond on/off phases, add a 1,000-millisecond group pause, and repeat forever.
 
 ## 3. Write the Student Lesson
