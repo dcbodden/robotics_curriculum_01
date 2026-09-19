@@ -10,7 +10,7 @@ Use the number prefix to keep lessons in learning order.
 
 The primary beginner route starts with [Multimeter and Ohm's Law](../electronics-fundamentals-lessons/01-multimeter-ohms-law/), then all four [Coding Fundamentals Lessons](../coding-fundamentals-lessons/). Their final [Arduino LED Counting](../coding-fundamentals-lessons/04-arduino-led-counting/) activity practices building, uploading, loops, and output before lesson 01 adds an external circuit.
 
-Complete Uno lessons 01 and 02 in order. Then use [Manual Voltage Mapping](../electronics-fundamentals-lessons/02-manual-voltage-mapping/) to reinforce the ADC idea before continuing with Uno lessons 03–06. The [repository guide](../README.md#recommended-beginner-sequence) shows the complete route.
+Complete Uno lessons 01 and 02 in order. Then use [Manual Voltage Mapping](../electronics-fundamentals-lessons/02-manual-voltage-mapping/) to reinforce the ADC idea before continuing with Uno lessons 03–09. The [repository guide](../README.md#recommended-beginner-sequence) shows the complete route.
 
 ## Lessons
 
@@ -20,6 +20,9 @@ Complete Uno lessons 01 and 02 in order. Then use [Manual Voltage Mapping](../el
 4. [`04-adc-pwm-motor-control`](04-adc-pwm-motor-control/) - Map the adjustable A0 voltage to motor PWM and observe the response of a blocking 1,000-millisecond control loop.
 5. [`05-interrupt-driven-motor-control`](05-interrupt-driven-motor-control/) - Use timer interrupts to update ADC-controlled motor PWM every 100 milliseconds while the main loop reports values every 1,000 milliseconds.
 6. [`06-joystick-motor-servo-control`](06-joystick-motor-servo-control/) - Check two joystick axes every 20 milliseconds to coordinate center-off motor power and servo position. Use its [teacher guide](06-joystick-motor-servo-control/teacher-guide.md) to prepare regulated external 5 V actuator power and verify the actual hardware.
+7. [`07-ultrasonic-blocking-distance`](07-ultrasonic-blocking-distance/) - Measure an HC-SR04 Echo with a bounded blocking wait, then report round-trip milliseconds and calculated centimeters every 500 milliseconds.
+8. [`08-interrupt-ultrasonic-joystick-control`](08-interrupt-ultrasonic-joystick-control/) - Capture HC-SR04 Echo edges on D2 while 20-millisecond joystick motor/servo control continues.
+9. [`09-distance-aware-motor-control`](09-distance-aware-motor-control/) - Compare requested and applied motor PWM while a valid target closer than 10 centimeters selects a 50 percent slowdown.
 
 ## Robot Attention Investigation: Lessons 04 and 05
 
@@ -37,5 +40,8 @@ Use the same B1 battery, RV control, and motor circuit to investigate how checki
 - Before lesson 04, students should understand lesson 03's PWM values from 0 to 255. Lesson 04 reuses the lesson 02 RV voltage divider to control those PWM values and intentionally updates only once every 1,000 milliseconds.
 - Before lesson 05, students should observe lesson 04's blocking response. Lesson 05 keeps the same motor and RV controls but uses a timer interrupt so motor updates can continue while the main program waits between serial reports.
 - Before lesson 06, students should understand lesson 05's frequent checks during foreground waits. Lesson 06 introduces a two-axis joystick, bounded servo position commands, and 50 checks per second. The teacher verifies its new regulated 5 V actuator supply, shared ground, and travel limits before use.
+- Before lesson 07, students should complete lesson 06 and recognize Arduino input/output pins, milliseconds and microseconds, Serial Monitor reports, and deliberate foreground waits. Lesson 07 uses a new standalone USB-powered Uno and HC-SR04 circuit; set the lesson 06 actuator circuit and external supply aside.
+- Before lesson 08, students should understand lesson 07's Echo round-trip measurement and lesson 06's coordinated joystick control. Lesson 08 combines those ideas so D2 interrupts capture Echo edges while every 20-millisecond control update continues.
+- Before lesson 09, students should complete lesson 08 and recognize valid versus invalid Echo results, the 20/80/500-millisecond rhythms, and requested joystick commands. Lesson 09 distinguishes requested from applied motor PWM and introduces the raw 10-centimeter slowdown rule.
 
-The sequence moves from a program-controlled PWM ramp, to direct but blocking ADC control, to interrupt-driven ADC control, and then to coordinated motor and servo commands. Open only one numbered lesson folder at a time so PlatformIO builds that lesson independently.
+The sequence moves from a program-controlled PWM ramp, to direct but blocking ADC control, interrupt-driven ADC control, coordinated motor and servo commands, blocking ultrasonic measurement, interrupt-driven measurement during control, and finally distance-informed motor slowdown. Open only one numbered lesson folder at a time so PlatformIO builds that lesson independently.

@@ -188,3 +188,5 @@ For each timing try, describe the response **between** messages rather than just
 - **Motor command stays zero in both stick directions:** Keep actuator power off and ask the teacher to inspect A0 and joystick connections. Only the direction that raises A0 above the center-off zone should increase the command.
 - **Servo binds or keeps buzzing, a clear high motor command does not turn the motor, or readings/power become unstable:** Remove **external power and USB**. Ask the teacher to inspect the circuit using [detailed diagnosis](teacher-guide.md#detailed-diagnosis). Do not force a shaft or leave a nonmoving commanded motor powered.
 - **Heat, unusual smell, smoke, sparks, or unexpected movement:** Remove **external power and USB immediately**. Tell the teacher, avoid hot parts, and do not reconnect until the setup has been checked.
+
+Next, continue to [lesson 07: Blocking Ultrasonic Distance](../07-ultrasonic-blocking-distance/) to measure an HC-SR04 Echo with a standalone sensor circuit.

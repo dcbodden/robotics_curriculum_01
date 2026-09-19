@@ -26,6 +26,9 @@ Follow this primary route so each activity builds on ideas and equipment used ea
 7. Control motor PWM directly with [Uno lesson 04: ADC PWM Motor Control](platformio-uno-lessons/04-adc-pwm-motor-control/).
 8. Compare slow and frequent control checks with [Uno lesson 05: Interrupt-Driven Motor Control](platformio-uno-lessons/05-interrupt-driven-motor-control/) and its robot-attention investigation.
 9. Combine two joystick inputs with [Uno lesson 06: Joystick Motor and Servo Control](platformio-uno-lessons/06-joystick-motor-servo-control/).
+10. Measure ultrasonic round-trip time and distance with [Uno lesson 07: Blocking Ultrasonic Distance](platformio-uno-lessons/07-ultrasonic-blocking-distance/).
+11. Keep joystick control running while Echo edges are captured with [Uno lesson 08: Interrupt Ultrasonic and Joystick Control](platformio-uno-lessons/08-interrupt-ultrasonic-joystick-control/).
+12. Use measured distance to modify an actuator command with [Uno lesson 09: Distance-Aware Motor Control](platformio-uno-lessons/09-distance-aware-motor-control/).
 
 The lesson collections also contain optional references and reinforcement activities. Follow each lesson's stated prerequisites before taking an optional side path.
 
