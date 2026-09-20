@@ -30,6 +30,6 @@
 ## 5. Verification
 
 - [x] 5.1 Add deterministic parser or fixture checks covering every diagnostic classification and malformed or interleaved non-`BTDIAG` serial lines.
-- [ ] 5.2 Perform a clean PlatformIO build of the experiment and record exact dependency versions, memory usage, warnings, and the fact that compilation alone does not verify Bluetooth behavior.
+- [x] 5.2 Perform a clean PlatformIO build of the experiment and record exact dependency versions, memory usage, warnings, and the fact that compilation alone does not verify Bluetooth behavior.
 - [ ] 5.3 Conduct and record an SZ-4015B first-pair diagnostic session on the supported ESP32-WROOM, requiring connection and valid button-input evidence before marking the physical test successful.
 - [ ] 5.4 Conduct and record a bonded-reconnection session after a disconnect or power cycle, and verify that the diagnostic skill correctly summarizes the captured evidence.

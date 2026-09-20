@@ -9,6 +9,9 @@ The firmware builds successfully for the supported board. A successful build is
 not proof that this particular controller connects; that requires the later
 physical first-pair and reconnection tests.
 
+See [BUILD_VERIFICATION.md](BUILD_VERIFICATION.md) for the dated clean-build
+record, resolved versions, memory usage, warnings, and verification boundary.
+
 ## Supported hardware
 
 - An original ESP32-WROOM-32 development board in the 30-pin DOIT DevKit V1
