@@ -177,6 +177,50 @@ If those events do not appear, reset the board once more before diagnosing the
 controller. Exit the monitor with `Ctrl+C`; always do this before another upload
 because only one process can own the serial port.
 
+## First-pair test with the SZ-4015B
+
+Use this procedure when the controller and ESP32 do not already share a stored
+Bluetooth bond. Starting with a previously bonded reconnection does not provide
+first-pair evidence.
+
+1. Start with the SZ-4015B powered off. Its channel lights should not be lit or
+   flashing.
+2. Upload the experiment firmware, open the serial monitor, and reset the ESP32
+   as described above.
+3. Wait for the ordered `firmware_started`, `bluetooth_ready`, and
+   `accepting_connections` records. Begin pairing promptly: the firmware accepts
+   new connections for 75 seconds after startup.
+4. Hold the controller's `SHARE` and `HOME` buttons together for approximately
+   three seconds, until the white channel light flashes. Release both buttons.
+5. Watch the serial stream for a `BTDIAG` record whose `event` is
+   `controller_connected`. The reported model name, vendor ID, and product ID
+   are observations; they are not required to match a hard-coded value for this
+   clone controller.
+6. After `controller_connected` appears, press and hold the controller's Cross
+   button for about half a second, then release it.
+7. Find the subsequent `BTDIAG` input record. Its `event` will be either
+   `controller_first_input` or `controller_input`; it must contain
+   `"valid_report":true` and its `pressed_buttons` value must include `cross`.
+
+The first-pair test passes only when the same session contains both of these, in
+order:
+
+```text
+controller_connected
+controller_first_input or controller_input with valid_report=true and cross pressed
+```
+
+The channel light, a connection record by itself, a neutral input record, or
+unstructured Bluetooth stack output is not sufficient to mark the test as a
+success. The requested Cross-button record demonstrates that the connected HID
+device is delivering usable controller input to this firmware.
+
+If `connection_timeout` appears before `controller_connected`, reset the ESP32
+to open a new 75-second connection window and repeat from the powered-off
+controller state. A timeout records only that no usable connection was observed
+within the window; it does not by itself prove that the controller is defective
+or incompatible.
+
 ## Command summary
 
 Run all commands from `experiments/esp32-bluetooth-controller-baseline/`:
@@ -200,4 +244,3 @@ Run all commands from `experiments/esp32-bluetooth-controller-baseline/`:
 # Monitor at the configured 115200 baud
 ./scripts/pio.sh device monitor -e esp32doit-devkit-v1
 ```
-
