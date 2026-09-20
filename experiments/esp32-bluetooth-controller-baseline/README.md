@@ -221,6 +221,119 @@ controller state. A timeout records only that no usable connection was observed
 within the window; it does not by itself prove that the controller is defective
 or incompatible.
 
+## Bonded-reconnection test
+
+Run this separately after a successful first-pair test. Leave the ESP32's stored
+bond intact; this test checks whether the controller can reconnect without
+entering first-pair mode again.
+
+1. Power off or disconnect the controller, then reset or power-cycle the ESP32.
+2. Open the serial monitor before resetting when possible, and wait for
+   `firmware_started`, `bluetooth_ready`, and `accepting_connections`.
+3. Press `HOME` once to start the controller. Do not hold `SHARE` and `HOME`.
+4. Wait for a new `controller_connected` record.
+5. Press and hold Cross for about half a second, then release it.
+6. Require a subsequent `controller_first_input` or `controller_input` record
+   with `"valid_report":true` and `pressed_buttons` containing `cross`.
+
+The reconnection test passes only when the new session contains both the new
+connection record and the requested input evidence. A channel light or an old
+record left in the terminal does not demonstrate a fresh reconnection.
+
+## Clear stored Bluetooth bonds
+
+Bond clearing changes nonvolatile ESP32 state. Use it only when a repeatable
+first-pair test is intended and the user has explicitly authorized the change.
+The firmware requires two exact, uppercase serial commands and limits the
+confirmation to 10 seconds.
+
+With the serial monitor connected:
+
+1. Enter `CLEAR_BONDS` and press Enter.
+2. Require `bond_clear_confirmation_required` with `"bonds_changed":false`.
+3. Within 10 seconds, enter `CONFIRM_CLEAR_BONDS` and press Enter.
+4. Require `bond_clear_completed` with `"bonds_changed":true` and
+   `"restart_required":true`.
+5. Reset the ESP32, power off the controller, and use the first-pair procedure
+   with `SHARE` + `HOME`.
+
+To abandon a pending request, enter `CANCEL_CLEAR_BONDS`. The resulting
+`bond_clear_cancelled` record reports `"bonds_changed":false`. Doing nothing
+for 10 seconds produces `bond_clear_expired`, also with
+`"bonds_changed":false`. A late `CONFIRM_CLEAR_BONDS` is rejected and cannot
+serve as evidence that bonds were cleared.
+
+## Expected `BTDIAG` sequences
+
+Raw ESP-IDF, Bluepad32, and BTstack lines can appear between these records. Use
+the prefixed `BTDIAG` records as the stable evidence and compare their
+`elapsed_ms` values to establish order.
+
+Successful first pair or bonded reconnection:
+
+```text
+firmware_started
+dependency_identity
+bluetooth_ready
+accepting_connections
+waiting_for_controller (zero or more)
+controller_connected
+controller_first_input
+controller_input (when the requested button changes the state)
+```
+
+The requested Cross press may be the first report, in which case
+`controller_first_input` itself contains `pressed_buttons:"cross"`. Otherwise,
+a later `controller_input` record must contain it.
+
+No observed connection:
+
+```text
+accepting_connections
+waiting_for_controller (periodically)
+connection_timeout
+```
+
+Confirmed bond clearing:
+
+```text
+bond_clear_confirmation_required
+bond_clear_completed
+```
+
+Cancelled or unconfirmed bond clearing ends in `bond_clear_cancelled` or
+`bond_clear_expired` instead of `bond_clear_completed`.
+
+## Timeout interpretation
+
+- `waiting_for_controller` is periodic progress evidence, not a failure.
+- `connection_timeout` means no controller was usable during the 75-second
+  firmware window. New Bluetooth connections remain disabled after this event
+  until the ESP32 is reset. It does not identify whether the cause was mode,
+  timing, radio conditions, stored bonds, or controller compatibility.
+- `bond_clear_expired` means the 10-second confirmation window ended. Stored
+  bonds were not changed; issue a new `CLEAR_BONDS` request if clearing is still
+  explicitly authorized.
+- `bond_clear_confirmation_rejected` means confirmation arrived without a live
+  request. Stored bonds were not changed.
+
+## Troubleshooting by furthest evidenced stage
+
+| Furthest evidence | What is established | Next checks |
+| --- | --- | --- |
+| Serial port will not open | No firmware conclusion is possible | Close every other monitor, verify the port with `./scripts/pio.sh device list`, reconnect the USB data cable, and install the PlatformIO udev rules if needed. |
+| Serial opens, but no `firmware_started` | The selected port has not shown this experiment booting | Open the monitor before pressing `EN`/`RST`; confirm the active project and port; upload again if the expected boot record remains absent. |
+| `firmware_started`, but no `bluetooth_ready` | This firmware started, but Bluetooth readiness was not evidenced | Preserve the raw stack output, reset once, and check power and board identity. Do not blame the controller yet. |
+| `bluetooth_ready`, but no `accepting_connections` | Bluetooth reached the ready stage, but the connection window was not evidenced | Reset once and confirm the uploaded firmware is current; retain intervening raw logs for diagnosis. |
+| `accepting_connections` or `waiting_for_controller` | The ESP32 is listening, but no usable controller connection has appeared | For first pair, start powered off and hold `SHARE` + `HOME` until the white light flashes. For reconnection, press `HOME` only. Keep the controller close and begin before the 75-second timeout. |
+| `connection_timeout` | The bounded connection window ended without a usable connection | Reset the ESP32 before retrying. Verify the intended first-pair versus bonded-reconnection procedure; consider confirmation-gated bond clearing only with explicit authorization. |
+| `controller_connected`, but no valid input | A controller connection occurred, but usable HID input is not yet proven | Press and hold Cross, then move an axis. Check for a quick `controller_disconnected` and preserve raw HID/stack logs. Connection alone is not a pass. |
+| `controller_disconnected` before input | A connection was lost before success evidence | Charge the controller, reduce distance, reset both devices, and repeat the correct pairing mode. Treat protocol compatibility as unresolved. |
+| Valid input with the requested Cross press | Connection and usable controller reports are proven | Mark that first-pair or reconnection session successful according to the procedure used. |
+| `bond_clear_confirmation_required` only | A destructive operation is pending, but bonds remain unchanged | Confirm within 10 seconds only if still authorized, cancel explicitly, or allow expiration. |
+| `bond_clear_cancelled`, `bond_clear_expired`, or confirmation rejected | The bond-clear operation did not run | Bonds remain unchanged. Begin a new two-step request only if clearing is still authorized. |
+| `bond_clear_completed` | The firmware accepted the confirmed clear operation | Reset the ESP32 before beginning a fresh first-pair test. |
+
 ## Command summary
 
 Run all commands from `experiments/esp32-bluetooth-controller-baseline/`:
