@@ -14,7 +14,7 @@
 
 ## 3. Experiment Instructions
 
-- [ ] 3.1 Write the experiment README with supported hardware, Bluetooth Classic constraint, dependency setup, active-project check, build, upload, monitor, and reset instructions.
+- [x] 3.1 Write the experiment README with supported hardware, Bluetooth Classic constraint, dependency setup, active-project check, build, upload, monitor, and reset instructions.
 - [ ] 3.2 Document a first-pair procedure for the SZ-4015B using `SHARE` + `HOME`, a requested button press, and connection-plus-input success criteria.
 - [ ] 3.3 Document the bonded-reconnection procedure, confirmation-gated bond clearing, expected `BTDIAG` sequence, timeout interpretation, and a troubleshooting matrix based on the furthest evidenced stage.
 - [ ] 3.4 Add the standalone Bluetooth controller experiment to `experiments/README.md` without presenting it as a numbered curriculum lesson.
