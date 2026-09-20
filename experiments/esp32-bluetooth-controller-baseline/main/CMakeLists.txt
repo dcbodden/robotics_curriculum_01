@@ -1,4 +1,5 @@
 set(sources
+    "btdiag.cpp"
     "main.c"
     "sketch.cpp"
 )

@@ -6,7 +6,7 @@
 
 ## 2. Observable Bluetooth Firmware
 
-- [ ] 2.1 Add a small, versioned `BTDIAG` JSON-line emitter and report firmware startup, build/dependency identity, monotonic elapsed time, and Bluetooth readiness.
+- [x] 2.1 Add a small, versioned `BTDIAG` JSON-line emitter and report firmware startup, build/dependency identity, monotonic elapsed time, and Bluetooth readiness.
 - [ ] 2.2 Initialize Bluepad32 for incoming PS4-compatible controller connections and emit accepting-connections plus periodic waiting and bounded-timeout evidence while preserving upstream stack logs.
 - [ ] 2.3 Report controller connection, available identity properties, and disconnection through structured events without hard-coding an expected SZ-4015B name, VID, or PID.
 - [ ] 2.4 Process controller reports and emit definitive first-input evidence plus readable, rate-limited button and axis observations suitable for interactive testing.

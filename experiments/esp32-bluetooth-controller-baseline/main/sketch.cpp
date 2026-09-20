@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #include <Arduino.h>
-#include <Bluepad32.h>
+
+#include "btdiag.h"
 
 namespace {
 constexpr unsigned long kSerialSpeed = 115200;
@@ -9,8 +10,13 @@ constexpr unsigned long kSerialSpeed = 115200;
 
 void setup() {
     Serial.begin(kSerialSpeed);
-    Serial.println("ESP32 Bluetooth controller baseline foundation ready");
-    Serial.printf("Bluepad32 firmware: %s\n", BP32.firmwareVersion());
+
+    btdiag::emitFirmwareStarted();
+    btdiag::emitDependencyIdentity();
+
+    // Bluepad32 launches the Arduino task only after its Bluetooth setup has
+    // completed, so reaching setup() is the readiness boundary for this port.
+    btdiag::emitBluetoothReady();
 }
 
 void loop() {
