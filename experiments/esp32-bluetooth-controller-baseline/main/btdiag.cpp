@@ -179,4 +179,40 @@ void emitControllerInput(int index,
                              pressedDirections, axisX, axisY, axisRX, axisRY, brake, throttle);
 }
 
+void emitBondClearConfirmationRequired(unsigned long timeoutMs) {
+    Serial.printf(
+        "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,"
+        "\"event\":\"bond_clear_confirmation_required\",\"confirm_command\":\"CONFIRM_CLEAR_BONDS\","
+        "\"cancel_command\":\"CANCEL_CLEAR_BONDS\",\"timeout_ms\":%lu,\"bonds_changed\":false}\n",
+        kProtocolVersion, elapsedMs(), timeoutMs);
+}
+
+void emitBondClearConfirmationRejected(const char* reason) {
+    Serial.printf(
+        "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,"
+        "\"event\":\"bond_clear_confirmation_rejected\",\"reason\":\"%s\",\"bonds_changed\":false}\n",
+        kProtocolVersion, elapsedMs(), reason);
+}
+
+void emitBondClearCancelled(bool hadPendingRequest) {
+    Serial.printf(
+        "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,\"event\":\"bond_clear_cancelled\","
+        "\"had_pending_request\":%s,\"bonds_changed\":false}\n",
+        kProtocolVersion, elapsedMs(), hadPendingRequest ? "true" : "false");
+}
+
+void emitBondClearExpired(unsigned long waitedMs, unsigned long timeoutMs) {
+    Serial.printf(
+        "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,\"event\":\"bond_clear_expired\","
+        "\"waited_ms\":%lu,\"timeout_ms\":%lu,\"bonds_changed\":false}\n",
+        kProtocolVersion, elapsedMs(), waitedMs, timeoutMs);
+}
+
+void emitBondClearCompleted() {
+    Serial.printf(
+        "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,\"event\":\"bond_clear_completed\","
+        "\"bonds_changed\":true,\"restart_required\":true}\n",
+        kProtocolVersion, elapsedMs());
+}
+
 }  // namespace btdiag

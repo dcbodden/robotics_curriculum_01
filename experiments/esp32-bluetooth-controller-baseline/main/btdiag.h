@@ -52,5 +52,10 @@ void emitControllerInput(int index,
                          int32_t axisRY,
                          int32_t brake,
                          int32_t throttle);
+void emitBondClearConfirmationRequired(unsigned long timeoutMs);
+void emitBondClearConfirmationRejected(const char* reason);
+void emitBondClearCancelled(bool hadPendingRequest);
+void emitBondClearExpired(unsigned long waitedMs, unsigned long timeoutMs);
+void emitBondClearCompleted();
 
 }  // namespace btdiag

@@ -10,7 +10,7 @@
 - [x] 2.2 Initialize Bluepad32 for incoming PS4-compatible controller connections and emit accepting-connections plus periodic waiting and bounded-timeout evidence while preserving upstream stack logs.
 - [x] 2.3 Report controller connection, available identity properties, and disconnection through structured events without hard-coding an expected SZ-4015B name, VID, or PID.
 - [x] 2.4 Process controller reports and emit definitive first-input evidence plus readable, rate-limited button and axis observations suitable for interactive testing.
-- [ ] 2.5 Implement the two-step, time-limited serial confirmation exchange for clearing stored Bluetooth bonds and report cancellation, expiration, and successful completion.
+- [x] 2.5 Implement the two-step, time-limited serial confirmation exchange for clearing stored Bluetooth bonds and report cancellation, expiration, and successful completion.
 
 ## 3. Experiment Instructions
 

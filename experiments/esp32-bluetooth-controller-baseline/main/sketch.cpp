@@ -13,6 +13,11 @@ constexpr unsigned long kSerialSpeed = 115200;
 constexpr unsigned long kConnectionTimeoutMs = 75000;
 constexpr unsigned long kWaitingIntervalMs = 5000;
 constexpr unsigned long kInputObservationIntervalMs = 100;
+constexpr unsigned long kBondClearConfirmationTimeoutMs = 10000;
+constexpr char kBondClearRequestCommand[] = "CLEAR_BONDS";
+constexpr char kBondClearConfirmCommand[] = "CONFIRM_CLEAR_BONDS";
+constexpr char kBondClearCancelCommand[] = "CANCEL_CLEAR_BONDS";
+constexpr size_t kSerialCommandBufferSize = 32;
 
 struct GamepadSnapshot {
     uint16_t buttons;
@@ -39,6 +44,11 @@ unsigned int connectedControllerCount = 0;
 bool connectionWindowTimedOut = false;
 ControllerPtr controllers[BP32_MAX_CONTROLLERS]{};
 InputTracker inputTrackers[BP32_MAX_CONTROLLERS]{};
+bool bondClearConfirmationPending = false;
+unsigned long bondClearRequestedAt = 0;
+char serialCommandBuffer[kSerialCommandBufferSize]{};
+size_t serialCommandLength = 0;
+bool serialCommandOverflowed = false;
 
 bool validControllerIndex(int index) {
     return index >= 0 && index < BP32_MAX_CONTROLLERS;
@@ -147,6 +157,84 @@ void processControllerReports() {
     }
 }
 
+void expireBondClearRequest() {
+    if (!bondClearConfirmationPending) {
+        return;
+    }
+
+    const unsigned long waitedMs = millis() - bondClearRequestedAt;
+    if (waitedMs < kBondClearConfirmationTimeoutMs) {
+        return;
+    }
+
+    bondClearConfirmationPending = false;
+    btdiag::emitBondClearExpired(waitedMs, kBondClearConfirmationTimeoutMs);
+}
+
+void handleSerialCommand(const char* command) {
+    if (strcmp(command, kBondClearRequestCommand) == 0) {
+        bondClearRequestedAt = millis();
+        bondClearConfirmationPending = true;
+        btdiag::emitBondClearConfirmationRequired(kBondClearConfirmationTimeoutMs);
+        return;
+    }
+
+    if (strcmp(command, kBondClearConfirmCommand) == 0) {
+        if (!bondClearConfirmationPending) {
+            btdiag::emitBondClearConfirmationRejected("no_pending_request");
+            return;
+        }
+
+        const unsigned long waitedMs = millis() - bondClearRequestedAt;
+        if (waitedMs >= kBondClearConfirmationTimeoutMs) {
+            bondClearConfirmationPending = false;
+            btdiag::emitBondClearExpired(waitedMs, kBondClearConfirmationTimeoutMs);
+            return;
+        }
+
+        bondClearConfirmationPending = false;
+        BP32.forgetBluetoothKeys();
+        btdiag::emitBondClearCompleted();
+        return;
+    }
+
+    if (strcmp(command, kBondClearCancelCommand) == 0) {
+        const bool hadPendingRequest = bondClearConfirmationPending;
+        bondClearConfirmationPending = false;
+        btdiag::emitBondClearCancelled(hadPendingRequest);
+    }
+}
+
+void processSerialCommands() {
+    expireBondClearRequest();
+
+    while (Serial.available() > 0) {
+        const char value = static_cast<char>(Serial.read());
+
+        if (value == '\r') {
+            continue;
+        }
+
+        if (value != '\n') {
+            if (serialCommandLength < sizeof(serialCommandBuffer) - 1) {
+                serialCommandBuffer[serialCommandLength++] = value;
+            } else {
+                serialCommandOverflowed = true;
+            }
+            continue;
+        }
+
+        serialCommandBuffer[serialCommandLength] = '\0';
+        if (!serialCommandOverflowed && serialCommandLength > 0) {
+            handleSerialCommand(serialCommandBuffer);
+        }
+
+        serialCommandLength = 0;
+        serialCommandOverflowed = false;
+        expireBondClearRequest();
+    }
+}
+
 void emitControllerIdentity(ControllerPtr controller, bool connected) {
     const ControllerProperties properties = controller->getProperties();
     const String modelName = controller->getModelName();
@@ -208,6 +296,7 @@ void loop() {
     // from update(), so it must continue running throughout the wait window.
     BP32.update();
     processControllerReports();
+    processSerialCommands();
 
     if (connectedControllerCount == 0 && !connectionWindowTimedOut) {
         const unsigned long now = millis();
