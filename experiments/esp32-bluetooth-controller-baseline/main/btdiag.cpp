@@ -47,4 +47,25 @@ void emitBluetoothReady() {
         kProtocolVersion, elapsedMs());
 }
 
+void emitAcceptingConnections(unsigned long timeoutMs) {
+    Serial.printf(
+        "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,\"event\":\"accepting_connections\","
+        "\"transport\":\"BR/EDR\",\"controller_mode\":\"ps4_compatible\",\"timeout_ms\":%lu}\n",
+        kProtocolVersion, elapsedMs(), timeoutMs);
+}
+
+void emitWaitingForController(unsigned long waitedMs, unsigned long remainingMs) {
+    Serial.printf(
+        "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,\"event\":\"waiting_for_controller\","
+        "\"waited_ms\":%lu,\"remaining_ms\":%lu}\n",
+        kProtocolVersion, elapsedMs(), waitedMs, remainingMs);
+}
+
+void emitConnectionTimeout(unsigned long waitedMs, unsigned long timeoutMs) {
+    Serial.printf(
+        "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,\"event\":\"connection_timeout\","
+        "\"waited_ms\":%lu,\"timeout_ms\":%lu,\"outcome\":\"no_controller_observed\"}\n",
+        kProtocolVersion, elapsedMs(), waitedMs, timeoutMs);
+}
+
 }  // namespace btdiag

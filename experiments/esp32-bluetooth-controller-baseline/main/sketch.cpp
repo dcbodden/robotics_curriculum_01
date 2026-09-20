@@ -1,11 +1,29 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #include <Arduino.h>
+#include <Bluepad32.h>
 
 #include "btdiag.h"
 
 namespace {
 constexpr unsigned long kSerialSpeed = 115200;
+constexpr unsigned long kConnectionTimeoutMs = 75000;
+constexpr unsigned long kWaitingIntervalMs = 5000;
+
+unsigned long connectionWindowStartedAt = 0;
+unsigned long lastWaitingReportAt = 0;
+unsigned int connectedControllerCount = 0;
+bool connectionWindowTimedOut = false;
+
+void onControllerConnected(ControllerPtr) {
+    ++connectedControllerCount;
+}
+
+void onControllerDisconnected(ControllerPtr) {
+    if (connectedControllerCount > 0) {
+        --connectedControllerCount;
+    }
+}
 }
 
 void setup() {
@@ -17,8 +35,34 @@ void setup() {
     // Bluepad32 launches the Arduino task only after its Bluetooth setup has
     // completed, so reaching setup() is the readiness boundary for this port.
     btdiag::emitBluetoothReady();
+
+    // Do not filter by advertised name, VID, or PID: PS4-compatible clones can
+    // identify themselves differently. The controller selects PS4 mode.
+    BP32.setup(onControllerConnected, onControllerDisconnected, true);
+
+    connectionWindowStartedAt = millis();
+    lastWaitingReportAt = connectionWindowStartedAt;
+    btdiag::emitAcceptingConnections(kConnectionTimeoutMs);
 }
 
 void loop() {
-    delay(1000);
+    // Bluepad32 delivers connect, disconnect, and controller data callbacks
+    // from update(), so it must continue running throughout the wait window.
+    BP32.update();
+
+    if (connectedControllerCount == 0 && !connectionWindowTimedOut) {
+        const unsigned long now = millis();
+        const unsigned long waitedMs = now - connectionWindowStartedAt;
+
+        if (waitedMs >= kConnectionTimeoutMs) {
+            BP32.enableNewBluetoothConnections(false);
+            connectionWindowTimedOut = true;
+            btdiag::emitConnectionTimeout(waitedMs, kConnectionTimeoutMs);
+        } else if (now - lastWaitingReportAt >= kWaitingIntervalMs) {
+            lastWaitingReportAt = now;
+            btdiag::emitWaitingForController(waitedMs, kConnectionTimeoutMs - waitedMs);
+        }
+    }
+
+    delay(10);
 }
