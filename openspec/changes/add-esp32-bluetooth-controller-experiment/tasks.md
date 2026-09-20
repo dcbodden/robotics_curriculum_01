@@ -21,11 +21,11 @@
 
 ## 4. Agent-Assisted Serial Diagnosis
 
-- [ ] 4.1 Create the repository-local `esp32-controller-diagnostics` skill using the repository's skill conventions, with separate default listen and explicitly requested flash-and-listen paths.
-- [ ] 4.2 Add a bounded monitor helper that validates the experiment path, PlatformIO environment, and serial port; captures raw output; extracts valid `BTDIAG` records; and closes the monitor cleanly.
-- [ ] 4.3 Implement stage-based session classification for missing serial access, missing experiment boot evidence, Bluetooth initialization, waiting or pairing timeout, connected-without-input, premature disconnection, and successful input.
-- [ ] 4.4 Add interactive skill guidance for board reset, `SHARE` + `HOME` first pairing, `HOME` reconnection, button confirmation, serial-port conflicts, and explicitly authorized bond clearing.
-- [ ] 4.5 Generate timestamped ignored transcripts and summaries containing reproducibility metadata, observed milestones, final classification, and clear separation between automated evidence and user-confirmed physical observations.
+- [x] 4.1 Create the repository-local `esp32-controller-diagnostics` skill using the repository's skill conventions, with separate default listen and explicitly requested flash-and-listen paths.
+- [x] 4.2 Add a bounded monitor helper that validates the experiment path, PlatformIO environment, and serial port; captures raw output; extracts valid `BTDIAG` records; and closes the monitor cleanly.
+- [x] 4.3 Implement stage-based session classification for missing serial access, missing experiment boot evidence, Bluetooth initialization, waiting or pairing timeout, connected-without-input, premature disconnection, and successful input.
+- [x] 4.4 Add interactive skill guidance for board reset, `SHARE` + `HOME` first pairing, `HOME` reconnection, button confirmation, serial-port conflicts, and explicitly authorized bond clearing.
+- [x] 4.5 Generate timestamped ignored transcripts and summaries containing reproducibility metadata, observed milestones, final classification, and clear separation between automated evidence and user-confirmed physical observations.
 
 ## 5. Verification
 
