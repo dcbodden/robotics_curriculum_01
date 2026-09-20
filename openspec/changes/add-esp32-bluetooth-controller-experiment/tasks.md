@@ -1,8 +1,8 @@
 ## 1. Reproducible Project Foundation
 
-- [ ] 1.1 Record the selected upstream Bluepad32 template, PlatformIO platform, Arduino, ESP-IDF, BTstack, and Bluepad32 revisions together with their source and license obligations.
-- [ ] 1.2 Create `experiments/esp32-bluetooth-controller-baseline/` with the minimal ESP-IDF/Arduino/Bluepad32 component structure, pinned dependencies, and a PlatformIO environment for the supported 30-pin ESP32-WROOM DevKit V1 at 115200 baud.
-- [ ] 1.3 Add project-local ignore rules for build products and generated diagnostic transcripts, then confirm the minimal project resolves dependencies and builds without compiling another repository project.
+- [x] 1.1 Record the selected upstream Bluepad32 template, PlatformIO platform, Arduino, ESP-IDF, BTstack, and Bluepad32 revisions together with their source and license obligations.
+- [x] 1.2 Create `experiments/esp32-bluetooth-controller-baseline/` with the minimal ESP-IDF/Arduino/Bluepad32 component structure, pinned dependencies, and a PlatformIO environment for the supported 30-pin ESP32-WROOM DevKit V1 at 115200 baud.
+- [x] 1.3 Add project-local ignore rules for build products and generated diagnostic transcripts, then confirm the minimal project resolves dependencies and builds without compiling another repository project.
 
 ## 2. Observable Bluetooth Firmware
 
