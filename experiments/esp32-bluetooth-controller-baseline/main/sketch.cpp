@@ -15,11 +15,27 @@ unsigned long lastWaitingReportAt = 0;
 unsigned int connectedControllerCount = 0;
 bool connectionWindowTimedOut = false;
 
-void onControllerConnected(ControllerPtr) {
-    ++connectedControllerCount;
+void emitControllerIdentity(ControllerPtr controller, bool connected) {
+    const ControllerProperties properties = controller->getProperties();
+    const String modelName = controller->getModelName();
+
+    if (connected) {
+        btdiag::emitControllerConnected(controller->index(), modelName.c_str(), properties.type, properties.subtype,
+                                        properties.vendor_id, properties.product_id, properties.btaddr);
+    } else {
+        btdiag::emitControllerDisconnected(controller->index(), modelName.c_str(), properties.type, properties.subtype,
+                                           properties.vendor_id, properties.product_id, properties.btaddr);
+    }
 }
 
-void onControllerDisconnected(ControllerPtr) {
+void onControllerConnected(ControllerPtr controller) {
+    ++connectedControllerCount;
+    emitControllerIdentity(controller, true);
+}
+
+void onControllerDisconnected(ControllerPtr controller) {
+    emitControllerIdentity(controller, false);
+
     if (connectedControllerCount > 0) {
         --connectedControllerCount;
     }
