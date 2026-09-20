@@ -54,6 +54,31 @@ void emitControllerEvent(const char* event,
         optionalId(productId, productIdJson, sizeof(productIdJson)));
 }
 
+void emitControllerInputEvent(const char* event,
+                              int index,
+                              uint16_t buttons,
+                              uint16_t miscButtons,
+                              uint8_t dpad,
+                              const char* pressedButtons,
+                              const char* pressedDirections,
+                              int32_t axisX,
+                              int32_t axisY,
+                              int32_t axisRX,
+                              int32_t axisRY,
+                              int32_t brake,
+                              int32_t throttle) {
+    Serial.printf(
+        "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,\"event\":\"%s\",\"controller_index\":%d,"
+        "\"valid_report\":true,\"buttons\":%u,\"misc_buttons\":%u,\"dpad\":%u,"
+        "\"pressed_buttons\":\"%s\",\"pressed_directions\":\"%s\","
+        "\"axis_x\":%ld,\"axis_y\":%ld,\"axis_rx\":%ld,\"axis_ry\":%ld,"
+        "\"brake\":%ld,\"throttle\":%ld}\n",
+        btdiag::kProtocolVersion, elapsedMs(), event, index, static_cast<unsigned int>(buttons),
+        static_cast<unsigned int>(miscButtons), static_cast<unsigned int>(dpad), pressedButtons, pressedDirections,
+        static_cast<long>(axisX), static_cast<long>(axisY), static_cast<long>(axisRX), static_cast<long>(axisRY),
+        static_cast<long>(brake), static_cast<long>(throttle));
+}
+
 }  // namespace
 
 namespace btdiag {
@@ -120,6 +145,38 @@ void emitControllerDisconnected(int index,
                                 uint16_t productId,
                                 const uint8_t address[6]) {
     emitControllerEvent("controller_disconnected", index, modelName, modelId, subtype, vendorId, productId, address);
+}
+
+void emitControllerFirstInput(int index,
+                              uint16_t buttons,
+                              uint16_t miscButtons,
+                              uint8_t dpad,
+                              const char* pressedButtons,
+                              const char* pressedDirections,
+                              int32_t axisX,
+                              int32_t axisY,
+                              int32_t axisRX,
+                              int32_t axisRY,
+                              int32_t brake,
+                              int32_t throttle) {
+    emitControllerInputEvent("controller_first_input", index, buttons, miscButtons, dpad, pressedButtons,
+                             pressedDirections, axisX, axisY, axisRX, axisRY, brake, throttle);
+}
+
+void emitControllerInput(int index,
+                         uint16_t buttons,
+                         uint16_t miscButtons,
+                         uint8_t dpad,
+                         const char* pressedButtons,
+                         const char* pressedDirections,
+                         int32_t axisX,
+                         int32_t axisY,
+                         int32_t axisRX,
+                         int32_t axisRY,
+                         int32_t brake,
+                         int32_t throttle) {
+    emitControllerInputEvent("controller_input", index, buttons, miscButtons, dpad, pressedButtons,
+                             pressedDirections, axisX, axisY, axisRX, axisRY, brake, throttle);
 }
 
 }  // namespace btdiag
