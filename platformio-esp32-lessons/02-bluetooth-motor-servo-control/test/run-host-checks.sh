@@ -17,7 +17,9 @@ compile_flags=(
 g++ "${compile_flags[@]}" "${script_dir}/test_control_mapping.cpp" -o "${check_dir}/mapping-check"
 g++ "${compile_flags[@]}" "${script_dir}/test_control_policy.cpp" -o "${check_dir}/policy-check"
 g++ "${compile_flags[@]}" "${script_dir}/test_actuator_commands.cpp" -o "${check_dir}/actuator-check"
+g++ "${compile_flags[@]}" "${script_dir}/test_control_telemetry.cpp" -o "${check_dir}/telemetry-check"
 
 "${check_dir}/mapping-check"
 "${check_dir}/policy-check"
 "${check_dir}/actuator-check"
+"${check_dir}/telemetry-check"

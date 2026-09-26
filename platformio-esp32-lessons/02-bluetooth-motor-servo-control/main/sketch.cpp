@@ -9,9 +9,11 @@
 #include "actuator_output.h"
 #include "btdiag.h"
 #include "control_policy.h"
+#include "control_telemetry.h"
 
 namespace {
 constexpr unsigned long kSerialSpeed = 115200;
+constexpr size_t kSerialTxBufferSize = 1024;
 constexpr unsigned long kConnectionTimeoutMs = 75000;
 constexpr unsigned long kWaitingIntervalMs = 5000;
 constexpr unsigned long kInputObservationIntervalMs = 100;
@@ -59,6 +61,8 @@ bool hardwareOutputValid = false;
 control::ControlOutput lastHardwareOutput{};
 int latestActiveAxisX = 0;
 int latestActiveAxisY = 0;
+control::ControlTelemetrySchedule controlTelemetrySchedule;
+control::ControlTelemetryWriter controlTelemetryWriter;
 
 bool validControllerIndex(int index) {
     return index >= 0 && index < BP32_MAX_CONTROLLERS;
@@ -135,6 +139,32 @@ void applyControlOutput() {
     hardwareOutputValid = true;
 }
 
+control::ControlTelemetrySnapshot currentControlTelemetry(unsigned long now) {
+    return {now,
+            controlPolicy.activeController(),
+            controlPolicy.state(),
+            controlPolicy.freshnessAgeMs(now),
+            latestActiveAxisX,
+            latestActiveAxisY,
+            controlPolicy.output(),
+            controlPolicy.lastTransition(),
+            actuatorReady};
+}
+
+void emitControlTransitionIfChanged(control::ControlState previousState,
+                                    control::TransitionReason previousReason,
+                                    unsigned long now) {
+    if (controlPolicy.state() == previousState && controlPolicy.lastTransition() == previousReason) return;
+    controlTelemetryWriter.enqueue(currentControlTelemetry(now), true);
+}
+
+void emitPeriodicControlTelemetry(unsigned long now) {
+    if (!controlTelemetrySchedule.shouldEmit(now, false)) return;
+    if (controlTelemetryWriter.enqueue(currentControlTelemetry(now), false)) {
+        controlTelemetrySchedule.markPeriodicEmitted(now);
+    }
+}
+
 void emitInput(ControllerPtr controller, const GamepadSnapshot& snapshot, bool firstInput) {
     char pressedButtons[96];
     char pressedDirections[24];
@@ -162,13 +192,18 @@ void processControllerReports() {
         }
 
         if (!controller->isGamepad()) {
+            const control::ControlState previousState = controlPolicy.state();
+            const control::TransitionReason previousReason = controlPolicy.lastTransition();
             controlPolicy.submitReport({index, now, 0, 0, false, false, false});
             applyControlOutput();
+            emitControlTransitionIfChanged(previousState, previousReason, now);
             continue;
         }
 
         InputTracker& tracker = inputTrackers[index];
         const GamepadSnapshot snapshot = readGamepad(controller);
+        const control::ControlState previousState = controlPolicy.state();
+        const control::TransitionReason previousReason = controlPolicy.lastTransition();
         const bool reportAccepted = controlPolicy.submitReport(
             {index, now, static_cast<int>(snapshot.axisX), static_cast<int>(snapshot.axisY), true,
              controller->miscStart(), controller->b()});
@@ -176,6 +211,7 @@ void processControllerReports() {
             latestActiveAxisX = static_cast<int>(snapshot.axisX);
             latestActiveAxisY = static_cast<int>(snapshot.axisY);
             applyControlOutput();
+            emitControlTransitionIfChanged(previousState, previousReason, now);
         }
 
         if (!tracker.firstInputSeen) {
@@ -296,6 +332,9 @@ void emitControllerIdentity(ControllerPtr controller, bool connected) {
 }
 
 void onControllerConnected(ControllerPtr controller) {
+    const unsigned long now = millis();
+    const control::ControlState previousState = controlPolicy.state();
+    const control::TransitionReason previousReason = controlPolicy.lastTransition();
     const int index = controller->index();
     if (validControllerIndex(index)) {
         if (controllers[index] == nullptr) {
@@ -307,11 +346,13 @@ void onControllerConnected(ControllerPtr controller) {
     emitControllerIdentity(controller, true);
     controlPolicy.controllerConnected(index, controller->isGamepad());
     applyControlOutput();
+    emitControlTransitionIfChanged(previousState, previousReason, now);
 }
 
 void onControllerDisconnected(ControllerPtr controller) {
-    emitControllerIdentity(controller, false);
-
+    const unsigned long now = millis();
+    const control::ControlState previousState = controlPolicy.state();
+    const control::TransitionReason previousReason = controlPolicy.lastTransition();
     const int index = controller->index();
     const bool activeControllerDisconnected = index == controlPolicy.activeController();
     if (validControllerIndex(index) && controllers[index] != nullptr && connectedControllerCount > 0) {
@@ -325,6 +366,11 @@ void onControllerDisconnected(ControllerPtr controller) {
         latestActiveAxisY = 0;
     }
     applyControlOutput();
+    emitControlTransitionIfChanged(previousState, previousReason, now);
+
+    // The coast command and transition evidence are established before the
+    // longer lifecycle identity record can consume serial bandwidth.
+    emitControllerIdentity(controller, false);
 }
 }
 
@@ -335,6 +381,9 @@ void setup() {
         hardwareOutputValid = true;
     }
 
+    // A full CONTROL record must fit in the TX ring so it can be queued
+    // atomically without blocking or interleaving with BTDIAG output.
+    Serial.setTxBufferSize(kSerialTxBufferSize);
     Serial.begin(kSerialSpeed);
 
     btdiag::emitFirmwareStarted();
@@ -351,15 +400,24 @@ void setup() {
     connectionWindowStartedAt = millis();
     lastWaitingReportAt = connectionWindowStartedAt;
     btdiag::emitAcceptingConnections(kConnectionTimeoutMs);
+    controlTelemetryWriter.enqueue(currentControlTelemetry(connectionWindowStartedAt), true);
+    controlTelemetrySchedule.markPeriodicEmitted(connectionWindowStartedAt);
+    controlTelemetryWriter.service();
 }
 
 void loop() {
+    controlTelemetryWriter.service();
+
     // Bluepad32 delivers connect, disconnect, and controller data callbacks
     // from update(), so it must continue running throughout the wait window.
     BP32.update();
     processControllerReports();
-    controlPolicy.update(millis());
+    const unsigned long controlNow = millis();
+    const control::ControlState previousState = controlPolicy.state();
+    const control::TransitionReason previousReason = controlPolicy.lastTransition();
+    controlPolicy.update(controlNow);
     applyControlOutput();
+    emitControlTransitionIfChanged(previousState, previousReason, controlNow);
     processSerialCommands();
 
     if (connectedControllerCount == 0 && !connectionWindowTimedOut) {
@@ -375,5 +433,8 @@ void loop() {
             btdiag::emitWaitingForController(waitedMs, kConnectionTimeoutMs - waitedMs);
         }
     }
+
+    emitPeriodicControlTelemetry(millis());
+    controlTelemetryWriter.service();
 
 }

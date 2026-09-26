@@ -24,10 +24,10 @@
 
 ## 4. Bluetooth Integration and Diagnostics
 
-- [ ] 4.1 Integrate the selected-controller snapshots and control-policy cadence with nonblocking `BP32.update()` processing while retaining the baseline connection, first-input, timeout, and confirmation-gated bond-clearing behavior.
-- [ ] 4.2 Preserve versioned `BTDIAG` lifecycle records and lower-level Bluetooth logs while updating firmware identity for Lesson 02.
-- [ ] 4.3 Add versioned, bounded-rate control telemetry for state, freshness, axes, target/applied motor commands, bridge direction and duty, servo pulse, and safety transition reason.
-- [ ] 4.4 Verify that significant safety transitions emit immediate evidence while periodic telemetry remains at or below the designed five-records-per-second rate and cannot block control processing.
+- [x] 4.1 Integrate the selected-controller snapshots and control-policy cadence with nonblocking `BP32.update()` processing while retaining the baseline connection, first-input, timeout, and confirmation-gated bond-clearing behavior.
+- [x] 4.2 Preserve versioned `BTDIAG` lifecycle records and lower-level Bluetooth logs while updating firmware identity for Lesson 02.
+- [x] 4.3 Add versioned, bounded-rate control telemetry for state, freshness, axes, target/applied motor commands, bridge direction and duty, servo pulse, and safety transition reason.
+- [x] 4.4 Verify that significant safety transitions emit immediate evidence while periodic telemetry remains at or below the designed five-records-per-second rate and cannot block control processing.
 
 ## 5. Bench Wiring and Safety Documentation
 

@@ -26,3 +26,11 @@ immediate safety zero, and the full zero interval before reversal.
 command clamping, mutual exclusion of AIN1/AIN2 drive, safe-zero output for
 startup, disarm, failsafe, and reversal interlock, plus bounded conversion from
 servo pulse widths to 50 Hz LEDC duty values.
+
+`test_control_telemetry.cpp` checks that significant transitions bypass the
+periodic gate and that ordinary `CONTROL` status records remain limited to one
+every 200 ms, or at most five records per second. The embedded writer drains
+its fixed queue only when a complete record fits within
+`Serial.availableForWrite()`. The configured transmit ring accepts each record
+atomically, so telemetry neither blocks control processing nor interleaves with
+`BTDIAG` lines.

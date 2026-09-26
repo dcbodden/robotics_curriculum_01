@@ -13,7 +13,7 @@
 namespace {
 
 constexpr char kFirmwareName[] = "02-bluetooth-motor-servo-control";
-constexpr char kFirmwareVersion[] = "0.1.0";
+constexpr char kFirmwareVersion[] = "0.2.0";
 constexpr char kBoard[] = "esp32doit-devkit-v1";
 constexpr char kPlatform[] = "pioarduino-54.03.21";
 constexpr char kTemplateRevision[] = "d07a9385f46f7215f51fc3eb5e40c5a484cfe102";
