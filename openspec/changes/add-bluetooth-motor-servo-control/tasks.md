@@ -7,12 +7,12 @@
 
 ## 2. Pure Mapping and Safety Policy
 
-- [ ] 2.1 Implement host-compatible left-stick mapping with -512-through-511 input clamping, independent 40-count dead zones, inverted vertical drive, signed -255-through-255 motor output, and bounded 1000-through-2000 microsecond servo output.
-- [ ] 2.2 Implement explicit controller selection and connection state so only the first selected valid gamepad can affect actuator commands and control never transfers silently.
-- [ ] 2.3 Implement neutral readiness plus edge-triggered OPTIONS arming and CIRCLE disarming, clearing readiness after reset, disconnect, invalid state, or failsafe.
-- [ ] 2.4 Implement the 300 ms fresh-report watchdog and immediate failsafe output of motor coast plus centered servo, with explicit transition reasons.
-- [ ] 2.5 Implement the 20 ms applied-command update, 16-count motor slew limit, immediate zero on safety transitions, and one-full-update zero interlock before a direction reversal.
-- [ ] 2.6 Add host checks covering mapping endpoints and clamps, both dead-zone boundaries, input inversion, servo centering, arm prerequisites and button edges, disarm, watchdog expiry, disconnect/reconnect, slew behavior, and zero-before-reverse behavior.
+- [x] 2.1 Implement host-compatible left-stick mapping with -512-through-511 input clamping, independent 40-count dead zones, inverted vertical drive, signed -255-through-255 motor output, and bounded 1000-through-2000 microsecond servo output.
+- [x] 2.2 Implement explicit controller selection and connection state so only the first selected valid gamepad can affect actuator commands and control never transfers silently.
+- [x] 2.3 Implement neutral readiness plus edge-triggered OPTIONS arming and CIRCLE disarming, clearing readiness after reset, disconnect, invalid state, or failsafe.
+- [x] 2.4 Implement the 300 ms fresh-report watchdog and immediate failsafe output of motor coast plus centered servo, with explicit transition reasons.
+- [x] 2.5 Implement the 20 ms applied-command update, 16-count motor slew limit, immediate zero on safety transitions, and one-full-update zero interlock before a direction reversal.
+- [x] 2.6 Add host checks covering mapping endpoints and clamps, both dead-zone boundaries, input inversion, servo centering, arm prerequisites and button edges, disarm, watchdog expiry, disconnect/reconnect, slew behavior, and zero-before-reverse behavior.
 
 ## 3. ESP32 Actuator Output
 

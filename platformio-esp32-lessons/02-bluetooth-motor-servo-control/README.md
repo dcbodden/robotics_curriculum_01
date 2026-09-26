@@ -127,6 +127,17 @@ From the lesson directory:
 The first build can take several minutes because ESP-IDF, Arduino, Bluepad32,
 and BTstack are compiled together. Later incremental builds are much faster.
 
+## Run the hardware-free control checks
+
+The left-stick mapping and safety policy are standard C++ and can be checked
+without PlatformIO or connected hardware:
+
+```bash
+./test/run-host-checks.sh
+```
+
+See [test/README.md](test/README.md) for the behavior covered by each check.
+
 ## Find the serial port
 
 Connect the ESP32 with a USB data cable, then run:
