@@ -1,6 +1,6 @@
 # Host checks
 
-Run the pure mapping and safety-policy checks without an ESP32, Bluetooth
+Run the pure mapping, safety-policy, and actuator-command checks without an ESP32, Bluetooth
 controller, motor driver, servo, or PlatformIO dependency tree:
 
 ```bash
@@ -21,3 +21,8 @@ secondary controllers, no silent handoff, neutral-before-arm behavior, OPTIONS
 and CIRCLE edges, explicit disarm, invalid input, the exact 300 ms watchdog
 boundary, disconnect and reconnect behavior, 20 ms/16-count slew updates,
 immediate safety zero, and the full zero interval before reversal.
+
+`test_actuator_commands.cpp` checks the complete DRV8833 channel-A truth table,
+command clamping, mutual exclusion of AIN1/AIN2 drive, safe-zero output for
+startup, disarm, failsafe, and reversal interlock, plus bounded conversion from
+servo pulse widths to 50 Hz LEDC duty values.

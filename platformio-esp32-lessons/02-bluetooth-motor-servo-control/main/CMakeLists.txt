@@ -1,4 +1,5 @@
 set(sources
+    "actuator_output.cpp"
     "btdiag.cpp"
     "main.c"
     "sketch.cpp"

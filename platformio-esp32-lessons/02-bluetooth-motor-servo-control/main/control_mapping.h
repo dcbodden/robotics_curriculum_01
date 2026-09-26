@@ -4,21 +4,9 @@
 
 #include <stdint.h>
 
+#include "control_config.h"
+
 namespace control {
-
-constexpr int kAxisMinimum = -512;
-constexpr int kAxisMaximum = 511;
-constexpr int kAxisDeadZone = 40;
-constexpr int kMotorCommandMaximum = 255;
-constexpr uint16_t kServoMinimumPulseUs = 1000;
-constexpr uint16_t kServoCenterPulseUs = 1500;
-constexpr uint16_t kServoMaximumPulseUs = 2000;
-
-static_assert(kAxisMinimum < -kAxisDeadZone, "Negative axis range must extend beyond the dead zone");
-static_assert(kAxisMaximum > kAxisDeadZone, "Positive axis range must extend beyond the dead zone");
-static_assert(kServoMinimumPulseUs < kServoCenterPulseUs &&
-                  kServoCenterPulseUs < kServoMaximumPulseUs,
-              "Servo pulse limits must surround center");
 
 struct MappedCommands {
     int motor;
@@ -58,12 +46,16 @@ inline uint16_t servoPulseFromAxisX(int value) {
     if (axis < -kAxisDeadZone) {
         const int offset = scaleRounded(-axis - kAxisDeadZone, -kAxisMinimum - kAxisDeadZone,
                                         kServoCenterPulseUs - kServoMinimumPulseUs);
-        return static_cast<uint16_t>(kServoCenterPulseUs - offset);
+        const uint16_t pulse = static_cast<uint16_t>(kServoCenterPulseUs - offset);
+        return kServoDirectionInverted ? static_cast<uint16_t>(kServoMinimumPulseUs + kServoMaximumPulseUs - pulse)
+                                       : pulse;
     }
 
     const int offset = scaleRounded(axis - kAxisDeadZone, kAxisMaximum - kAxisDeadZone,
                                     kServoMaximumPulseUs - kServoCenterPulseUs);
-    return static_cast<uint16_t>(kServoCenterPulseUs + offset);
+    const uint16_t pulse = static_cast<uint16_t>(kServoCenterPulseUs + offset);
+    return kServoDirectionInverted ? static_cast<uint16_t>(kServoMinimumPulseUs + kServoMaximumPulseUs - pulse)
+                                   : pulse;
 }
 
 inline bool leftStickIsNeutral(int axisX, int axisY) {

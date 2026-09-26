@@ -16,10 +16,10 @@
 
 ## 3. ESP32 Actuator Output
 
-- [ ] 3.1 Add an output adapter that establishes safe low states before PWM setup and assigns GPIO 26/27 to DRV8833 inputs and GPIO 25 to the servo signal without resource conflicts.
-- [ ] 3.2 Configure approximately 20 kHz 8-bit forward-coast motor PWM and a separate 50 Hz servo PWM resource using the API supplied by the pinned Arduino core.
-- [ ] 3.3 Translate positive, zero, and negative applied motor commands into the specified AIN1/AIN2 truth table and verify that both inputs are low during initialization, disarm, failsafe, and reversal interlock.
-- [ ] 3.4 Add centralized motor direction, dead-zone, PWM, servo endpoint, servo inversion, watchdog, slew, and telemetry configuration with compile-time consistency checks where practical.
+- [x] 3.1 Add an output adapter that establishes safe low states before PWM setup and assigns GPIO 26/27 to DRV8833 inputs and GPIO 25 to the servo signal without resource conflicts.
+- [x] 3.2 Configure approximately 20 kHz 8-bit forward-coast motor PWM and a separate 50 Hz servo PWM resource using the API supplied by the pinned Arduino core.
+- [x] 3.3 Translate positive, zero, and negative applied motor commands into the specified AIN1/AIN2 truth table and verify that both inputs are low during initialization, disarm, failsafe, and reversal interlock.
+- [x] 3.4 Add centralized motor direction, dead-zone, PWM, servo endpoint, servo inversion, watchdog, slew, and telemetry configuration with compile-time consistency checks where practical.
 - [ ] 3.5 Inspect and record the actual HW-627 labels and populated parts; add GPIO 13 `nSLEEP` control and optional fault telemetry only if those signals are verified as exposed on the user's module.
 
 ## 4. Bluetooth Integration and Diagnostics

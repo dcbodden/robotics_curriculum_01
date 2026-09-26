@@ -4,15 +4,12 @@
 
 #include <stdint.h>
 
+#include "control_config.h"
 #include "control_mapping.h"
 
 namespace control {
 
 constexpr int kNoController = -1;
-constexpr uint32_t kFreshReportWatchdogMs = 300;
-constexpr uint32_t kControlUpdateIntervalMs = 20;
-constexpr int kMotorSlewPerUpdate = 16;
-
 enum class ControlState {
     Disconnected,
     Disarmed,
