@@ -12,6 +12,7 @@ Lesson 06 supplies useful teaching patterns—pure command mapping, bounded serv
 - Ensure every reset, connection transition, stale-input condition, and direction reversal has a deterministic safe motor output.
 - Produce smooth, bounded bench commands for one reversible geared motor and one servo while retaining readable diagnostic evidence.
 - Make the staged bench procedure capable of finding supply, grounding, brush-noise, and module-pinout problems before simultaneous motion.
+- Organize the physical workflow as student-facing missions with teacher gates and deeper implementation detail separated from the learner focus.
 
 **Non-Goals:**
 
@@ -22,11 +23,11 @@ Lesson 06 supplies useful teaching patterns—pure command mapping, bounded serv
 
 ## Decisions
 
-### 1. Create a sibling experiment derived from the baseline
+### 1. Create numbered Lesson 02 from the baseline
 
-Add `experiments/esp32-bluetooth-motor-servo-control/` and reproduce the baseline's pinned dependency declarations, bootstrap process, local PlatformIO wrapper, ESP-IDF/Arduino entry structure, and relevant diagnostics. Downloaded dependency trees and generated tooling remain ignored and reproducible from the new project's manifests.
+Add `platformio-esp32-lessons/02-bluetooth-motor-servo-control/` and reproduce the baseline's pinned dependency declarations, bootstrap process, local PlatformIO wrapper, ESP-IDF/Arduino entry structure, and relevant diagnostics. Downloaded dependency trees and generated tooling remain ignored and reproducible from the new project's manifests.
 
-This keeps the controller-only baseline useful as a known diagnostic checkpoint and makes the actuator experiment independently openable. Modifying the baseline in place would erase that checkpoint; making the new project depend on files in a sibling project would violate the repository's standalone-project convention.
+This keeps the controller-only baseline useful as a known diagnostic checkpoint and makes the actuator lesson independently openable. Modifying the baseline in place would erase that checkpoint; making the new lesson depend on files in the baseline experiment would violate the repository's standalone-project convention.
 
 ### 2. Separate input, policy, and hardware output
 
@@ -96,7 +97,7 @@ Translate the applied signed drive command as follows:
 
 Normal commands move toward the mapped target by at most 16 duty counts per 20 ms control update, giving a full-scale transition of roughly one third of a second. If the requested sign differs from the applied sign, drive both inputs low immediately, hold zero for at least one complete control update, and then ramp in the new direction. Failsafe and disarm always jump directly to zero rather than ramping down.
 
-Forward-coast PWM matches the specified zero behavior and makes mechanical coasting visible. Active braking and forward-brake PWM were rejected for this first experiment because they create sharper current and mechanical transients and complicate the comparison with Lesson 06.
+Forward-coast PWM matches the specified zero behavior and makes mechanical coasting visible. Active braking and forward-brake PWM were rejected for this first lesson because they create sharper current and mechanical transients and complicate the comparison with Lesson 06.
 
 ### 8. Preserve lifecycle diagnostics and add control telemetry
 
@@ -137,7 +138,7 @@ The geared motor remains secured, bare, and unloaded. The approximate 300 mA fig
 
 ## Migration Plan
 
-This is an additive experiment with no data or firmware migration. Implement it as a sibling directory, validate it independently, and leave the controller baseline and existing lessons unchanged. If the integration proves unsafe or unreliable, remove or quarantine only the new experiment; the baseline remains available to isolate Bluetooth behavior.
+This is an additive numbered lesson with no data or firmware migration. Implement it as Lesson 02 under `platformio-esp32-lessons/`, validate it independently, and leave the controller baseline and Lesson 01 unchanged. If the integration proves unsafe or unreliable, remove or quarantine only the new lesson; the baseline remains available to isolate Bluetooth behavior.
 
 ## Open Questions
 

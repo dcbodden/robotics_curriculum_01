@@ -1,9 +1,9 @@
-## 1. Standalone Experiment Scaffold
+## 1. Standalone Lesson Scaffold
 
-- [ ] 1.1 Create `experiments/esp32-bluetooth-motor-servo-control/` as an independently openable project derived from the controller baseline while leaving the baseline unchanged.
+- [ ] 1.1 Create `platformio-esp32-lessons/02-bluetooth-motor-servo-control/` as an independently openable numbered lesson derived from the controller baseline while leaving the baseline unchanged.
 - [ ] 1.2 Copy and rename the pinned dependency declarations, checksum bootstrap process, project-local PlatformIO wrapper, ESP-IDF configuration, build entry files, and ignore rules needed to reproduce the baseline toolchain.
-- [ ] 1.3 Update firmware and dependency identity metadata for the new experiment and document its derivation from the known baseline revisions.
-- [ ] 1.4 Confirm the new project selects only `esp32doit-devkit-v1`, builds through its local wrapper, and does not compile files from a lesson or sibling experiment.
+- [ ] 1.3 Update firmware and dependency identity metadata for Lesson 02 and document its derivation from the known baseline revisions.
+- [ ] 1.4 Confirm the new project selects only `esp32doit-devkit-v1`, builds through its local wrapper, and does not compile files from another lesson or the baseline experiment.
 
 ## 2. Pure Mapping and Safety Policy
 
@@ -25,7 +25,7 @@
 ## 4. Bluetooth Integration and Diagnostics
 
 - [ ] 4.1 Integrate the selected-controller snapshots and control-policy cadence with nonblocking `BP32.update()` processing while retaining the baseline connection, first-input, timeout, and confirmation-gated bond-clearing behavior.
-- [ ] 4.2 Preserve versioned `BTDIAG` lifecycle records and lower-level Bluetooth logs while updating firmware identity for the actuator experiment.
+- [ ] 4.2 Preserve versioned `BTDIAG` lifecycle records and lower-level Bluetooth logs while updating firmware identity for Lesson 02.
 - [ ] 4.3 Add versioned, bounded-rate control telemetry for state, freshness, axes, target/applied motor commands, bridge direction and duty, servo pulse, and safety transition reason.
 - [ ] 4.4 Verify that significant safety transitions emit immediate evidence while periodic telemetry remains at or below the designed five-records-per-second rate and cannot block control processing.
 
@@ -38,12 +38,12 @@
 - [ ] 5.5 Add power-off wiring rules, secured unloaded actuator requirements, clear motion areas, supply-current limiting, abnormal-operation stop conditions, and external-power-first shutdown instructions.
 - [ ] 5.6 Keep batteries, DC/DC conversion, wheels, chassis, steering linkage, and complete rover integration visibly out of scope and point to them as later curriculum work.
 
-## 6. Guided Bench Procedure
+## 6. Student Missions and Teacher Guidance
 
-- [ ] 6.1 Add an actuator-power-off procedure for build/upload, Bluetooth pairing or reconnection, neutral telemetry, displaced-stick arm rejection, successful neutral arming, explicit disarming, and watchdog/disconnect failsafe checks.
-- [ ] 6.2 Add a teacher- or experimenter-gated servo-only procedure that starts near center, verifies direction and pulse bounds, and narrows endpoints on binding or persistent buzzing.
-- [ ] 6.3 Add a current-limited, conservative-duty motor procedure for forward motion, zero/coast, reverse motion, and the observable zero interval during reversal without deliberate stalling.
-- [ ] 6.4 Add a final simultaneous motor-and-servo check that records supply voltage/current behavior, resets, Bluetooth continuity, actuator response, and whether additional bulk capacitance is justified.
+- [ ] 6.1 Add a student-facing actuator-power-off mission with teacher gates for build/upload, Bluetooth pairing or reconnection, neutral telemetry, displaced-stick arm rejection, successful neutral arming, explicit disarming, and watchdog/disconnect failsafe checks.
+- [ ] 6.2 Add a teacher-gated student servo-only mission that starts near center, verifies direction and pulse bounds, and narrows endpoints on binding or persistent buzzing.
+- [ ] 6.3 Add a teacher-gated, current-limited, conservative-duty motor mission for forward motion, zero/coast, reverse motion, and the observable zero interval during reversal without deliberate stalling.
+- [ ] 6.4 Add a final student simultaneous motor-and-servo mission that records supply voltage/current behavior, resets, Bluetooth continuity, actuator response, and whether additional bulk capacitance is justified.
 - [ ] 6.5 Add readable troubleshooting paths for wrong project/port, pairing failure, failure to arm, immediate failsafe, reversed controls, no motor motion, unstable servo, driver fault/heat, and power-integrity symptoms.
 
 ## 7. Verification and Repository Integration
@@ -52,5 +52,5 @@
 - [ ] 7.2 Bootstrap pinned dependencies and perform a clean firmware build with the project-local PlatformIO wrapper; record resolved versions, memory use, warnings, and the physical-verification boundary.
 - [ ] 7.3 Confirm the existing Bluetooth controller baseline still builds independently and its tracked source and documented behavior were not modified.
 - [ ] 7.4 Conduct or explicitly mark pending the controller connection, actuator-power-off safety, servo motion, forward/reverse motor motion, reversal, failsafe, and simultaneous-motion checks, keeping automated and user-observed evidence separate.
-- [ ] 7.5 Update the repository experiment index or root navigation so contributors can find the new experiment without presenting it as a completed rover or numbered lesson.
-- [ ] 7.6 Run strict OpenSpec validation and review the finished experiment against every scenario in the delta specification.
+- [ ] 7.5 Update the ESP32 lesson collection index and root navigation so learners and teachers can find Lesson 02 without presenting it as a completed rover.
+- [ ] 7.6 Run strict OpenSpec validation and review the finished lesson against every scenario in the delta specification.
