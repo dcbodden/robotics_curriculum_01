@@ -21,6 +21,8 @@ constexpr uint32_t kFreshReportWatchdogMs = 300;
 // DRV8833 channel A output resources.
 constexpr uint8_t kMotorAin1Pin = 26;
 constexpr uint8_t kMotorAin2Pin = 27;
+constexpr uint8_t kDriverSleepPin = 13;
+constexpr bool kDriverFaultTelemetryEnabled = false;
 constexpr uint8_t kMotorAin1PwmChannel = 0;
 constexpr uint8_t kMotorAin2PwmChannel = 1;
 constexpr uint32_t kMotorPwmFrequencyHz = 20000;
@@ -47,7 +49,8 @@ static_assert(kAxisMaximum > kAxisDeadZone, "Positive axis range must extend bey
 static_assert(kMotorCommandMaximum == static_cast<int>(kMotorPwmMaximumDuty),
               "Motor command range must match the 8-bit PWM duty range");
 static_assert(kMotorAin1Pin != kMotorAin2Pin && kMotorAin1Pin != kServoSignalPin &&
-                  kMotorAin2Pin != kServoSignalPin,
+                  kMotorAin2Pin != kServoSignalPin && kDriverSleepPin != kMotorAin1Pin &&
+                  kDriverSleepPin != kMotorAin2Pin && kDriverSleepPin != kServoSignalPin,
               "Actuator GPIO assignments must be unique");
 static_assert(kMotorAin1PwmChannel != kMotorAin2PwmChannel &&
                   kMotorAin1PwmChannel != kServoPwmChannel &&

@@ -6,7 +6,9 @@
 #include <cstdio>
 #include <cstring>
 
+#include "actuator_output.h"
 #include "btdiag.h"
+#include "control_policy.h"
 
 namespace {
 constexpr unsigned long kSerialSpeed = 115200;
@@ -18,6 +20,7 @@ constexpr char kBondClearRequestCommand[] = "CLEAR_BONDS";
 constexpr char kBondClearConfirmCommand[] = "CONFIRM_CLEAR_BONDS";
 constexpr char kBondClearCancelCommand[] = "CANCEL_CLEAR_BONDS";
 constexpr size_t kSerialCommandBufferSize = 32;
+constexpr size_t kMaximumSerialBytesPerLoop = 32;
 
 struct GamepadSnapshot {
     uint16_t buttons;
@@ -49,6 +52,13 @@ unsigned long bondClearRequestedAt = 0;
 char serialCommandBuffer[kSerialCommandBufferSize]{};
 size_t serialCommandLength = 0;
 bool serialCommandOverflowed = false;
+control::ControlPolicy controlPolicy;
+control::ActuatorOutput actuatorOutput;
+bool actuatorReady = false;
+bool hardwareOutputValid = false;
+control::ControlOutput lastHardwareOutput{};
+int latestActiveAxisX = 0;
+int latestActiveAxisY = 0;
 
 bool validControllerIndex(int index) {
     return index >= 0 && index < BP32_MAX_CONTROLLERS;
@@ -103,6 +113,28 @@ bool snapshotsDiffer(const GamepadSnapshot& left, const GamepadSnapshot& right) 
            left.axisRY != right.axisRY || left.brake != right.brake || left.throttle != right.throttle;
 }
 
+bool outputsEqual(const control::ControlOutput& left, const control::ControlOutput& right) {
+    return left.targetMotor == right.targetMotor && left.appliedMotor == right.appliedMotor &&
+           left.servoPulseUs == right.servoPulseUs && left.reversalInterlock == right.reversalInterlock;
+}
+
+void applyControlOutput() {
+    if (!actuatorReady) return;
+
+    const control::ControlOutput output = controlPolicy.output();
+    if (hardwareOutputValid && outputsEqual(lastHardwareOutput, output)) return;
+
+    if (!actuatorOutput.apply(output)) {
+        actuatorOutput.safeStop();
+        actuatorReady = false;
+        hardwareOutputValid = false;
+        return;
+    }
+
+    lastHardwareOutput = output;
+    hardwareOutputValid = true;
+}
+
 void emitInput(ControllerPtr controller, const GamepadSnapshot& snapshot, bool firstInput) {
     char pressedButtons[96];
     char pressedDirections[24];
@@ -125,13 +157,26 @@ void processControllerReports() {
 
     for (int index = 0; index < BP32_MAX_CONTROLLERS; ++index) {
         ControllerPtr controller = controllers[index];
-        if (controller == nullptr || !controller->isConnected() || !controller->isGamepad() ||
-            !controller->hasData()) {
+        if (controller == nullptr || !controller->isConnected() || !controller->hasData()) {
+            continue;
+        }
+
+        if (!controller->isGamepad()) {
+            controlPolicy.submitReport({index, now, 0, 0, false, false, false});
+            applyControlOutput();
             continue;
         }
 
         InputTracker& tracker = inputTrackers[index];
         const GamepadSnapshot snapshot = readGamepad(controller);
+        const bool reportAccepted = controlPolicy.submitReport(
+            {index, now, static_cast<int>(snapshot.axisX), static_cast<int>(snapshot.axisY), true,
+             controller->miscStart(), controller->b()});
+        if (reportAccepted) {
+            latestActiveAxisX = static_cast<int>(snapshot.axisX);
+            latestActiveAxisY = static_cast<int>(snapshot.axisY);
+            applyControlOutput();
+        }
 
         if (!tracker.firstInputSeen) {
             emitInput(controller, snapshot, true);
@@ -208,8 +253,10 @@ void handleSerialCommand(const char* command) {
 void processSerialCommands() {
     expireBondClearRequest();
 
-    while (Serial.available() > 0) {
+    size_t processed = 0;
+    while (processed < kMaximumSerialBytesPerLoop && Serial.available() > 0) {
         const char value = static_cast<char>(Serial.read());
+        ++processed;
 
         if (value == '\r') {
             continue;
@@ -258,21 +305,36 @@ void onControllerConnected(ControllerPtr controller) {
         inputTrackers[index] = {};
     }
     emitControllerIdentity(controller, true);
+    controlPolicy.controllerConnected(index, controller->isGamepad());
+    applyControlOutput();
 }
 
 void onControllerDisconnected(ControllerPtr controller) {
     emitControllerIdentity(controller, false);
 
     const int index = controller->index();
+    const bool activeControllerDisconnected = index == controlPolicy.activeController();
     if (validControllerIndex(index) && controllers[index] != nullptr && connectedControllerCount > 0) {
         --connectedControllerCount;
         controllers[index] = nullptr;
         inputTrackers[index] = {};
     }
+    controlPolicy.controllerDisconnected(index);
+    if (activeControllerDisconnected) {
+        latestActiveAxisX = 0;
+        latestActiveAxisY = 0;
+    }
+    applyControlOutput();
 }
 }
 
 void setup() {
+    actuatorReady = actuatorOutput.begin();
+    if (actuatorReady) {
+        lastHardwareOutput = controlPolicy.output();
+        hardwareOutputValid = true;
+    }
+
     Serial.begin(kSerialSpeed);
 
     btdiag::emitFirmwareStarted();
@@ -296,6 +358,8 @@ void loop() {
     // from update(), so it must continue running throughout the wait window.
     BP32.update();
     processControllerReports();
+    controlPolicy.update(millis());
+    applyControlOutput();
     processSerialCommands();
 
     if (connectedControllerCount == 0 && !connectionWindowTimedOut) {
@@ -312,5 +376,4 @@ void loop() {
         }
     }
 
-    delay(10);
 }

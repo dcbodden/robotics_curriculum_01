@@ -16,9 +16,11 @@ bool ActuatorOutput::begin() {
     pinMode(kMotorAin1Pin, OUTPUT);
     pinMode(kMotorAin2Pin, OUTPUT);
     pinMode(kServoSignalPin, OUTPUT);
+    pinMode(kDriverSleepPin, OUTPUT);
     digitalWrite(kMotorAin1Pin, LOW);
     digitalWrite(kMotorAin2Pin, LOW);
     digitalWrite(kServoSignalPin, LOW);
+    digitalWrite(kDriverSleepPin, LOW);
 
     motorAin1Attached_ =
         ledcAttachChannel(kMotorAin1Pin, kMotorPwmFrequencyHz, kMotorPwmResolutionBits, kMotorAin1PwmChannel);
@@ -41,6 +43,9 @@ bool ActuatorOutput::begin() {
         return false;
     }
 
+    // The inspected HW-627 exposes DRV8833 nSLEEP as the edge pad marked
+    // "EEP". Wake the bridge only after both motor inputs are attached at zero.
+    digitalWrite(kDriverSleepPin, HIGH);
     initialized_ = true;
     return true;
 }
@@ -92,9 +97,11 @@ void ActuatorOutput::detachPwmAndDriveLow() {
     pinMode(kMotorAin1Pin, OUTPUT);
     pinMode(kMotorAin2Pin, OUTPUT);
     pinMode(kServoSignalPin, OUTPUT);
+    pinMode(kDriverSleepPin, OUTPUT);
     digitalWrite(kMotorAin1Pin, LOW);
     digitalWrite(kMotorAin2Pin, LOW);
     digitalWrite(kServoSignalPin, LOW);
+    digitalWrite(kDriverSleepPin, LOW);
 }
 
 }  // namespace control
