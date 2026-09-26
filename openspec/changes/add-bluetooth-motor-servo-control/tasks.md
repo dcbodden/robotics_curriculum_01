@@ -40,11 +40,11 @@
 
 ## 6. Student Missions and Teacher Guidance
 
-- [ ] 6.1 Add a student-facing actuator-power-off mission with teacher gates for build/upload, Bluetooth pairing or reconnection, neutral telemetry, displaced-stick arm rejection, successful neutral arming, explicit disarming, and watchdog/disconnect failsafe checks.
-- [ ] 6.2 Add a teacher-gated student servo-only mission that starts near center, verifies direction and pulse bounds, and narrows endpoints on binding or persistent buzzing.
-- [ ] 6.3 Add a teacher-gated, current-limited, conservative-duty motor mission for forward motion, zero/coast, reverse motion, and the observable zero interval during reversal without deliberate stalling.
-- [ ] 6.4 Add a final student simultaneous motor-and-servo mission that records supply voltage/current behavior, resets, Bluetooth continuity, actuator response, and whether additional bulk capacitance is justified.
-- [ ] 6.5 Add readable troubleshooting paths for wrong project/port, pairing failure, failure to arm, immediate failsafe, reversed controls, no motor motion, unstable servo, driver fault/heat, and power-integrity symptoms.
+- [x] 6.1 Add a student-facing actuator-power-off mission with teacher gates for build/upload, Bluetooth pairing or reconnection, neutral telemetry, displaced-stick arm rejection, successful neutral arming, explicit disarming, and watchdog/disconnect failsafe checks.
+- [x] 6.2 Add a teacher-gated student servo-only mission that starts near center, verifies direction and pulse bounds, and narrows endpoints on binding or persistent buzzing.
+- [x] 6.3 Add a teacher-gated, current-limited, conservative-duty motor mission for forward motion, zero/coast, reverse motion, and the observable zero interval during reversal without deliberate stalling.
+- [x] 6.4 Add a final student simultaneous motor-and-servo mission that records supply voltage/current behavior, resets, Bluetooth continuity, actuator response, and whether additional bulk capacitance is justified.
+- [x] 6.5 Add readable troubleshooting paths for wrong project/port, pairing failure, failure to arm, immediate failsafe, reversed controls, no motor motion, unstable servo, driver fault/heat, and power-integrity symptoms.
 
 ## 7. Verification and Repository Integration
 
