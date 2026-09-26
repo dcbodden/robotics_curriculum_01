@@ -31,12 +31,12 @@
 
 ## 5. Bench Wiring and Safety Documentation
 
-- [ ] 5.1 Write an HW-627 inspection and wiring table that uses the physical module labels, assigns one bridge to the secured bare 48:1 geared motor, and records whether sleep, fault, and expected onboard capacitors are available.
-- [ ] 5.2 Document USB-only ESP32 power, an appropriately rated regulated 5 V actuator supply, separate positive branches for driver and servo, a low-impedance common ground, and the prohibition on joining actuator positive to ESP32 5 V or 3.3 V.
-- [ ] 5.3 Document the initial 100 nF motor-terminal capacitor, local 100 nF driver bypass, 100–220 microfarad driver bulk capacitor, optional servo/distribution bulk ranges, voltage-rating and polarity checks, short twisted motor leads, and measurement-driven adjustment.
-- [ ] 5.4 Explain DRV8833 current recirculation and explicitly prohibit a single flywheel diode across the bidirectional motor; distinguish the provisional 300 mA running estimate from startup and stall demand.
-- [ ] 5.5 Add power-off wiring rules, secured unloaded actuator requirements, clear motion areas, supply-current limiting, abnormal-operation stop conditions, and external-power-first shutdown instructions.
-- [ ] 5.6 Keep batteries, DC/DC conversion, wheels, chassis, steering linkage, and complete rover integration visibly out of scope and point to them as later curriculum work.
+- [x] 5.1 Write an HW-627 inspection and wiring table that uses the physical module labels, assigns one bridge to the secured bare 48:1 geared motor, and records whether sleep, fault, and expected onboard capacitors are available.
+- [x] 5.2 Document USB-only ESP32 power, an appropriately rated regulated 5 V actuator supply, separate positive branches for driver and servo, a low-impedance common ground, and the prohibition on joining actuator positive to ESP32 5 V or 3.3 V.
+- [x] 5.3 Document the initial 100 nF motor-terminal capacitor, local 100 nF driver bypass, 100–220 microfarad driver bulk capacitor, optional servo/distribution bulk ranges, voltage-rating and polarity checks, short twisted motor leads, and measurement-driven adjustment.
+- [x] 5.4 Explain DRV8833 current recirculation and explicitly prohibit a single flywheel diode across the bidirectional motor; distinguish the provisional 300 mA running estimate from startup and stall demand.
+- [x] 5.5 Add power-off wiring rules, secured unloaded actuator requirements, clear motion areas, supply-current limiting, abnormal-operation stop conditions, and external-power-first shutdown instructions.
+- [x] 5.6 Keep batteries, DC/DC conversion, wheels, chassis, steering linkage, and complete rover integration visibly out of scope and point to them as later curriculum work.
 
 ## 6. Student Missions and Teacher Guidance
 

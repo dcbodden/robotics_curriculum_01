@@ -22,6 +22,12 @@ those claims require separate physical verification.
 
 See [BUILD_VERIFICATION.md](BUILD_VERIFICATION.md) for the dated clean-build
 record, resolved versions, memory usage, warnings, and verification boundary.
+See [BENCH_WIRING.md](BENCH_WIRING.md) for the inspected HW-627 pin table,
+split-supply wiring, suppression components, and mandatory bench-safety rules.
+
+> **This is a bench-actuator lesson, not a rover build.** Batteries, DC/DC
+> conversion, wheels, chassis work, steering linkage, and complete rover wiring
+> are reserved for later curriculum work.
 
 ## Supported hardware
 
