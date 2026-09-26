@@ -1,9 +1,9 @@
 ## 1. Standalone Lesson Scaffold
 
-- [ ] 1.1 Create `platformio-esp32-lessons/02-bluetooth-motor-servo-control/` as an independently openable numbered lesson derived from the controller baseline while leaving the baseline unchanged.
-- [ ] 1.2 Copy and rename the pinned dependency declarations, checksum bootstrap process, project-local PlatformIO wrapper, ESP-IDF configuration, build entry files, and ignore rules needed to reproduce the baseline toolchain.
-- [ ] 1.3 Update firmware and dependency identity metadata for Lesson 02 and document its derivation from the known baseline revisions.
-- [ ] 1.4 Confirm the new project selects only `esp32doit-devkit-v1`, builds through its local wrapper, and does not compile files from another lesson or the baseline experiment.
+- [x] 1.1 Create `platformio-esp32-lessons/02-bluetooth-motor-servo-control/` as an independently openable numbered lesson derived from the controller baseline while leaving the baseline unchanged.
+- [x] 1.2 Copy and rename the pinned dependency declarations, checksum bootstrap process, project-local PlatformIO wrapper, ESP-IDF configuration, build entry files, and ignore rules needed to reproduce the baseline toolchain.
+- [x] 1.3 Update firmware and dependency identity metadata for Lesson 02 and document its derivation from the known baseline revisions.
+- [x] 1.4 Confirm the new project selects only `esp32doit-devkit-v1`, builds through its local wrapper, and does not compile files from another lesson or the baseline experiment.
 
 ## 2. Pure Mapping and Safety Policy
 
