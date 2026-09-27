@@ -1,4 +1,108 @@
-# Scaffold Build Verification
+# Build and Host Verification
+
+## 2026-09-26 complete host checks
+
+Run from the Lesson 02 directory:
+
+```bash
+./test/run-host-checks.sh
+```
+
+The script compiled all four host executables as C++11 with `-Wall -Wextra
+-Werror`; any compiler warning would therefore fail the run. It exited 0 with:
+
+```text
+Mapping checks passed: inversion, dead zones, endpoints, clamps, and full axis range.
+Policy checks passed: selection, arming, failsafe, watchdog, slew, and reversal.
+Actuator checks passed: bridge truth table, safe-zero states, and servo duty bounds.
+Telemetry checks passed: immediate transitions and at most five periodic records per second.
+```
+
+This is deterministic host evidence for the pure mapping, policy, bridge-command,
+servo-duty, and telemetry scheduling code. It is not Bluetooth, GPIO waveform,
+electrical, or physical-motion evidence.
+
+## 2026-09-26 clean complete-firmware build
+
+Run from the Lesson 02 directory:
+
+```bash
+./scripts/bootstrap-dependencies.sh
+./scripts/pio.sh --version
+./scripts/pio.sh project config --json-output
+./scripts/pio.sh run --environment esp32doit-devkit-v1 --target clean
+./scripts/pio.sh run --environment esp32doit-devkit-v1
+```
+
+The bootstrap exited 0 and reported that the pinned ESP-IDF components were
+already present; the earlier scaffold run below records the checksum-verified
+installation. The wrapper reported PlatformIO Core `6.1.19`. Resolved build
+inputs were:
+
+| Layer | Resolved version |
+| --- | --- |
+| pioarduino Espressif32 platform | `54.3.21` |
+| ESP-IDF framework | `3.50402.0` (`5.4.2`) |
+| SCons | `4.40801.0` (`4.8.1`) |
+| Xtensa toolchain | `14.2.0+20241119` |
+
+The configuration contained only environment `esp32doit-devkit-v1`, board
+`esp32doit-devkit-v1`, framework `espidf`, and this lesson's `main/` source
+directory. After the explicit clean, the complete build exited 0 with
+`SUCCESS` in 401.32 seconds. PlatformIO reported:
+
+| Output | Result |
+| --- | --- |
+| RAM | 86,040 of 327,680 bytes (26.3%) |
+| Flash | 735,428 of 4,194,304 bytes (17.5%) |
+| `firmware.elf` file size | 7,703,684 bytes |
+| `firmware.bin` file size | 735,824 bytes |
+
+The built lesson objects were `actuator_output.cpp.o`, `btdiag.cpp.o`,
+`control_telemetry.cpp.o`, `main.c.o`, and `sketch.cpp.o`. No warning originated
+from those sources. The pinned dependency stack emitted two known deprecation
+warnings: Bluepad32 includes ESP-IDF's legacy timer-group header, and
+`esp_diagnostics` includes the deprecated FreeRTOS task-snapshot header.
+PlatformIO also attempted the unsupported optional `esp-idf-size --ng` form,
+reported exit code 2 for that size-display step, fell back to its normal size
+check, generated both firmware images, and ended with `SUCCESS`.
+
+## 2026-09-26 controller-baseline independence
+
+Run from `experiments/esp32-bluetooth-controller-baseline/`:
+
+```bash
+./scripts/bootstrap-dependencies.sh
+./scripts/pio.sh --version
+./scripts/pio.sh project config --json-output
+./scripts/pio.sh run --environment esp32doit-devkit-v1
+```
+
+The bootstrap exited 0 with its pinned components already present, and the
+baseline's own wrapper reported PlatformIO Core `6.1.19`. Its resolved
+configuration contained one environment, `esp32doit-devkit-v1`, and used the
+baseline's own `main/` source and `.tooling/` directory. The independent build
+exited 0 with `SUCCESS` in 264.65 seconds and compiled exactly these baseline
+project objects: `btdiag.cpp.o`, `main.c.o`, and `sketch.cpp.o`.
+
+| Output | Result |
+| --- | --- |
+| RAM | 83,648 of 327,680 bytes (25.5%) |
+| Flash | 714,468 of 4,194,304 bytes (17.0%) |
+| `firmware.elf` file size | 7,384,816 bytes |
+| `firmware.bin` file size | 714,864 bytes |
+
+The dependency stack produced the same Bluepad32 timer-group and
+`esp_diagnostics` task-snapshot deprecation warnings described above. The
+unsupported optional `esp-idf-size --ng` display also fell back successfully;
+no warning originated from the baseline's `main/` sources.
+
+After the build, repository-root checks of the baseline path found no working
+tree diff, staged diff, or non-ignored untracked files. Its tracked tree at
+`HEAD` was `4bf49e1acf66f3b483e9e57247cb9616626efbad`. This confirms that Lesson 02
+work did not modify the baseline's tracked source or documented behavior;
+ignored build products remain local to the baseline. This is independent-build
+evidence, not a new controller-on-hardware runtime test.
 
 ## 2026-09-26 Lesson 02 scaffold
 
@@ -55,7 +159,9 @@ back after that unsupported option. No warning originated from Lesson 02's
 
 ## Verification boundary
 
-This verifies only that the standalone scaffold bootstraps and builds for the
-supported ESP32-WROOM board. It does not claim that Bluetooth has been exercised
-on hardware or that motor/servo mapping, actuator outputs, bench wiring, or
-physical motion have been implemented or verified.
+The current host checks verify deterministic software behavior, and the clean
+firmware build verifies compilation and image generation for the supported
+ESP32-WROOM board. Neither result proves upload, Bluetooth connection, GPIO
+waveforms, HW-627 wiring, supply integrity, servo motion, motor motion, reversal
+on physical outputs, or failsafe behavior on connected hardware. Those checks
+remain separate and pending until the staged bench procedure is performed.
