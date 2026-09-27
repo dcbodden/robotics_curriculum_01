@@ -3,6 +3,7 @@ set(sources
     "btdiag.cpp"
     "control_telemetry.cpp"
     "main.c"
+    "shared_console.cpp"
     "sketch.cpp"
 )
 
@@ -11,6 +12,7 @@ set(component_dependencies
     "bluepad32"
     "bluepad32_arduino"
     "btstack"
+    "esp_driver_uart"
 )
 
 idf_component_register(

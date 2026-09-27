@@ -27,7 +27,7 @@
 - [x] 4.1 Integrate the selected-controller snapshots and control-policy cadence with nonblocking `BP32.update()` processing while retaining the baseline connection, first-input, timeout, and confirmation-gated bond-clearing behavior.
 - [x] 4.2 Preserve versioned `BTDIAG` lifecycle records and lower-level Bluetooth logs while updating firmware identity for Lesson 02.
 - [x] 4.3 Add versioned, bounded-rate control telemetry for state, freshness, axes, target/applied motor commands, bridge direction and duty, servo pulse, and safety transition reason.
-- [x] 4.4 Verify that significant safety transitions emit immediate evidence while periodic telemetry remains at or below the designed five-records-per-second rate and cannot block control processing.
+- [x] 4.4 Correct shared UART and telemetry initialization to reuse BTstack's active console without resizing, restarting, or replacing its driver; serialize bounded-rate application records under the console's native capacity, add regression coverage for constrained write capacity, and verify telemetry cannot corrupt output or prevent Bluetooth scanning and control processing.
 
 ## 5. Bench Wiring and Safety Documentation
 
@@ -51,6 +51,7 @@
 - [x] 7.1 Run the complete host mapping and policy check suite with warnings treated as errors and record the command and result.
 - [x] 7.2 Bootstrap pinned dependencies and perform a clean firmware build with the project-local PlatformIO wrapper; record resolved versions, memory use, warnings, and the physical-verification boundary.
 - [x] 7.3 Confirm the existing Bluetooth controller baseline still builds independently and its tracked source and documented behavior were not modified.
-- [ ] 7.4 Conduct or explicitly mark pending the controller connection, actuator-power-off safety, servo motion, forward/reverse motor motion, reversal, failsafe, and simultaneous-motion checks, keeping automated and user-observed evidence separate.
-- [ ] 7.5 Update the ESP32 lesson collection index and root navigation so learners and teachers can find Lesson 02 without presenting it as a completed rover.
-- [ ] 7.6 Run strict OpenSpec validation and review the finished lesson against every scenario in the delta specification.
+- [x] 7.4 Clean-build and upload the UART-corrected firmware, then record clean startup through `accepting_connections` and repeat the controller pairing or bonded-reconnection check with actuator power off, keeping automated and user-observed evidence separate.
+- [ ] 7.5 Conduct or explicitly mark pending the servo motion, forward/reverse motor motion, reversal, failsafe, and simultaneous-motion checks, keeping automated and user-observed evidence separate.
+- [ ] 7.6 Update the ESP32 lesson collection index and root navigation so learners and teachers can find Lesson 02 without presenting it as a completed rover.
+- [ ] 7.7 Run strict OpenSpec validation and review the finished lesson against every scenario in the delta specification.

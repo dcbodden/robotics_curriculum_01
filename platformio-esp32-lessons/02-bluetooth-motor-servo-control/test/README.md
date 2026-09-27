@@ -29,8 +29,10 @@ servo pulse widths to 50 Hz LEDC duty values.
 
 `test_control_telemetry.cpp` checks that significant transitions bypass the
 periodic gate and that ordinary `CONTROL` status records remain limited to one
-every 200 ms, or at most five records per second. The embedded writer drains
-its fixed queue only when a complete record fits within
-`Serial.availableForWrite()`. The configured transmit ring accepts each record
-atomically, so telemetry neither blocks control processing nor interleaves with
-`BTDIAG` lines.
+every 200 ms, or at most five records per second. It also checks constrained
+console capacities below, equal to, and above a queued record's size. The
+embedded writer reuses the UART ring established by BTstack and drains its
+fixed queue only when a complete record fits within
+the active UART driver's reported free TX capacity. It never resizes or reinstalls the active UART
+driver, and insufficient transient capacity causes a nonblocking retry rather
+than a partial application record.

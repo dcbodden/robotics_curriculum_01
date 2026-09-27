@@ -1,5 +1,77 @@
 # Build and Host Verification
 
+## 2026-09-27 shared-console correction and actuator-power-off reconnection
+
+### Automated evidence
+
+The UART regression was reproduced before the correction as repeated stale
+record fragments followed by an `IDLE1` task-watchdog report. The corrected
+firmware leaves UART0 under the ownership established by
+`btstack_stdio_init()`: it does not call `Serial.begin()`, resize Arduino
+serial buffers, or install/delete the UART driver. Control records are queued
+only when the active UART TX ring reports enough room for a complete record,
+and the Arduino loop includes the baseline's cooperative 10 ms yield.
+
+The host suite was rerun from the Lesson 02 directory:
+
+```bash
+./test/run-host-checks.sh
+```
+
+It exited 0. In addition to the existing mapping, policy, and actuator checks,
+the telemetry check covered capacities below, equal to, and above a complete
+record and reported:
+
+```text
+Telemetry checks passed: transitions, five-per-second limit, and constrained console capacity.
+```
+
+The firmware was then rebuilt from an explicitly empty build tree:
+
+```bash
+./scripts/pio.sh run --target clean
+./scripts/pio.sh run
+```
+
+The clean build exited 0 with `SUCCESS` in 358.31 seconds. PlatformIO reported
+85,720 of 327,680 RAM bytes (26.2%) and 722,040 of 4,194,304 flash bytes
+(17.2%). The only warnings were the already-recorded dependency deprecations
+and PlatformIO's nonfatal unsupported `esp-idf-size --ng` display attempt.
+
+Firmware `0.2.2` was uploaded to `/dev/ttyUSB1`. Esptool identified an
+ESP32-D0WD-V3 revision 3.1, wrote the 722,448-byte application image, verified
+all hashes, performed a hard reset, and exited with `SUCCESS`.
+
+After releasing the serial monitor's DTR and RTS reset lines, the fresh boot
+produced complete records in this order: `firmware_started` for version
+`0.2.2`, `dependency_identity`, `bluetooth_ready`, and
+`accepting_connections` at 764 ms, followed by `BR/EDR scan -> 1` and
+`BLE scan -> 1`. Complete `CONTROL` records continued at approximately 200 ms
+intervals without a watchdog reset or repeated stale fragments.
+
+The retained-bond controller check then produced valid reports for controller
+index 0. The control policy selected it, observed neutral, and continuously
+reported `state:"disarmed"`, fresh report ages, motor coast/duty 0, and a
+1500-microsecond centered servo command. Cross presses were recorded at
+82,192 ms and 85,104 ms as `BTDIAG controller_input` events with
+`valid_report:true` and `pressed_buttons:"cross"`. No bond-clear command was
+sent. This is serial evidence for Bluetooth discovery, bonded controller input,
+policy processing, and safe logical commands; it is not evidence of electrical
+isolation or physical actuator behavior.
+
+An additional, non-required reset made while the controller was already active
+rediscovered `Wireless Controller` but its SDP query timed out. That attempt
+was stopped without clearing bonds and does not replace the preceding complete
+successful check; future diagnostics should put the controller back into its
+normal HOME-button reconnect state after resetting the ESP32.
+
+### User-observed evidence
+
+The user confirmed that the external actuator supply was off throughout the
+successful controller check. This confirms the test boundary but does not prove
+GPIO waveforms or actuator motion. Servo, motor, reversal, failsafe-motion, and
+simultaneous-motion checks remain pending under task 7.5.
+
 ## 2026-09-26 complete host checks
 
 Run from the Lesson 02 directory:

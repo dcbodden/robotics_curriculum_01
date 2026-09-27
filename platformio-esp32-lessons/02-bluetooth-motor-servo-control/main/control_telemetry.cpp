@@ -7,6 +7,7 @@
 #include <cstdio>
 
 #include "bridge_command.h"
+#include "shared_console.h"
 
 namespace {
 
@@ -95,16 +96,15 @@ bool ControlTelemetryWriter::enqueue(const ControlTelemetrySnapshot& snapshot, b
 void ControlTelemetryWriter::service() {
     if (count_ == 0) return;
 
-    const int writable = Serial.availableForWrite();
-    if (writable <= 0) return;
-
     LineSlot& slot = queue_[head_];
     const size_t remaining = slot.length - slot.offset;
-    if (static_cast<size_t>(writable) < remaining) return;
 
-    // Queue the complete line atomically. Partial writes would allow a
-    // synchronous BTDIAG record to split this JSON object between loop passes.
-    const size_t written = Serial.write(reinterpret_cast<const uint8_t*>(slot.bytes + slot.offset), remaining);
+    // Queue the complete line atomically through BTstack's existing TX ring.
+    // Partial writes would allow a synchronous BTDIAG record to split this JSON
+    // object between loop passes.
+    const size_t written = shared_console::tryWrite(
+        reinterpret_cast<const uint8_t*>(slot.bytes + slot.offset), remaining);
+    if (written == 0) return;
     slot.offset = static_cast<uint16_t>(slot.offset + written);
 
     if (slot.offset == slot.length) {

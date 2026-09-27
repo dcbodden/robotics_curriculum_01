@@ -10,10 +10,12 @@
 
 #include <cstdio>
 
+#include "shared_console.h"
+
 namespace {
 
 constexpr char kFirmwareName[] = "02-bluetooth-motor-servo-control";
-constexpr char kFirmwareVersion[] = "0.2.0";
+constexpr char kFirmwareVersion[] = "0.2.2";
 constexpr char kBoard[] = "esp32doit-devkit-v1";
 constexpr char kPlatform[] = "pioarduino-54.03.21";
 constexpr char kTemplateRevision[] = "d07a9385f46f7215f51fc3eb5e40c5a484cfe102";
@@ -44,7 +46,7 @@ void emitControllerEvent(const char* event,
     char vendorIdJson[6];
     char productIdJson[6];
 
-    Serial.printf(
+    shared_console::printf(
         "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,\"event\":\"%s\",\"controller_index\":%d,"
         "\"bluetooth_address\":\"%02x:%02x:%02x:%02x:%02x:%02x\",\"model_name\":\"%s\","
         "\"model_id\":%u,\"subtype\":%u,\"vendor_id\":%s,\"product_id\":%s}\n",
@@ -69,7 +71,7 @@ void emitControllerInputEvent(const char* event,
                               int32_t axisRY,
                               int32_t brake,
                               int32_t throttle) {
-    Serial.printf(
+    shared_console::printf(
         "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,\"event\":\"%s\",\"controller_index\":%d,"
         "\"valid_report\":true,\"buttons\":%u,\"misc_buttons\":%u,\"dpad\":%u,"
         "\"pressed_buttons\":\"%s\",\"pressed_directions\":\"%s\","
@@ -86,14 +88,14 @@ void emitControllerInputEvent(const char* event,
 namespace btdiag {
 
 void emitFirmwareStarted() {
-    Serial.printf(
+    shared_console::printf(
         "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,\"event\":\"firmware_started\","
         "\"firmware\":\"%s\",\"firmware_version\":\"%s\"}\n",
         kProtocolVersion, elapsedMs(), kFirmwareName, kFirmwareVersion);
 }
 
 void emitDependencyIdentity() {
-    Serial.printf(
+    shared_console::printf(
         "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,\"event\":\"dependency_identity\","
         "\"board\":\"%s\",\"platform\":\"%s\",\"template_revision\":\"%s\","
         "\"derived_from\":\"%s\",\"baseline_tree\":\"%s\","
@@ -103,28 +105,28 @@ void emitDependencyIdentity() {
 }
 
 void emitBluetoothReady() {
-    Serial.printf(
+    shared_console::printf(
         "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,\"event\":\"bluetooth_ready\","
         "\"transport\":\"BR/EDR\"}\n",
         kProtocolVersion, elapsedMs());
 }
 
 void emitAcceptingConnections(unsigned long timeoutMs) {
-    Serial.printf(
+    shared_console::printf(
         "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,\"event\":\"accepting_connections\","
         "\"transport\":\"BR/EDR\",\"controller_mode\":\"ps4_compatible\",\"timeout_ms\":%lu}\n",
         kProtocolVersion, elapsedMs(), timeoutMs);
 }
 
 void emitWaitingForController(unsigned long waitedMs, unsigned long remainingMs) {
-    Serial.printf(
+    shared_console::printf(
         "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,\"event\":\"waiting_for_controller\","
         "\"waited_ms\":%lu,\"remaining_ms\":%lu}\n",
         kProtocolVersion, elapsedMs(), waitedMs, remainingMs);
 }
 
 void emitConnectionTimeout(unsigned long waitedMs, unsigned long timeoutMs) {
-    Serial.printf(
+    shared_console::printf(
         "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,\"event\":\"connection_timeout\","
         "\"waited_ms\":%lu,\"timeout_ms\":%lu,\"outcome\":\"no_controller_observed\"}\n",
         kProtocolVersion, elapsedMs(), waitedMs, timeoutMs);
@@ -183,7 +185,7 @@ void emitControllerInput(int index,
 }
 
 void emitBondClearConfirmationRequired(unsigned long timeoutMs) {
-    Serial.printf(
+    shared_console::printf(
         "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,"
         "\"event\":\"bond_clear_confirmation_required\",\"confirm_command\":\"CONFIRM_CLEAR_BONDS\","
         "\"cancel_command\":\"CANCEL_CLEAR_BONDS\",\"timeout_ms\":%lu,\"bonds_changed\":false}\n",
@@ -191,28 +193,28 @@ void emitBondClearConfirmationRequired(unsigned long timeoutMs) {
 }
 
 void emitBondClearConfirmationRejected(const char* reason) {
-    Serial.printf(
+    shared_console::printf(
         "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,"
         "\"event\":\"bond_clear_confirmation_rejected\",\"reason\":\"%s\",\"bonds_changed\":false}\n",
         kProtocolVersion, elapsedMs(), reason);
 }
 
 void emitBondClearCancelled(bool hadPendingRequest) {
-    Serial.printf(
+    shared_console::printf(
         "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,\"event\":\"bond_clear_cancelled\","
         "\"had_pending_request\":%s,\"bonds_changed\":false}\n",
         kProtocolVersion, elapsedMs(), hadPendingRequest ? "true" : "false");
 }
 
 void emitBondClearExpired(unsigned long waitedMs, unsigned long timeoutMs) {
-    Serial.printf(
+    shared_console::printf(
         "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,\"event\":\"bond_clear_expired\","
         "\"waited_ms\":%lu,\"timeout_ms\":%lu,\"bonds_changed\":false}\n",
         kProtocolVersion, elapsedMs(), waitedMs, timeoutMs);
 }
 
 void emitBondClearCompleted() {
-    Serial.printf(
+    shared_console::printf(
         "BTDIAG {\"protocol_version\":%u,\"elapsed_ms\":%lu,\"event\":\"bond_clear_completed\","
         "\"bonds_changed\":true,\"restart_required\":true}\n",
         kProtocolVersion, elapsedMs());

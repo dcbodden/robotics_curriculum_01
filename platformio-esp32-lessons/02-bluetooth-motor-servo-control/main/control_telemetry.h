@@ -12,6 +12,13 @@ namespace control {
 
 inline uint32_t telemetryElapsed(uint32_t nowMs, uint32_t thenMs) { return nowMs - thenMs; }
 
+// A record is handed to the shared console only when BTstack's active UART can accept
+// the complete remaining line. Returning zero preserves nonblocking behavior
+// and prevents an application record from being split between loop passes.
+inline size_t telemetryWriteSize(size_t available, size_t remaining) {
+    return available >= remaining ? remaining : 0;
+}
+
 class ControlTelemetrySchedule {
 public:
     bool shouldEmit(uint32_t nowMs, bool significantTransition) const {

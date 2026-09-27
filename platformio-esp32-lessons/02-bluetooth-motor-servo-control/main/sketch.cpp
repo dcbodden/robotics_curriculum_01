@@ -10,10 +10,9 @@
 #include "btdiag.h"
 #include "control_policy.h"
 #include "control_telemetry.h"
+#include "shared_console.h"
 
 namespace {
-constexpr unsigned long kSerialSpeed = 115200;
-constexpr size_t kSerialTxBufferSize = 1024;
 constexpr unsigned long kConnectionTimeoutMs = 75000;
 constexpr unsigned long kWaitingIntervalMs = 5000;
 constexpr unsigned long kInputObservationIntervalMs = 100;
@@ -49,6 +48,7 @@ unsigned int connectedControllerCount = 0;
 bool connectionWindowTimedOut = false;
 ControllerPtr controllers[BP32_MAX_CONTROLLERS]{};
 InputTracker inputTrackers[BP32_MAX_CONTROLLERS]{};
+bool controllerSelectionEligible[BP32_MAX_CONTROLLERS]{};
 bool bondClearConfirmationPending = false;
 unsigned long bondClearRequestedAt = 0;
 char serialCommandBuffer[kSerialCommandBufferSize]{};
@@ -204,6 +204,13 @@ void processControllerReports() {
         const GamepadSnapshot snapshot = readGamepad(controller);
         const control::ControlState previousState = controlPolicy.state();
         const control::TransitionReason previousReason = controlPolicy.lastTransition();
+        if (controlPolicy.activeController() == control::kNoController && controllerSelectionEligible[index]) {
+            controlPolicy.controllerConnected(index, true);
+            // A controller already present when the active controller later
+            // disconnects must not inherit control silently. Only a future
+            // connection may become eligible for a new control session.
+            for (bool& eligible : controllerSelectionEligible) eligible = false;
+        }
         const bool reportAccepted = controlPolicy.submitReport(
             {index, now, static_cast<int>(snapshot.axisX), static_cast<int>(snapshot.axisY), true,
              controller->miscStart(), controller->b()});
@@ -290,8 +297,10 @@ void processSerialCommands() {
     expireBondClearRequest();
 
     size_t processed = 0;
-    while (processed < kMaximumSerialBytesPerLoop && Serial.available() > 0) {
-        const char value = static_cast<char>(Serial.read());
+    while (processed < kMaximumSerialBytesPerLoop) {
+        const int nextValue = shared_console::read();
+        if (nextValue < 0) break;
+        const char value = static_cast<char>(nextValue);
         ++processed;
 
         if (value == '\r') {
@@ -342,9 +351,12 @@ void onControllerConnected(ControllerPtr controller) {
         }
         controllers[index] = controller;
         inputTrackers[index] = {};
+        controllerSelectionEligible[index] = controlPolicy.activeController() == control::kNoController;
     }
     emitControllerIdentity(controller, true);
-    controlPolicy.controllerConnected(index, controller->isGamepad());
+    if (controlPolicy.controllerConnected(index, controller->isGamepad())) {
+        for (bool& eligible : controllerSelectionEligible) eligible = false;
+    }
     applyControlOutput();
     emitControlTransitionIfChanged(previousState, previousReason, now);
 }
@@ -359,9 +371,11 @@ void onControllerDisconnected(ControllerPtr controller) {
         --connectedControllerCount;
         controllers[index] = nullptr;
         inputTrackers[index] = {};
+        controllerSelectionEligible[index] = false;
     }
     controlPolicy.controllerDisconnected(index);
     if (activeControllerDisconnected) {
+        for (bool& eligible : controllerSelectionEligible) eligible = false;
         latestActiveAxisX = 0;
         latestActiveAxisY = 0;
     }
@@ -381,10 +395,10 @@ void setup() {
         hardwareOutputValid = true;
     }
 
-    // A full CONTROL record must fit in the TX ring so it can be queued
-    // atomically without blocking or interleaving with BTDIAG output.
-    Serial.setTxBufferSize(kSerialTxBufferSize);
-    Serial.begin(kSerialSpeed);
+    // btstack_stdio_init() already installed UART0 with its own RX/TX rings and
+    // event queue. Attach command input through BTstack's callback without
+    // allowing Arduino HardwareSerial to resize or restart that driver.
+    shared_console::begin();
 
     btdiag::emitFirmwareStarted();
     btdiag::emitDependencyIdentity();
@@ -437,4 +451,9 @@ void loop() {
     emitPeriodicControlTelemetry(millis());
     controlTelemetryWriter.service();
 
+    // Match the proven controller baseline's cooperative yield. Without this,
+    // the Arduino task can starve IDLE1 and trigger the task watchdog while
+    // Bluetooth and telemetry are active. Ten milliseconds remains inside the
+    // control policy's 20 ms update cadence.
+    delay(10);
 }

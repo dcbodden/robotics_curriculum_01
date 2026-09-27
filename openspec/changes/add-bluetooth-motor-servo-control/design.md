@@ -103,7 +103,9 @@ Forward-coast PWM matches the specified zero behavior and makes mechanical coast
 
 Retain versioned `BTDIAG` records for firmware identity, dependency identity, Bluetooth readiness, connection lifecycle, first input, waiting, timeout, and confirmation-gated bond clearing. Give the new firmware its own identity and keep lower-level stack logs visible.
 
-Add a separately identifiable, versioned control record containing active controller index, state, freshness age, raw mapped axes, target and applied signed motor commands, bridge direction/duty, servo pulse command, and transition reason. Emit immediately on significant state transitions and otherwise no faster than a documented bounded interval, initially 200 ms. Serial output must never delay the control cadence.
+`btstack_stdio_init()` establishes UART0 before the Arduino `setup()` function runs and remains the console owner. Arduino serial output and lesson telemetry reuse that active configuration; the lesson must not resize, restart, or replace the UART driver after BTstack initialization. In particular, it must not request a larger Arduino TX ring that causes the pinned core to reinstall the already-active driver.
+
+Add a separately identifiable, versioned control record containing active controller index, state, freshness age, raw mapped axes, target and applied signed motor commands, bridge direction/duty, servo pulse command, and transition reason. Emit immediately on significant state transitions and otherwise no faster than a documented bounded interval, initially 200 ms. The telemetry path tolerates the console's actual available write capacity and serializes application records without assuming a large UART ring buffer. Serial output must never delay the control cadence, corrupt the shared console stream, or prevent Bluetooth scanning from starting. If telemetry setup or enqueueing fails, actuator outputs remain safe and Bluetooth connection processing continues with degraded diagnostic evidence.
 
 ### 9. Treat the HW-627 as an inspected module and add external power-integrity parts
 
@@ -134,6 +136,7 @@ The geared motor remains secured, bare, and unloaded. The approximate 300 mA fig
 - **[Servo endpoints vary and 1000/2000 microseconds may bind a particular unit]** → Centralize limits, start near center, test incrementally, and narrow endpoints before wider travel.
 - **[A 300 ms watchdog may trip if a controller produces unexpectedly sparse reports]** → Log freshness age during actuator-power-off testing and adjust only with evidence while retaining the 500 ms requirement.
 - **[Slew limiting can prevent a low-inertia motor from overcoming starting friction at small commands]** → Preserve the requested target in telemetry and test increasing bounded commands; do not hide the physical starting threshold with an automatic minimum duty in the initial design.
+- **[Reconfiguring UART0 after BTstack console startup can corrupt output and starve application progress]** → Reuse BTstack's initialized UART driver, avoid Arduino TX-buffer resizing or driver replacement, and verify clean startup through `accepting_connections`. The observed regression truncated a GPIO log and then repeated stale UART fragments without bound, obscuring lifecycle records and preventing useful pairing evidence.
 - **[Duplicating the baseline scaffold creates maintenance work]** → Record exact upstream revisions and keep the derivation explicit; independence is favored over a shared build tree for reproducibility.
 
 ## Migration Plan

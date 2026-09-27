@@ -125,6 +125,10 @@ The lesson SHALL retain distinguishable Bluetooth lifecycle diagnostics and add 
 - **WHEN** an armed controller changes the mapped stick axes
 - **THEN** serial output reports the corresponding bounded motor and servo commands at a rate that remains readable without blocking control processing
 
+#### Scenario: Share the initialized Bluetooth console safely
+- **WHEN** BTstack has initialized the UART console before the Arduino `setup()` function runs
+- **THEN** the lesson reuses that active console without resizing, restarting, or replacing its UART driver, and bounded lifecycle and control records remain readable without preventing controller scanning or control-loop processing
+
 #### Scenario: Observe a safety transition
 - **WHEN** the lesson disarms or enters failsafe
 - **THEN** serial evidence identifies the reason and shows a zero motor command and the configured safe servo command

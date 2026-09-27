@@ -31,5 +31,13 @@ int main() {
     assert(!schedule.shouldEmit(1199, false));
     assert(schedule.shouldEmit(1200, false));
 
-    puts("Telemetry checks passed: immediate transitions and at most five periodic records per second.");
+    // The writer never emits a partial application record when the shared
+    // BTstack console temporarily has less capacity than the queued line.
+    assert(control::telemetryWriteSize(0, 300) == 0);
+    assert(control::telemetryWriteSize(127, 300) == 0);
+    assert(control::telemetryWriteSize(299, 300) == 0);
+    assert(control::telemetryWriteSize(300, 300) == 300);
+    assert(control::telemetryWriteSize(4096, 300) == 300);
+
+    puts("Telemetry checks passed: transitions, five-per-second limit, and constrained console capacity.");
 }
