@@ -1,5 +1,32 @@
 # Build and Host Verification
 
+## 2026-09-27 powered actuator bench check
+
+### Automated evidence
+
+No new automated run was used as physical evidence for this check. The
+previously recorded host suite covers servo and motor command mapping,
+forward/reverse bridge commands, the zero-before-reverse policy, explicit
+disarming, and disconnect/watchdog failsafe logic. Those deterministic checks
+do not prove motion, GPIO timing, supply integrity, or failsafe behavior with
+connected actuators.
+
+### User-observed evidence
+
+With the external actuator supply enabled, the user reported that arming and
+disarming worked and that both left-stick control axes operated their intended
+actuators. The horizontal axis moved the servo, and the vertical axis drove the
+secured motor in both forward and reverse. Direct direction reversal behaved
+safely, and simultaneous motor-and-servo operation worked without an observed
+reset or erratic actuator response.
+
+The controller-disconnect/loss test was not performed directly. Physical
+confirmation that disconnect or report loss forces motor coast and servo center
+within the required interval therefore remains pending. No oscilloscope capture
+or independent supply-voltage/current measurement was supplied, so the observed
+reversal supports the behavior but does not measure the exact zero interval or
+electrical transients.
+
 ## 2026-09-27 shared-console correction and actuator-power-off reconnection
 
 ### Automated evidence
@@ -69,8 +96,10 @@ normal HOME-button reconnect state after resetting the ESP32.
 
 The user confirmed that the external actuator supply was off throughout the
 successful controller check. This confirms the test boundary but does not prove
-GPIO waveforms or actuator motion. Servo, motor, reversal, failsafe-motion, and
-simultaneous-motion checks remain pending under task 7.5.
+GPIO waveforms or actuator motion. At the end of this actuator-power-off check,
+servo, motor, reversal, failsafe-motion, and simultaneous-motion checks were
+still pending; the later powered check above records the subsequently observed
+motion and the remaining disconnect/failsafe boundary.
 
 ## 2026-09-26 complete host checks
 
