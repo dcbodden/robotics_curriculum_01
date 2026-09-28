@@ -1,5 +1,94 @@
 # Build and Host Verification
 
+## 2026-09-27 strict OpenSpec validation and scenario review
+
+Strict validation was run from the repository root:
+
+```bash
+openspec validate add-bluetooth-motor-servo-control --strict
+```
+
+It exited 0 with `Change 'add-bluetooth-motor-servo-control' is valid`. The
+current lesson host suite was also rerun with `./test/run-host-checks.sh`; all
+mapping, policy, actuator-command, and telemetry checks passed with warnings
+treated as errors. The controller baseline path still had no working-tree
+changes.
+
+Every delta-spec scenario was then reviewed against the finished lesson. In
+the tables below, “conforms” means that the required code, documentation, test,
+or recorded observation exists. It does not elevate host checks or logical
+telemetry into physical evidence.
+
+### Standalone Bluetooth actuator lesson
+
+| Scenario | Review result |
+| --- | --- |
+| Open the actuator lesson independently | Conforms: the lesson-local configuration, pinned dependencies, wrapper, source tree, instructions, and recorded clean build are self-contained. |
+| Browse the ESP32 lesson collection | Conforms: the collection index lists Lesson 02 after Lesson 01 and identifies Bluetooth Classic, bidirectional motor, servo, and bench-only scope. |
+| Keep the diagnostic baseline intact | Conforms: the baseline independently built from its own tree, its tracked tree was unchanged, and it remains unchanged in the current worktree. |
+
+### Wireless motor and servo command mapping
+
+| Scenario | Review result |
+| --- | --- |
+| Move the stick forward and backward | Conforms: mapping checks cover both signed directions, and powered motion was user-observed in both directions. |
+| Steer left and right | Conforms: mapping checks cover bounded pulses on both sides of center, and powered servo response was user-observed. |
+| Release the stick | Conforms: mapping and policy checks require zero motor and a 1500-microsecond centered servo command inside both dead zones. |
+| Receive an extreme or out-of-range axis value | Conforms: host checks cover clamping below -512 and above 511 plus bounded motor and servo outputs across the entire supported range. |
+
+### DRV8833 bidirectional output behavior
+
+| Scenario | Review result |
+| --- | --- |
+| Command forward motion | Conforms: bridge checks require AIN1 PWM with AIN2 low, and forward motor motion was user-observed. |
+| Command reverse motion | Conforms: bridge checks require AIN1 low with AIN2 PWM, and reverse motor motion was user-observed. |
+| Reverse direction | Conforms: policy and actuator checks prove immediate zero plus one complete zero update before opposite duty. Safe physical reversal was observed, but the exact GPIO zero interval was not instrumented and remains a stated evidence boundary. |
+| Command motor stop | Conforms: bridge checks require both inputs low, and the missions explicitly distinguish electrical coast from continuing mechanical motion. |
+
+### Explicit arming and loss-of-control failsafe
+
+| Scenario | Review result |
+| --- | --- |
+| Start or connect with a displaced stick | Conforms: the policy check rejects neutral readiness and arming outside the dead zones, and Mission 1 requires this check with actuator power off. |
+| Arm from neutral | Conforms: policy checks require a prior fresh neutral report and a later OPTIONS edge; powered arm/disarm operation was user-observed. |
+| Lose fresh controller input | Conforms in implementation: the 300 ms watchdog host check proves zero motor and centered servo inside the 500 ms limit. A powered physical report-loss observation remains pending. |
+| Disconnect and reconnect | Conforms in implementation: host checks require safe output, fresh neutral, and a new arm edge; bonded reconnection was observed with actuator power off. Powered physical disconnect behavior remains pending. |
+| Disarm explicitly | Conforms: host checks prove immediate safe output and the user observed working disarm behavior with actuator power enabled. |
+
+### Bench-only lesson guidance
+
+| Scenario | Review result |
+| --- | --- |
+| Prepare the bench circuit | Conforms: `BENCH_WIRING.md` specifies USB-only ESP32 power, separate regulated actuator-positive branches, a common signal reference, and no actuator-positive connection to ESP32 power pins. |
+| Begin physical testing | Conforms: the wiring checklist and gated missions require neutral evidence, secured unloaded actuators, clear motion areas, polarity checks, and conservative current limiting before power. |
+| Encounter abnormal operation | Conforms: the guide requires immediate external-power removal followed by USB removal, inspection, and no reconnection until the cause is corrected. |
+| Preserve later rover scope | Conforms: the lesson, collection index, and root navigation reserve batteries, conversion, wheels, chassis, linkage, and complete rover wiring for later work. |
+
+### Power-integrity and inductive-load guidance
+
+| Scenario | Review result |
+| --- | --- |
+| Add initial local decoupling | Conforms: the inspected-module guide specifies 100 nF at the motor, 100 nF at driver VCC/GND, and 100–220 uF local bulk with placement, polarity, and rating checks. |
+| Address servo or shared-supply transients | Conforms: the guide gives measurement-driven 470 uF driver, 100–470 uF servo, and 470–1000 uF distribution options without treating capacitance as a supply substitute. |
+| Consider a motor flywheel diode | Conforms: the guide prohibits a single diode across the reversible motor and explains DRV8833 H-bridge recirculation. |
+| Size the supply and driver | Conforms: the 300 mA value is labeled an unverified running estimate; startup/stall demand, thermal limits, and the prohibition on deliberate stall testing are explicit. |
+
+### Observable control and verification evidence
+
+| Scenario | Review result |
+| --- | --- |
+| Observe normal wireless control | Conforms: bounded `CONTROL` records contain axes, target/applied motor values, bridge direction/duty, servo pulse, state, freshness, and transition reason; connected-controller operation was observed. |
+| Share the initialized Bluetooth console safely | Conforms: the firmware reuses BTstack's UART without restarting its driver, constrained-capacity telemetry checks pass, and startup through scanning plus continuing records was observed. |
+| Observe a safety transition | Conforms: safety transitions enqueue immediate records containing their reason and safe output fields; policy and telemetry checks cover the values. Powered disconnect observation remains pending as noted above. |
+| Verify pure control behavior | Conforms: the warning-as-error host suite covers mapping boundaries, clamping, inversion, arming, watchdog, disconnect/reconnect, slew, reversal, safe bridge commands, servo bounds, and telemetry cadence. |
+| Record verification boundaries | Conforms: this record separates host, build, Bluetooth, user-observed motion, uninstrumented electrical behavior, and the still-pending powered disconnect/failsafe check. |
+
+Review result: all 29 scenarios are represented by conforming implementation,
+documentation, automated checks, or recorded observations. The powered
+disconnect/report-loss test and instrumented reversal/power measurements remain
+clearly identified evidence follow-ups; they are not represented as completed
+physical tests.
+
 ## 2026-09-27 powered actuator bench check
 
 ### Automated evidence

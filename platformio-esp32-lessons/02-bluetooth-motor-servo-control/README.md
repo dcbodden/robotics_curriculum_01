@@ -2,10 +2,10 @@
 
 This independently buildable ESP32-WROOM lesson is the starting point for
 wireless bench control of one bidirectional motor and one servo with a
-Mystiluck/Senze SZ-4015B game controller in PS4-compatible mode. This scaffold
+Mystiluck/Senze SZ-4015B game controller in PS4-compatible mode. The lesson
 retains the controller connection and machine-readable `BTDIAG` behavior from
-the standalone baseline; the actuator mapping, safety policy, and output stages
-are introduced by the following implementation tasks.
+the standalone baseline and adds actuator mapping, safety policy, PWM output,
+and staged bench verification.
 
 The lesson was derived from
 `experiments/esp32-bluetooth-controller-baseline/` at repository commit
@@ -16,7 +16,7 @@ and firmware identity. Building this directory never compiles the baseline or
 another lesson. See [DEPENDENCIES.md](DEPENDENCIES.md) for the full revision
 record.
 
-The scaffold builds successfully for the supported board. A successful build is
+The lesson builds successfully for the supported board. A successful build is
 not proof that this particular controller connects or that actuators operate;
 those claims require separate physical verification.
 
