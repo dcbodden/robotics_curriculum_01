@@ -1,0 +1,13 @@
+.pio/
+build/
+sdkconfig
+sdkconfig.old
+sdkconfig.*
+!sdkconfig.defaults
+managed_components/
+.diagnostics/
+.tooling/
+
+# Populated reproducibly by scripts/bootstrap-dependencies.sh.
+components/*
+!components/README.md

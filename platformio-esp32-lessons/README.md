@@ -13,5 +13,6 @@ Individual lessons identify any additional hardware they require. Lesson 01 uses
 ## Lessons
 
 1. [`01-hello-world`](01-hello-world/) - Verify the ESP32, upload path, onboard LED, and Serial Monitor by repeating blink groups for the Fibonacci sequence 1, 1, 2, 3, 5.
+2. [`02-bluetooth-motor-servo-control`](02-bluetooth-motor-servo-control/) - Use a PS4-compatible Bluetooth Classic controller to command one servo and one forward/reverse geared motor through an HW-627 DRV8833 on a current-limited bench setup. This lesson verifies wireless actuator control; batteries, DC/DC conversion, wheels, chassis work, steering linkage, and complete rover integration remain later work.
 
 The separate [`platformio-esp32-robotics-template`](../platformio-esp32-robotics-template/) contains advanced starter projects for camera, motor-control, and Wi-Fi robotics work.

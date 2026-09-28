@@ -10,7 +10,7 @@ This project is an OpenSpec-driven exploratory robotics curriculum for beginners
 - `syllabus-and-teacher-materials/` — lesson plans, pedagogy notes, and teacher-training/reference material
 - `platformio-uno-template/` — a VS Code-friendly PlatformIO Arduino Uno starter project for digital/physical integration lessons
 - [`platformio-uno-lessons/`](platformio-uno-lessons/) — numbered, independently buildable Arduino Uno projects, beginning with [`01-gpio-transistor-switch`](platformio-uno-lessons/01-gpio-transistor-switch/) for controlling and measuring a transistor-switched LED with digital pin 8
-- [`platformio-esp32-lessons/`](platformio-esp32-lessons/) — numbered, independently buildable ESP32 DevKit projects, beginning with `01-hello-world` for verifying the onboard LED and Serial Monitor
+- [`platformio-esp32-lessons/`](platformio-esp32-lessons/) — numbered, independently buildable ESP32 DevKit projects: begin with [`01-hello-world`](platformio-esp32-lessons/01-hello-world/) to verify the board and toolchain, then use [`02-bluetooth-motor-servo-control`](platformio-esp32-lessons/02-bluetooth-motor-servo-control/) for bench-only PS4-compatible Bluetooth control of a bidirectional motor and servo; batteries, chassis work, and complete rover integration come later
 - `platformio-esp32-robotics-template/` — an ESP32-WROOM-32 advanced robotics template organized around OV7670 camera work, DRV8833 motor control, an FPV Wi-Fi RC car project, and a follow-on semi-autonomous robotics project
 - `openspec/` — lightweight OpenSpec planning artifacts for repository structure and future curriculum changes
 
