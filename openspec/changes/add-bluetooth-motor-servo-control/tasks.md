@@ -53,5 +53,5 @@
 - [x] 7.3 Confirm the existing Bluetooth controller baseline still builds independently and its tracked source and documented behavior were not modified.
 - [x] 7.4 Clean-build and upload the UART-corrected firmware, then record clean startup through `accepting_connections` and repeat the controller pairing or bonded-reconnection check with actuator power off, keeping automated and user-observed evidence separate.
 - [x] 7.5 Conduct or explicitly mark pending the servo motion, forward/reverse motor motion, reversal, failsafe, and simultaneous-motion checks, keeping automated and user-observed evidence separate.
-- [ ] 7.6 Update the ESP32 lesson collection index and root navigation so learners and teachers can find Lesson 02 without presenting it as a completed rover.
+- [x] 7.6 Update the ESP32 lesson collection index and root navigation so learners and teachers can find Lesson 02 without presenting it as a completed rover.
 - [ ] 7.7 Run strict OpenSpec validation and review the finished lesson against every scenario in the delta specification.
