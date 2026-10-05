@@ -147,26 +147,36 @@ and bench-supply arrangement.
 
 ## Planning power budget
 
-The values in this section size the first tests. They are not proof of battery,
-converter, driver, or wiring capacity. `Measured` remains pending until the
-corresponding staged test is performed.
+The values in this section size the first tests. Every current shown before a
+staged test is a **planning estimate**, even when it is based on supplier test
+data. It is not proof of battery, converter, driver, or wiring capacity.
+`Measured` remains pending until the corresponding staged test is performed.
 
 | Load | Rail | Expected operating current | Conservative planning current | Planning output power | Measured |
 | --- | ---: | ---: | ---: | ---: | --- |
-| Bluetooth ESP32 DEVKITV1 | 5.0 V | 0.15–0.20 A with Bluetooth active | 0.50 A | 2.50 W | Pending |
-| TT motor A | 4.5 V maximum | 0.155 A no-load reference | 1.20 A supplied stall reference | 5.40 W | Pending |
-| TT motor B | 4.5 V maximum | 0.155 A no-load reference | 1.20 A supplied stall reference | 5.40 W | Pending |
+| Bluetooth ESP32 DEVKITV1 | 5.0 V | 0.15–0.20 A planning estimate with Bluetooth active | 0.50 A planning allowance | 2.50 W | Pending |
+| TT motor A | 4.5 V maximum | 0.155 A supplier reference used as a planning estimate | 1.20 A supplier stall reference used as a planning bound | 5.40 W | Pending |
+| TT motor B | 4.5 V maximum | 0.155 A supplier reference used as a planning estimate | 1.20 A supplier stall reference used as a planning bound | 5.40 W | Pending |
 | Phase-1 output total | mixed | At least 2.40 W plus driver losses using the reference no-load currents | Simultaneous arithmetic planning case | 13.30 W | Pending |
-| ESP32-S3 camera branch, phase 2 | 5.0 V | Unknown until measured | 1.00 A placeholder | 5.00 W | Deferred |
+| ESP32-S3 camera branch, phase 2 | 5.0 V | Unknown until measured | 1.00 A placeholder planning allowance, not a documented demand | 5.00 W | Deferred |
 | Phase-2 output total | mixed | Unknown until measured | Simultaneous arithmetic planning case | 18.30 W | Deferred |
 
-The 1.20 A motor values are supplied stall references at 4.5 V, not measured
-startup currents and not a test target. The procedure never deliberately
-stalls either motor. A handheld meter may also miss a short startup transient,
-so an observed maximum must not be represented as the exact peak.
+The motor figures come from a supplier's test of one example of the same
+described motor type. They are planning estimates for these two specimens, not
+their measurements. In particular, the 1.20 A values are supplier stall
+references at 4.5 V, not measured startup currents and not a test target. The
+procedure never deliberately stalls either motor. Recorded free-start and
+unloaded-running values replace the corresponding planning values for later
+budgets; the supplier stall figure remains only an unverified upper reference.
+A handheld meter may also miss a short startup transient, so an observed
+maximum must not be represented as the exact peak.
 
-Using 80% aggregate conversion efficiency only as a conservative planning
-assumption gives:
+The **80% aggregate conversion efficiency is a planning estimate**, not a
+Texas Instruments datasheet value and not a measurement of any HW-411. Actual
+efficiency depends on input voltage, output voltage, current, the converter IC,
+diode, inductor, capacitors, PCB layout, and temperature. Replace 80% in later
+budgets with input/output measurements for each assigned HW-411. Until then,
+using it as a conservative arithmetic assumption gives:
 
 | Planning case | Load-side power | Estimated pack power | Pack current at 12.6 V | Pack current at 11.1 V | Pack current at 9.0 V |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -177,6 +187,14 @@ These totals do not establish that one HW-411 can continuously deliver the
 motor branch's arithmetic case or that the HW-627 can sustain both bridges at
 their stall references. Voltage droop, resets, faults, and temperature are part
 of the acceptance evidence.
+
+The phase-2 camera's **1.00 A allowance is also only a planning estimate**. It
+is not an Espressif or camera-board specification and does not claim that the
+board will draw 1.00 A. The exact third-party camera board, regulator, OV3660
+operating mode, Wi-Fi conditions, frame size, frame rate, illumination, and
+firmware can all affect demand. Keep phase 2 disconnected until the board is
+identified; then replace this allowance with measured boot, Wi-Fi-connect, and
+representative-streaming current.
 
 ## Expansion boundary
 
@@ -405,9 +423,36 @@ The DRV8833 bridge provides the bidirectional switching and winding-current
 recirculation paths. The external motor-noise component is the non-polarized
 terminal capacitor already fitted to each motor, not a single polarized diode.
 
+## Component sources and evidence limits
+
+Use these primary manufacturer or supplier references to understand the named
+components. They do not override the staged measurements, and they do not
+certify a visually similar module or board whose complete design is unknown.
+
+| Component | Primary source | What the source establishes here | What it does not establish |
+| --- | --- | --- | --- |
+| 1:48 TT motors | [Adafruit product 3777: TT Motor, 200 RPM, 3–6 VDC](https://www.adafruit.com/product/3777) | The product description matches the supplied 1:48 ratio, 200 mm leads, 3–6 V range, and single-sample no-load/stall figures used as planning estimates. | It does not prove the exact SKU of MOTOR-A or MOTOR-B, their startup current, or their condition. Do not deliberately reproduce its stall test. |
+| DRV8833 IC | [Texas Instruments DRV8833 datasheet](https://www.ti.com/lit/ds/symlink/drv8833.pdf) | The IC is a dual H-bridge intended to drive two DC motors and documents its supply range, package-dependent current ratings, current regulation, recirculation behavior, and protection functions. | It does not establish the HW-627's package option, thermal pad/layout, current-limit configuration, connector capability, or safe complete-module continuous current. |
+| LM2596 IC | [Texas Instruments LM2596 datasheet](https://www.ti.com/lit/ds/symlink/lm2596.pdf) | The IC datasheet documents the regulator family, reference designs, test conditions, external-component dependence, efficiency curves, and thermal/layout considerations. | It does not prove that the HW-411 uses a genuine TI IC, reproduce its reference design, sustain 3 A, or achieve 80% efficiency at either assigned load. |
+| ESP32-WROOM family | [Espressif ESP32-WROOM-32 datasheet](https://documentation.espressif.com/esp32-wroom-32_datasheet_en.html) | It supplies family-level module voltage, radio, and current-consumption context. | The photographed board's shield does not identify an exact Espressif module variant, and the datasheet does not specify the complete DEVKITV1 board's 5 V input or Bluetooth workload current. |
+| ESP32-S3-WROOM-1 family | [Espressif ESP32-S3-WROOM-1/1U datasheet](https://documentation.espressif.com/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf) | It supplies family-level module voltage, Wi-Fi, memory-variant, and current-consumption context for later identification. | It does not specify the unidentified camera carrier board, its 5 V power path/regulator, OV3660 sensor load, or streaming workload current. |
+
+The evidence labels in this guide mean:
+
+- **Datasheet limit** applies only when the exact manufacturer part, package,
+  circuit, and stated test conditions have been established.
+- **Supplier reference used as a planning estimate** is published test data for
+  one supplier sample; it is not a measurement of either curriculum specimen.
+- **Planning estimate** or **planning allowance** is provisional arithmetic for
+  choosing the first meter range and test boundary. It must not be reported as
+  observed demand, efficiency, capacity, or surplus.
+- **Measured** means a value recorded from the identified assembly at a stated
+  measurement point, rail voltage, and operating state. Later tasks add the
+  measurement forms and replace applicable planning values with that evidence.
+
 ## Follow-on sections
 
-Authoritative source references, the multimeter procedure, measurement
-records, shutdown steps, and the acceptance checklist are added by subsequent
-tasks in this OpenSpec change. The current hardware inventory and known
-markings are in [RoverPowerHardwareRecord.md](RoverPowerHardwareRecord.md).
+The multimeter procedure, measurement records, shutdown steps, and acceptance
+checklist are added by subsequent tasks in this OpenSpec change. The current
+hardware inventory and known markings are in
+[RoverPowerHardwareRecord.md](RoverPowerHardwareRecord.md).

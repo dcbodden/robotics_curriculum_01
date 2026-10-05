@@ -4,7 +4,7 @@
 - [x] 1.2 Expand `syllabus-and-teacher-materials/Explorations/PowerArchitecture.md` into the follow-on guide with the three-branch block diagram, phase boundaries, power budget, expansion boundary, and explicit preservation of Lesson 02's bench-only contract.
 - [x] 1.3 Add a point-to-point wiring table covering fused 3S distribution, the two phase-1 converters, the disconnected phase-2 branch, star returns, ESP32 5 V inputs, mirrored DRV8833 input signals, both bridge outputs, wire sizing, connector polarity, and USB/external-power exclusion.
 - [x] 1.4 Add suppression and energy-storage guidance for both motor-terminal ceramics, driver ceramic and bulk capacitance, ESP32-local bulk capacitance, distribution bulk capacitance, polarity, voltage rating, placement, twisted motor pairs, and the prohibition on a single diode across a reversible motor.
-- [ ] 1.5 Add authoritative component-source references and clearly label the motor currents, converter efficiency, and camera demand as planning estimates until replaced by measurements.
+- [x] 1.5 Add authoritative component-source references and clearly label the motor currents, converter efficiency, and camera demand as planning estimates until replaced by measurements.
 
 ## 2. Measurement and Safety Procedure
 
