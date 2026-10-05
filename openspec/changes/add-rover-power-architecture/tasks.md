@@ -10,8 +10,8 @@
 
 - [x] 2.1 Add a multimeter safety procedure showing voltage-mode parallel probing versus current-mode series insertion, fused-range selection, power-off rewiring, and a mandatory current-jack-to-voltage-jack restoration checkpoint.
 - [x] 2.2 Add measurement tables that identify the measurement point, converter side, rail voltage, operating state, observed current, min/max-capture status, voltage droop, reset or connectivity evidence, driver fault evidence, and temperature observation.
-- [ ] 2.3 Add normal and emergency shutdown sequences, teacher gates, secured-unloaded-motor rules, no-deliberate-stall rules, reachable cutoff requirements, and stop conditions for non-turning motors, unexpected motion, droop, resets, faults, odor, damaged insulation, or excessive heat.
-- [ ] 2.4 Add an acceptance checklist that keeps phase 2 disconnected until every phase-1 source, rail, separate-load, integrated-load, and abnormal-observation item is resolved.
+- [x] 2.3 Add normal and emergency shutdown sequences, teacher gates, secured-unloaded-motor rules, no-deliberate-stall rules, reachable cutoff requirements, and stop conditions for non-turning motors, unexpected motion, droop, resets, faults, odor, damaged insulation, or excessive heat.
+- [x] 2.4 Add an acceptance checklist that keeps phase 2 disconnected until every phase-1 source, rail, separate-load, integrated-load, and abnormal-observation item is resolved.
 
 ## 3. Phase-1 Source and Converter Qualification
 

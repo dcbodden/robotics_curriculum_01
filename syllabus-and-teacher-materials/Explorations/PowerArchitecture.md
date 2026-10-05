@@ -697,8 +697,282 @@ example `HW-411 B case, IR thermometer, 24 C start / 39 C end`—and include the
 test duration. Any interrupted test retains its partial readings and is marked
 `stop`, never silently rewritten as a passing run.
 
-## Follow-on sections
+## Test controls, stop conditions, and shutdown
 
-Shutdown steps and the acceptance checklist are added by subsequent tasks in
-this OpenSpec change. The current hardware inventory and known markings are in
+This is a supervised bench activity. One person operates the controls and meter
+while a teacher or second adult watches the assembly and remains able to remove
+power. Review the normal and emergency shutdown paths aloud before each session.
+
+OSHA identifies rising battery temperature, venting, vapor, smoke, and fire as
+possible signs of lithium-ion thermal runaway; its
+[lithium-ion battery safety guidance](https://www.osha.gov/sites/default/files/publications/OSHA4480.pdf)
+also notes that released gases and particulates may be hazardous. Do not lean
+over, touch, inhale fumes from, or attempt to continue testing a suspect pack.
+Follow the identified pack manufacturer's emergency guidance and the facility's
+emergency plan.
+
+### Teacher authorization gates
+
+The teacher/checker must stop the sequence at each gate until every item for
+that gate is verified and recorded:
+
+1. **Before any battery-powered test:** identify the protected pack and its
+   permitted discharge range; install the intended fuse and a suitable physical
+   cutoff in the positive feed ahead of the star distribution; verify polarity,
+   insulation, strain relief, and the meter configuration. Because the fuse and
+   cutoff are presently deferred in the hardware record, powered testing is not
+   yet authorized.
+2. **Before any motor is connected:** confirm HW-411 A and B with loads removed,
+   verify their output polarity and settings, inspect local capacitance and
+   motor-terminal suppression, keep HW-411 C and the camera disconnected, and
+   verify that USB 5 V is absent from the externally powered ESP32.
+3. **Before each single-motor run:** remove battery power while connecting only
+   the named motor to its bridge. Secure the motor body against movement without
+   clamping, obstructing, loading, or touching its shaft or gearbox output.
+   Remove wheels and keep wires, clothing, hair, tools, and fingers clear.
+4. **Before the two-motor run:** require passing single-motor records for both
+   specimens, secure both motor bodies with shafts free, and verify a
+   neutral/disarmed controller state before motor power is enabled.
+5. **Before integrated phase 1:** require passing separate Bluetooth and motor
+   branch records, correct current-meter placement, and a clear emergency path
+   to the cutoff. Apply motor power only from neutral/disarmed state.
+
+The cutoff must remove battery positive power upstream of all three converters,
+be identified clearly, and be reachable by the supervising adult without
+reaching over motors, exposed conductors, or the battery. It must be suitable
+for the pack's DC voltage and prospective current; an AC wall-switch current
+marking alone does not establish DC interruption capability. Battery connector
+removal is an additional isolation step, not a substitute for a reachable
+emergency cutoff during powered tests.
+
+### Secured-unloaded-motor and no-stall rules
+
+- Test bare, secured motor/gearbox assemblies only. Do not attach wheels, place
+  the assembly on a chassis, or allow it to propel itself during this activity.
+- Leave both shafts free. Do not grip a shaft, block a wheel, jam a gearbox, add
+  a brake, or otherwise create a deliberate stall, even briefly.
+- Begin with only the named motor connected. Advance to two motors only after
+  both single-motor sequences pass.
+- Use the documented conservative command and reversal delay. Do not increase
+  PWM, rail voltage, test duration, or mechanical load to force a failed test to
+  pass. A motor rail adjustment is made only with loads disconnected and never
+  above 4.5 V in this activity.
+- A motor that remains energized but does not turn is an accidental stall.
+  Remove power immediately; do not wait for a meter reading or firmware timeout.
+
+### Immediate stop conditions
+
+Call out `STOP` and use the emergency sequence if any of these occurs:
+
+- a commanded motor does not begin turning promptly or stops while energized;
+- motion is unexpected, a motor restraint shifts, or wiring approaches a shaft;
+- the 5 V rail leaves the exact board's verified input range, the motor rail
+  leaves 4.0–4.5 V, or droop is severe, increasing, or accompanied by unstable
+  operation;
+- either ESP32 resets, browns out, repeatedly boots, or loses Bluetooth/Wi-Fi;
+- the HW-627 fault signal asserts, protection repeatedly trips, or an expected
+  fault signal is unavailable and another abnormal symptom appears;
+- a converter, driver, motor, wire, connector, meter lead, or battery becomes
+  unexpectedly or rapidly hot;
+- there is smoke, vapor, hissing, leaking, swelling, odor, arcing, sparking,
+  discoloration, softened insulation, exposed conductor, or other damage; or
+- the operator loses a reliable view of the assembly or access to the cutoff.
+
+Do not raise voltage, repeat the command, reconnect protection, replace a fuse,
+or add capacitance merely to continue after a stop. Preserve the partial record,
+identify the cause, correct it with power removed, and repeat every affected
+earlier gate before another attempt.
+
+### Normal shutdown
+
+1. Command zero/coast, then explicitly disarm the controller.
+2. Observe that both motors have stopped and record the final operating state.
+3. Open the physical battery cutoff.
+4. Disconnect the protected pack so the assembly cannot be energized
+   accidentally.
+5. Wait for bulk capacitors to discharge. With the meter restored to DC-voltage
+   configuration, verify the relevant rails are at or near 0 V.
+6. Complete the mandatory current-jack-to-voltage-jack restoration checkpoint.
+7. Only then change wiring, move a meter connection, adjust an HW-411, or touch
+   conductors. Inspect for looseness, damage, odor, or retained heat and record
+   the result before storing the assembly.
+
+### Emergency shutdown
+
+1. Call out `STOP`. Do not wait to collect another reading or navigate software.
+2. Use the reachable physical cutoff immediately **if it can be reached without
+   crossing smoke, hot parts, moving machinery, or exposed conductors**.
+3. Step away and follow the facility emergency plan if the cutoff cannot be
+   reached safely, or if the pack is venting, smoking, burning, swelling, or
+   rapidly heating. Keep others away and avoid inhaling vapor or smoke.
+4. Do not touch or move a hot, swollen, leaking, venting, smoking, or burning
+   pack. Contact emergency services when fire, continuing smoke, or immediate
+   danger is present; use firefighting equipment only as directed by the pack
+   manufacturer and facility emergency plan.
+5. After the condition is stable and a responsible adult determines approach
+   is safe, disconnect the protected pack without touching damaged conductors.
+   Leave the system de-energized and allow components to cool in an appropriate
+   monitored location away from combustible material.
+6. Record the stop condition and partial readings. Quarantine damaged equipment
+   from reuse and follow manufacturer and local hazardous-waste instructions;
+   do not place a damaged lithium-ion pack in ordinary trash or recycling.
+7. Do not re-energize the assembly until the cause, damage, corrective action,
+   and repeated earlier checks have been reviewed and approved by the teacher.
+
+## Phase-1 acceptance gate
+
+**Default status: `BLOCKED`.** Keep HW-411 C disconnected from the protected
+pack and keep both of the camera board's USB-C connectors and its external 5 V
+input disconnected. Documentation alone does not pass this gate: each checked
+item requires an actual inspection or measurement plus the cited session and
+record IDs.
+
+Mark an item `PASS` only when its evidence is complete. Mark it `BLOCKED` when
+evidence is missing, a result is out of range, or an abnormal observation is
+unresolved. `Not applicable` is allowed only where the item explicitly offers
+that choice, and it requires a written reason. One blocked item blocks all of
+phase 2.
+
+### Gate record
+
+| Field | Entry |
+| --- | --- |
+| Gate ID and review date | ___ |
+| Phase-1 session ID or IDs reviewed | ___ |
+| Operator | ___ |
+| Teacher/checker | ___ |
+| Motor-rail setting represented by the final records | ___ V |
+| Corrective-action record references, if any | ___ |
+| HW-411 C and camera physical-disconnection verification | location/state: ___; checker initials: ___ |
+
+### A. Source, protection, cutoff, and instrument gate
+
+- [ ] **PASS / BLOCKED:** The exact protected 3S pack is identified; its
+      polarity, permitted discharge-voltage range, current limit, and connector
+      orientation are recorded. Evidence: ___
+- [ ] **PASS / BLOCKED:** The intended pack-side fuse and holder are installed
+      and documented for the actual DC circuit. Evidence: ___
+- [ ] **PASS / BLOCKED:** A suitable DC cutoff is installed upstream of the
+      distribution star, labeled, reachable without crossing hazards, and
+      demonstrated to remove power from both phase-1 branches. Evidence: ___
+- [ ] **PASS / BLOCKED:** Wire and screw-terminal paths are inspected; no motor
+      or pack current is routed through a solderless breadboard rail, ESP32
+      header, or lightweight signal jumper. Evidence: ___
+- [ ] **PASS / BLOCKED:** The meter model, leads, correct installed current fuse,
+      range, time limit, and min/max capability are recorded and suitable for
+      every cited measurement. Evidence: ___
+- [ ] **PASS / BLOCKED:** HW-411 C has no pack input and no camera output
+      connection; the camera is also disconnected from USB. Evidence: ___
+
+### B. Source, converter, rail, and wiring evidence gate
+
+- [ ] **PASS / BLOCKED:** `P1-SRC-01` records correct pack polarity and voltage
+      within the selected pack's documented operating range. Record: ___
+- [ ] **PASS / BLOCKED:** HW-411 A was adjusted and recorded at 5.0 V with its
+      load disconnected, then rechecked at both A output and ESP32 5 V input
+      under every required Bluetooth state. Records: ___
+- [ ] **PASS / BLOCKED:** HW-411 B was adjusted and recorded at 4.0 V initially;
+      its output and HW-627 load-terminal voltage remained within 4.0–4.5 V for
+      every accepted motor state. Records: ___
+- [ ] **PASS / BLOCKED / NOT APPLICABLE:** If B was raised above 4.0 V, the
+      adjustment was made with loads disconnected, stayed at or below 4.5 V,
+      and every affected single- and dual-motor record was repeated with the
+      voltage-qualified record IDs. Reason/records: ___
+- [ ] **PASS / BLOCKED:** Inspection confirms separate positive converter
+      outputs, the defined star return, direct motor-current wiring, correct
+      capacitor polarity/rating/placement, intact motor-terminal suppression,
+      twisted motor pairs where practical, open `J2`, and the documented
+      mirrored logic-signal fan-out without paralleled bridge outputs. Evidence: ___
+- [ ] **PASS / BLOCKED:** USB and external 5 V were never simultaneously applied
+      to the Bluetooth ESP32 during accepted tests. Evidence: ___
+
+### C. Separate-load evidence gate
+
+- [ ] **PASS / BLOCKED:** Bluetooth-only records `P1-A-02` through `P1-A-04`
+      contain A-output current, converter- and board-terminal voltage, operating
+      state, min/max status, connectivity, reset, and temperature observations.
+      Records: ___
+- [ ] **PASS / BLOCKED:** Driver-idle record `P1-B-01` is complete and shows no
+      unexplained fault, droop, protection trip, or heating. Record: ___
+- [ ] **PASS / BLOCKED:** MOTOR-A free-start, settled-forward, reversal/reverse,
+      and coast records are complete with the shaft unrestrained and no
+      deliberate stall. Records: ___
+- [ ] **PASS / BLOCKED:** MOTOR-B has the same complete attributable record set
+      while retaining its specimen identity and lead orientation. Records: ___
+- [ ] **PASS / BLOCKED:** Both-motor start, settled run, bounded reversal, and
+      coast records are complete and show both secured motors responding as
+      commanded. Records: ___
+- [ ] **PASS / BLOCKED:** Every separate-load record identifies the exact current
+      boundary, converter side, rail-voltage point, observed current, displayed
+      maximum and capture status, voltage droop, faults, and temperature. Any
+      handheld-meter maximum remains labeled `observed`, not exact peak. Evidence: ___
+
+### D. Integrated phase-1 evidence gate
+
+- [ ] **PASS / BLOCKED:** `P1-I-01` and `P1-I-02` record whole-pack current and
+      voltage plus the ESP32 and HW-627 load-terminal voltages at safe idle and
+      Bluetooth-connected idle. Records: ___
+- [ ] **PASS / BLOCKED:** `P1-I-03` and `P1-I-04` contain the same attributable
+      evidence during individual MOTOR-A and MOTOR-B operation. Records: ___
+- [ ] **PASS / BLOCKED:** `P1-I-05` contains the same evidence during bounded
+      simultaneous motor operation. Record: ___
+- [ ] **PASS / BLOCKED:** Separate branch and integrated whole-pack readings have
+      been compared with the planning budget without treating arithmetic
+      difference as demonstrated spare capacity. Evidence: ___
+
+### E. Abnormal-observation resolution gate
+
+- [ ] **PASS / BLOCKED:** No accepted record contains an unexplained ESP32 reset
+      or brownout, Bluetooth interruption, non-turning energized motor,
+      unexpected motion, out-of-range rail, severe or increasing droop, HW-627
+      fault, repeated protection trip, excessive heating, smoke, vapor, hissing,
+      leaking, swelling, odor, arcing, damaged insulation, or loose connection.
+      Evidence: ___
+- [ ] **PASS / BLOCKED / NOT APPLICABLE:** Every stopped or failed record has an
+      issue entry below, a documented cause and correction, teacher approval,
+      and passing repeats of the affected row and every dependent later row.
+      Reason/records: ___
+- [ ] **PASS / BLOCKED:** Component and wiring temperatures, voltage drop, and
+      observed current remain within the documented limits of the identified
+      hardware with explicit margin; an unknown limit is not counted as a pass.
+      Evidence: ___
+
+| Issue ID | Failed/stopped record IDs | Symptom and stop condition | Identified cause | Power-off correction | Repeated record IDs and result | Teacher initials |
+| --- | --- | --- | --- | --- | --- | --- |
+| ___ | ___ | ___ | ___ | ___ | ___ | ___ |
+| ___ | ___ | ___ | ___ | ___ | ___ | ___ |
+
+### F. Shutdown and final phase boundary
+
+- [ ] **PASS / BLOCKED:** The final run ended with the normal shutdown sequence;
+      motors stopped, cutoff opened, pack disconnected, rails verified near
+      0 V, and the meter restored to its voltage jack and DC-voltage range.
+      Evidence/checker initials: ___
+- [ ] **PASS / BLOCKED:** The assembly was inspected after shutdown with no
+      unresolved damage, odor, loose wiring, retained abnormal heat, or battery
+      concern. Evidence: ___
+- [ ] **PASS / BLOCKED:** HW-411 C and the camera remain physically disconnected
+      at the time of this decision. Evidence/checker initials: ___
+
+### Teacher decision
+
+| Decision field | Entry |
+| --- | --- |
+| Final result | **BLOCKED / PASS** |
+| Unresolved item or issue IDs; write `none` only after review | ___ |
+| Required correction and repeated records if blocked | ___ |
+| Teacher/checker printed name | ___ |
+| Teacher/checker signature and date | ___ |
+| Phase-2 authorization, valid only when final result is `PASS` | authorized / not authorized |
+
+If the final result is `BLOCKED`, leave phase 2 disconnected and return to the
+earliest failed gate after correction. If the result is `PASS`, normal shutdown
+must still be complete before HW-411 C is adjusted or camera wiring is added.
+Passing this gate authorizes only separate camera-branch qualification; it does
+not authorize a moving rover, loaded wheels, extra actuators, or simultaneous
+USB and external 5 V.
+
+## Hardware record
+
+The current hardware inventory and known markings are in
 [RoverPowerHardwareRecord.md](RoverPowerHardwareRecord.md).
