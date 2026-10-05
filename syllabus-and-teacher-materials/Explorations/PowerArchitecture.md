@@ -581,9 +581,124 @@ Never estimate a short startup transient as an exact peak merely because the
 meter displayed a maximum; handheld-meter sample rate and min/max behavior are
 part of the measurement limitations.
 
+## Measurement records
+
+Create a new record ID for each operating state. Use that ID in both the
+electrical-reading table and the observation table so a current reading cannot
+be separated from its voltage, load state, fault, connectivity, and thermal
+context. Enter `not measured`, `not supported`, or `not applicable` instead of
+leaving an ambiguous blank or writing zero.
+
+With one meter, voltage and current readings are sequential, not simultaneous.
+Return the meter to voltage mode using the mandatory checkpoint, reproduce the
+same bounded operating state, and record the time of each reading. If the state
+cannot be reproduced consistently, create separate record IDs and say so; do
+not combine the readings into one claimed operating point.
+
+### Test-session header
+
+Complete one header for every bench session.
+
+| Field | Record |
+| --- | --- |
+| Session ID, date, and time | ___ |
+| Operator and teacher/checker | ___ |
+| Protected-pack identification and starting voltage | ___ |
+| Meter make/model and asset or serial ID | ___ |
+| Current input, installed fuse, selected range, and allowed duration | ___ |
+| Min/max feature available and its documented behavior | yes / no / unknown; details: ___ |
+| HW-411 assignments and unloaded settings | A: ___ V; B: ___ V; C: disconnected / ___ V |
+| Motor specimen and lead-orientation labels | MOTOR-A: ___; MOTOR-B: ___ |
+| Firmware/build identity and relevant command settings | ___ |
+| Ambient temperature and temperature instrument, if used | ___ |
+| Camera branch state | physically disconnected / phase 2 authorized |
+
+### Required operating-state matrix
+
+The rows below name the minimum records. Do not skip directly to an integrated
+or two-motor row because a later state happens to work. `Start` means a free,
+unrestrained start of a secured motor; it never means deliberate stall.
+
+| Record ID | Phase and configuration | Required operating state | Current boundary/classification | Required rail-voltage point or points |
+| --- | --- | --- | --- | --- |
+| `P1-SRC-01` | Source; converter loads disconnected | Pack connected through the intended distribution path, no loads | Current not required; source-voltage record | Protected-pack/distribution input positive to negative |
+| `P1-A-01` | HW-411 A only, no ESP32 | Converter energized unloaded | Current optional; label as A input or A output if taken | HW-411 A `OUT+` to `OUT-` |
+| `P1-A-02` | Bluetooth branch only | ESP32 boot | HW-411 A output: A `OUT+` toward ESP32 | A output and ESP32 `VIN`/5 V to its ground |
+| `P1-A-03` | Bluetooth branch only | Bluetooth connected, neutral/disarmed | HW-411 A output | A output and ESP32 5 V input |
+| `P1-A-04` | Bluetooth branch only | Representative active reporting | HW-411 A output | A output and ESP32 5 V input |
+| `P1-B-01` | HW-411 B and HW-627; motors disconnected | Driver idle | HW-411 B output: B `OUT+` toward HW-627 | B output and HW-627 `VCC` to `GND` |
+| `P1-B-A-START` | MOTOR-A only | Free start | HW-411 B output | B output and HW-627 `VCC` |
+| `P1-B-A-FWD` | MOTOR-A only | Settled forward run | HW-411 B output | B output and HW-627 `VCC` |
+| `P1-B-A-REV` | MOTOR-A only | Bounded reversal and settled reverse run | HW-411 B output | B output and HW-627 `VCC` |
+| `P1-B-A-COAST` | MOTOR-A only | Coast command and stop | HW-411 B output | B output and HW-627 `VCC` |
+| `P1-B-B-START` | MOTOR-B only | Free start | HW-411 B output | B output and HW-627 `VCC` |
+| `P1-B-B-FWD` | MOTOR-B only | Settled forward run | HW-411 B output | B output and HW-627 `VCC` |
+| `P1-B-B-REV` | MOTOR-B only | Bounded reversal and settled reverse run | HW-411 B output | B output and HW-627 `VCC` |
+| `P1-B-B-COAST` | MOTOR-B only | Coast command and stop | HW-411 B output | B output and HW-627 `VCC` |
+| `P1-B-AB-START` | Both motors | Conservative simultaneous free start | HW-411 B output | B output and HW-627 `VCC` |
+| `P1-B-AB-RUN` | Both motors | Settled simultaneous run | HW-411 B output | B output and HW-627 `VCC` |
+| `P1-B-AB-REV` | Both motors | Bounded reversal and settled reverse run | HW-411 B output | B output and HW-627 `VCC` |
+| `P1-B-AB-COAST` | Both motors | Coast command and stop | HW-411 B output | B output and HW-627 `VCC` |
+| `P1-I-01` | Integrated phase 1 | Safe neutral/disarmed idle | Whole pack: protected positive after intended fuse/cutoff path | Pack, ESP32 5 V input, and HW-627 `VCC` |
+| `P1-I-02` | Integrated phase 1 | Bluetooth-connected idle | Whole pack | Pack, ESP32 5 V input, and HW-627 `VCC` |
+| `P1-I-03` | Integrated phase 1 | MOTOR-A operating | Whole pack | Pack, ESP32 5 V input, and HW-627 `VCC` |
+| `P1-I-04` | Integrated phase 1 | MOTOR-B operating | Whole pack | Pack, ESP32 5 V input, and HW-627 `VCC` |
+| `P1-I-05` | Integrated phase 1 | Conservative simultaneous motor operation | Whole pack | Pack, ESP32 5 V input, and HW-627 `VCC` |
+| `P2-C-01` | Camera branch only; phase 2 | Camera boot | HW-411 C output: C `OUT+` toward camera | C output and camera-board 5 V input |
+| `P2-C-02` | Camera branch only; phase 2 | Wi-Fi connection | HW-411 C output | C output and camera-board 5 V input |
+| `P2-C-03` | Camera branch only; phase 2 | Representative OV3660 streaming workload | HW-411 C output | C output and camera-board 5 V input |
+| `P2-I-01` | All three branches; phase 2 | Bluetooth connected and camera streaming, motors idle | Whole pack | Pack, both ESP32 5 V inputs, and HW-627 `VCC` |
+| `P2-I-02` | All three branches; phase 2 | Camera streaming and bounded simultaneous motor operation | Whole pack | Pack, both ESP32 5 V inputs, and HW-627 `VCC` |
+
+Phase-2 rows remain unused until the phase-1 gate authorizes them. If the motor
+rail is adjusted after a failed 4.0 V start, suffix the repeated IDs with the
+actual setting, such as `P1-B-A-START-4V5`, and repeat every affected row.
+
+### Electrical-reading table
+
+Add rows as necessary when one operating state needs several voltage points.
+The current measurement point must name the two nodes separated for series
+insertion. `Converter side` must be one of `whole pack`, `converter input`,
+`converter output`, or `not applicable`; do not describe an output measurement
+as battery current.
+
+| Record ID and reading time | Operating state and loads energized | Current measurement point (source node -> load node) | Converter side | Current range | Observed current (A) | Min/max capture (off / on / unsupported) | Observed displayed maximum (A) | Rail-voltage probe points | Baseline voltage (V) | Voltage in state (V) | Droop = baseline - state (V) |
+| --- | --- | --- | --- | ---: | ---: | --- | ---: | --- | ---: | ---: | ---: |
+| ___ | ___ | ___ | ___ | ___ | ___ | ___ | ___ | ___ | ___ | ___ | ___ |
+| ___ | ___ | ___ | ___ | ___ | ___ | ___ | ___ | ___ | ___ | ___ | ___ |
+| ___ | ___ | ___ | ___ | ___ | ___ | ___ | ___ | ___ | ___ | ___ | ___ |
+
+For a stable state, `Observed current` is the displayed value after the state
+settles. For a start or reversal, record the largest value actually displayed
+in `Observed displayed maximum` and state whether min/max capture was enabled.
+If the meter lacks that feature, write `unsupported`; never relabel a visually
+noticed number as an exact transient peak. Record the baseline at the same
+voltage probe points under the applicable preceding idle state. Use `not
+applicable` for droop when there is no meaningful baseline.
+
+### Behavior, fault, connectivity, and temperature table
+
+Complete one observation row for every electrical record ID, including normal
+results. `None observed` is evidence; a blank is not. Use instrumented
+temperatures when available. Otherwise record a qualitative, touch-free
+observation such as `no visible heating or odor`; do not touch energized parts
+or spinning motors to estimate temperature.
+
+| Record ID | Test duration | ESP32 reset or brownout evidence | Bluetooth/Wi-Fi connectivity evidence | HW-627 fault indication | Motor response and unexpected motion | Temperature observation (component, method, start/end or qualitative) | Odor, noise, damaged insulation, or protection trip | Outcome and corrective-action reference |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ___ | ___ | none observed / details: ___ | stable / interrupted / not applicable; details: ___ | inactive / asserted / not observable; details: ___ | ___ | ___ | none observed / details: ___ | pass / stop / repeat; ___ |
+| ___ | ___ | none observed / details: ___ | stable / interrupted / not applicable; details: ___ | inactive / asserted / not observable; details: ___ | ___ | ___ | none observed / details: ___ | pass / stop / repeat; ___ |
+| ___ | ___ | none observed / details: ___ | stable / interrupted / not applicable; details: ___ | inactive / asserted / not observable; details: ___ | ___ | ___ | none observed / details: ___ | pass / stop / repeat; ___ |
+
+If the HW-627 fault output is not connected or its module mapping remains
+unknown, record `not observable`; do not infer an inactive fault merely because
+the motors turn. Record the temperature location and method consistently—for
+example `HW-411 B case, IR thermometer, 24 C start / 39 C end`—and include the
+test duration. Any interrupted test retains its partial readings and is marked
+`stop`, never silently rewritten as a passing run.
+
 ## Follow-on sections
 
-Measurement records, shutdown steps, and the acceptance checklist are added by
-subsequent tasks in this OpenSpec change. The current hardware inventory and
-known markings are in
+Shutdown steps and the acceptance checklist are added by subsequent tasks in
+this OpenSpec change. The current hardware inventory and known markings are in
 [RoverPowerHardwareRecord.md](RoverPowerHardwareRecord.md).
