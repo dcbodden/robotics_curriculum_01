@@ -315,10 +315,99 @@ the source, converter input, converter output, screw terminal, and load. An
 HW-411 adjusted correctly with reversed output leads is still a destructive
 connection.
 
+## Suppression, bypass, and energy storage
+
+Capacitors in this architecture have different jobs. The motor-terminal parts
+reduce brush noise at its source, the driver ceramic supplies high-frequency
+switching current, and the bulk capacitors reduce slower rail droop. One part
+does not replace the others, and additional capacitance does not repair an
+undersized converter, driver, connector, wire, or battery.
+
+The photographed HW-411 already carries a 100 uF, 50 V input electrolytic and
+a 220 uF, 35 V output electrolytic. Keep those installed, but do not treat them
+as load-local capacitance when 18 AWG wiring and screw terminals separate the
+converter from the ESP32 or HW-627.
+
+### Starting capacitor plan
+
+| Location and purpose | Starting configuration | Polarity and voltage rating | Placement |
+| --- | --- | --- | --- |
+| Motor A brush-noise suppression | Retain its factory-installed terminal capacitor. A nominal 100 nF ceramic directly across the two motor terminals is the target arrangement; do not add a duplicate merely because the existing value is unmarked. | Must be non-polarized. Prefer a ceramic rated at least 25 V; 50 V is a common robust choice for motor-terminal transients. | Directly across Motor A's two metal terminals with the shortest practical leads. |
+| Motor B brush-noise suppression | Retain its factory-installed terminal capacitor under the same inspection rule as Motor A. | Must be non-polarized and suitably voltage-rated; use the same target rating as Motor A if replacement is required. | Directly across Motor B's two metal terminals with the shortest practical leads. |
+| HW-627 high-frequency bypass | 100 nF ceramic from `VCC` to `GND`. The module's visible `0.01uF`, `2.2uF`, and `10uF` footprints do not establish this external bypass. | Non-polarized; at least 16 V, with 25 V or higher acceptable. | At the HW-627 supply pins, not at the far end of the branch wire or on a distant breadboard rail. |
+| HW-627 local bulk storage | Begin with approximately 470 uF electrolytic from `VCC` to `GND` because two motors share the rail. | Positive lead to `VCC`; negative stripe to `GND`. At least 10 V; 16 V preferred for the 4.0–4.5 V rail. | Beside the HW-627 power connection with short, low-impedance leads. |
+| Bluetooth ESP32 local bulk | Begin with 100–220 uF electrolytic from `VIN`/5 V to `GND`. | Positive lead to `VIN`/5 V; negative stripe to `GND`. At least 10 V; 16 V preferred. | At the ESP32 breakout screw terminals or immediately beside the board's power pins. |
+| Protected 3S distribution bulk | Optional starting range of 470–1000 uF electrolytic across positive and ground distribution. Add only after the source and branch wiring are verified. | Positive lead to the positive star; negative stripe to the ground star. At least 25 V for a 12.6 V fully charged 3S source. | Downstream of the target fuse and cutoff, at the star distribution point. Keep leads short and insulated. |
+| Camera ESP32 local bulk, phase 2 only | Begin with 220–470 uF electrolytic from camera `5V` to `GND` when that branch is eventually qualified. | Positive lead to `5V`; negative stripe to `GND`. At least 10 V; 16 V preferred. | At the camera-board power input, not back at HW-411 C. Remains absent or disconnected in phase 1. |
+
+Before relying on the installed motor capacitors, inspect both motors with power
+removed:
+
+1. Confirm each capacitor is physically connected across that motor's two
+   terminals, rather than from one terminal to the metal case.
+2. Confirm it is a non-polarized ceramic part. Record any readable value or
+   marking; do not invent a value when the part is unmarked.
+3. Check for cracked coating, broken leads, solder bridges, or a lead touching
+   the motor can unintentionally.
+4. Retain an intact factory capacitor even when its exact value is unreadable.
+   Replace or supplement it only when its construction is unsuitable or later
+   measurements show a noise problem that warrants a controlled change.
+
+If the factory part can be verified as approximately 100 nF directly across the
+terminals, it already satisfies the starting motor-suppression configuration.
+Installing another 100 nF in parallel is unnecessary. Do not add
+terminal-to-case capacitors without a motor-manufacturer EMI scheme that calls
+for them.
+
+### Physical layout
+
+- Twist Motor A's two leads together from `OUT1`/`OUT2` to Motor A, and twist
+  Motor B's pair from `OUT3`/`OUT4` to Motor B. Keep each pair short and separate
+  from ESP32 antenna, USB, and logic-signal wiring where practical.
+- Keep the motor-terminal capacitors at the motors. Moving them to the HW-627
+  end of 200 mm leads leaves the lead pair acting as a noise source.
+- Keep the 100 nF driver ceramic and 470 uF driver bulk capacitor at the HW-627
+  supply pins. A capacitor at HW-411 B does not provide the same high-frequency
+  current loop.
+- Keep the Bluetooth bulk capacitor on the ESP32 side of its branch wiring and
+  the distribution bulk capacitor at the star. They serve different current
+  paths.
+- Insulate all exposed capacitor leads and mechanically secure large
+  electrolytics so vibration or handling cannot fatigue their connections.
+
+### Polarity, power-off, and adjustment rules
+
+Ceramic capacitors in this plan are non-polarized. Every electrolytic is
+polarized: verify its `+` lead and negative stripe against the rail before
+power is applied. Also read the printed voltage rating; physical size and color
+are not evidence of a safe rating.
+
+Open and disconnect battery power before installing, removing, or moving a
+capacitor. Allow bulk capacitors to discharge and verify the rail is near 0 V
+before touching conductors. Larger bulk values increase connection inrush and
+stored energy, so change one value at a time and repeat the applicable source,
+droop, temperature, and shutdown checks.
+
+Treat every value above as a provisional starting configuration to be evaluated
+by measurements. Increase bulk capacitance only when recorded voltage droop or
+resets justify a trial. Stop and correct wiring, supply, driver, or load
+problems rather than adding capacitance to conceal persistent stalls, severe
+droop, overheating, or a protection trip.
+
+### No single flyback diode across a reversible motor
+
+Do not install one conventional flyback diode across either motor or across
+`OUT1`/`OUT2` or `OUT3`/`OUT4`. Each H-bridge intentionally reverses motor
+terminal polarity. A diode that blocks one direction becomes forward-biased in
+the other and can effectively short the bridge output.
+
+The DRV8833 bridge provides the bidirectional switching and winding-current
+recirculation paths. The external motor-noise component is the non-polarized
+terminal capacitor already fitted to each motor, not a single polarized diode.
+
 ## Follow-on sections
 
-Suppression and capacitance details, authoritative source references,
-multimeter procedure, measurement records, shutdown steps, and the acceptance
-checklist are added by subsequent tasks in this OpenSpec change. The current
-hardware inventory and known markings are in
-[RoverPowerHardwareRecord.md](RoverPowerHardwareRecord.md).
+Authoritative source references, the multimeter procedure, measurement
+records, shutdown steps, and the acceptance checklist are added by subsequent
+tasks in this OpenSpec change. The current hardware inventory and known
+markings are in [RoverPowerHardwareRecord.md](RoverPowerHardwareRecord.md).

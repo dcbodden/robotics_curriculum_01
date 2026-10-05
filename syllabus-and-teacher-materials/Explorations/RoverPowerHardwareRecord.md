@@ -137,6 +137,7 @@ one motor of this type, not measurements of either installed specimen.
 | Gear ratio | 1:48 | 1:48 |
 | Representative no-load data | 150 mA at 120 RPM and 3 V; 155 mA at 185 RPM and 4.5 V; 160 mA at 250 RPM and 6 V | Same motor-type reference data; specimen measurement pending |
 | Representative stall data | 1.1 A at 3 V; 1.2 A at 4.5 V; 1.5 A at 6 V | Same motor-type reference data; specimen measurement pending |
+| Factory noise-suppression capacitor | Present according to the user; exact value, type, terminal placement, and condition still require visual inspection | Present according to the user; exact value, type, terminal placement, and condition still require visual inspection |
 | Actual no-load current and conditions | Not measured | Not measured |
 | Actual startup current | Not measured | Not measured |
 | Shaft/gearbox condition before test | Not recorded | Not recorded |
