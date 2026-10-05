@@ -450,9 +450,140 @@ The evidence labels in this guide mean:
   measurement point, rail voltage, and operating state. Later tasks add the
   measurement forms and replace applicable planning values with that evidence.
 
+## Multimeter safety procedure
+
+Voltage and current measurements use different meter connections. Confusing
+them can place the meter's low-resistance current shunt directly across the
+pack or a converter output. A current-input fuse is a last line of protection,
+not permission to probe a voltage rail.
+
+The general connection rules agree with Fluke's
+[digital-multimeter jack guidance](https://www.fluke.com/en-us/learn/best-practices/test-tools-basics/digital-multimeters/digital-multimeter-jacks)
+and its [current-measurement explanation](https://media.fluke.com/ade6b718-4577-4b57-903b-b10600664c67_original%20file.pdf),
+but the manual for the actual meter controls its allowed ranges, fuses, and
+measurement duration.
+
+The reported meter has a fused 10 A input, but its model, installed fuse part,
+fuse interrupt rating, lead ratings, accuracy, and 10 A time limit are not yet
+recorded. Before any series-current test, identify the meter and follow its
+manual to inspect or test the current-input fuse. Confirm that the selected
+jack, range, fuse, leads, and permitted measurement duration cover the planned
+DC test. Do not bypass a fuse or substitute an unspecified fuse. If these
+details cannot be confirmed, perform voltage checks only and obtain a suitable
+meter or DC current probe before continuing.
+
+### Voltage mode: probe in parallel
+
+Voltage mode observes the difference between two points without intentionally
+opening the circuit:
+
+```text
+positive o----------------o load +
+         |                |
+        red               load
+    [ meter: DC V ]       |
+        black             |
+         |                |
+negative o----------------o load -
+       parallel connection
+```
+
+1. Put the black lead in `COM` and the red lead in the jack marked for volts
+   (`V` or `V/ohm`), never an `A`, `10A`, `mA`, or `uA` jack.
+2. Select DC volts and a range above the highest expected voltage. The maximum
+   planned source voltage is 12.6 V for a fully charged 3S pack; the regulated
+   rails are 5.0 V and 4.0–4.5 V.
+3. Touch the black probe to the applicable negative/ground point and the red
+   probe to the applicable positive point. This is a **parallel** connection;
+   do not cut or disconnect the conductor being measured.
+4. Record the two exact probe points, polarity, operating state, and voltage.
+   A negative display normally indicates reversed probe polarity; remove the
+   probes and resolve polarity before connecting a load.
+5. Remove the red probe first and then the black probe. Keep the meter in this
+   voltage configuration unless a current measurement is immediately required.
+
+### Current mode: insert in series
+
+Current mode temporarily replaces one conductor so all current at the named
+measurement boundary flows through the meter:
+
+```text
+positive o---- red [ meter: DC A ] black ----o load +
+negative o-----------------------------------o load -
+                series insertion
+```
+
+Use the positive conductor for these insertions so the common ground reference
+between the ESP32 and HW-627 remains intact. Suitable named boundaries include
+the protected-pack positive output for whole-pack current, HW-411 A `OUT+` for
+Bluetooth-branch output current, and HW-411 B `OUT+` for motor-branch output
+current. The record must identify which boundary is used; currents measured on
+converter inputs and outputs are not interchangeable.
+
+Follow this sequence for every current measurement:
+
+1. Disarm the controller and command coast/zero output.
+2. Open the physical cutoff **and disconnect the protected pack**. While the
+   separate cutoff remains deferred, physical pack disconnection is mandatory;
+   do not treat firmware, an unplugged USB cable, or a switch of unverified DC
+   suitability as isolation.
+3. With the meter still configured for DC voltage, verify the conductor to be
+   opened is at or near 0 V after stored energy has decayed. Remove both probes.
+4. Confirm the planned current boundary and expected upper demand. Inspect the
+   leads and use the meter manual to verify the fuse and any maximum-duration or
+   cooldown rule for the selected input.
+5. Move the red lead to the **fused high-current/10 A jack** and select DC amps
+   on the highest suitable fused range. Begin there for every motor-branch or
+   whole-pack test because motor startup is transient and the present planning
+   case exceeds common mA-input ratings. Never use an unfused current input.
+6. Open only the selected positive conductor and connect the meter across that
+   break: red toward the source, black toward the load. Secure the connections
+   so a loose probe cannot open the motor circuit or touch an adjacent terminal.
+7. Have a second person or teacher verify: pack disconnected, correct boundary,
+   series path, red lead in the intended fused current jack, DC-current range,
+   and no meter lead placed across positive and negative.
+8. Reconnect the pack and close the cutoff only for the bounded test. Keep hands
+   away from the wiring. Record the measurement boundary, rail voltage,
+   operating state, observed current, and whether min/max capture was used.
+9. Open the cutoff immediately after the reading, disconnect the pack, and wait
+   for motion to stop and stored energy to decay. Never move a lead, change a
+   jack, change a current range, or remove the series meter while energized.
+10. Remove the meter and restore the opened conductor with power disconnected.
+    If a reading was negative or out of range, correct the setup only after this
+    full power-removal sequence; do not swap live leads.
+
+Start the Bluetooth-only measurement on the same verified high-current range.
+A lower fused range may be used later only when its manual, fuse, time limit,
+and the already observed upper current establish adequate margin. Repeat the
+power-off rewiring sequence to change ranges. Be aware that a current meter's
+burden voltage can lower the load voltage, especially on a lower range; recheck
+the rail at the load after returning the meter to voltage mode.
+
+### Mandatory restoration checkpoint
+
+Complete this checkpoint after **every** current measurement, before anyone
+performs another voltage check or puts the meter away:
+
+- [ ] Cutoff open, protected pack physically disconnected, and test stopped.
+- [ ] Series meter removed and the opened circuit conductor safely restored.
+- [ ] Red lead moved out of `A`/`10A`/`mA` and back to the `V` or `V/ohm` jack.
+- [ ] Black lead remains in `COM`.
+- [ ] Selector set to DC volts on a range above 12.6 V, or meter switched off
+      for storage after the lead has been restored.
+- [ ] A second person or teacher states and verifies: **meter restored to
+      voltage mode**.
+- [ ] Before re-energizing, the next measurement's probe points and polarity
+      are identified; after reconnection, voltage is probed only in parallel.
+
+Never place a meter configured for current directly across the protected pack,
+an HW-411 input or output, the HW-627 supply, a motor, or either ESP32 supply.
+Never estimate a short startup transient as an exact peak merely because the
+meter displayed a maximum; handheld-meter sample rate and min/max behavior are
+part of the measurement limitations.
+
 ## Follow-on sections
 
-The multimeter procedure, measurement records, shutdown steps, and acceptance
-checklist are added by subsequent tasks in this OpenSpec change. The current
-hardware inventory and known markings are in
+Measurement records, shutdown steps, and the acceptance checklist are added by
+subsequent tasks in this OpenSpec change. The current hardware inventory and
+known markings are in
 [RoverPowerHardwareRecord.md](RoverPowerHardwareRecord.md).
